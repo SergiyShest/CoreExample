@@ -61,24 +61,9 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasIndex(e => e.ImageDataId, "IX_Users_ImageDataId");
-
             entity.HasIndex(e => e.Email, "IX_user_email");
-
-            entity.HasIndex(e => e.Logon, "IX_user_logon");
-
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.BirthDay).HasColumnType("timestamp without time zone");
-            entity.Property(e => e.Email).HasMaxLength(255);
-            entity.Property(e => e.FirstName).HasMaxLength(30);
-            entity.Property(e => e.LastName).HasMaxLength(30);
-            entity.Property(e => e.Logon).HasMaxLength(100);
-            entity.Property(e => e.Phone).HasMaxLength(100);
-            entity.Property(e => e.RegisterDate).HasColumnType("timestamp without time zone");
 
-            //entity.HasOne(d => d.ImageData).WithMany(p => p.Users)
-            //    .HasForeignKey(d => d.ImageDataId)
-            //    .OnDelete(DeleteBehavior.Restrict);
         });
 
         //modelBuilder.Entity<VWfResult>(entity =>

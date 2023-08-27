@@ -51,7 +51,7 @@ namespace Tests
             var questionnaire = createQuestionnaire();
             var newQuestionId = questionnaire.Questions.FirstOrDefault(x => x.Name == "Test").Id;
 
-            var newQuestion = UOW.GetRepository<A_prop>().FirstOrDefault(x => x.Id == newQuestionId);
+            var newQuestion = UOW.GetRepository<Vjsf>().FirstOrDefault(x => x.Id == newQuestionId);
             Assert.NotNull(newQuestion);
         }
 
@@ -89,7 +89,7 @@ namespace Tests
 
         private QuestionnaireBo createQuestionnaire(bool withQuestion = true)
         {
-            var questionnaireRecord = UOW.GetRepository<A_prop>().FirstOrDefault(x => x.Code == "QUESTIONNAIRE");
+            var questionnaireRecord = UOW.GetRepository<Questionnaire>().FirstOrDefault();
             var questionnaire = new QuestionnaireBo(questionnaireRecord);
             if (withQuestion)
             {

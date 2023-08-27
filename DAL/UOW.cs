@@ -28,6 +28,8 @@ namespace DAL
 
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate, bool noTracking = true);
 
+        TEntity FirstOrDefault();
+
         TEntity Find(int id);
 
         void Create(TEntity item, bool withSave = true);
@@ -39,6 +41,8 @@ namespace DAL
         void Remove(TEntity item);
 
         void Delete(IEnumerable<int> ids, bool withSave = true);
+
+
     }
 
 

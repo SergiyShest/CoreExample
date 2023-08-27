@@ -241,6 +241,11 @@ namespace Sasha.Lims.WebUI.Areas.Questions
         {
             return GetAll(noTracking).Where(predicate);
         }
+
+        public T FirstOrDefault()
+        {
+            return GetAll(false)?.FirstOrDefault();
+        }
     }
 
 }
