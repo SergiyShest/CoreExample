@@ -2,65 +2,17 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using NLog.Fluent;
 
-using Sasha.Lims.WebUI.Areas.Questions;
 
 using DAL;
 using System.Collections.Generic;
-using System.Dynamic;
-using NLog;
+using BLL;
 
 namespace MVC.Controllers
 {
 
- public class BaseController : Controller
-
-    {
-        protected Logger log = LogManager.GetCurrentClassLogger();
 
 
-        protected JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings();
-
-        public string GetJsonSafe(Func<object> function)
-        {
-            dynamic expOb = new ExpandoObject();
-            try
-            {
-                expOb.Item = function();
-            }
-            catch (Exception ex)
-            {
-                expOb.Errors = new List<ObjectError>() { new ObjectError("", ex.GetAllMessages()) };
-                log.Error(ex);
-            }
-            var json = JsonConvert.SerializeObject(expOb, JsonSerializerSettings);
-            return json;
-        }
-
-        public string GetJsonSafe(Action function)
-        {
-            dynamic expOb = new ExpandoObject();
-            try
-            {
-                function();
-
-            }
-            catch (Exception ex)
-            {
-                expOb.Errors = new List<ObjectError>() { new ObjectError("", ex.GetAllMessages()) };
-                log.Error(ex);
-
-            }
-            var json = JsonConvert.SerializeObject(expOb, JsonSerializerSettings);
-            return json;
-        }
-
-
-    }
-
-
-    [Authorize]
     public class QuestionnaireController : BaseController
     {
         public ActionResult Index(int? id, int? patientId, string mode)
@@ -72,10 +24,10 @@ namespace MVC.Controllers
                 mode = "work";
             }
             ViewBag.Mode = mode;
-            if (id == null)
-            {
-                ViewBag.Mode = "edit";
-            }
+            //if (id == null)
+            //{
+            //    ViewBag.Mode = "edit";
+            //}
             return View("Index");
         }
 
@@ -100,30 +52,27 @@ namespace MVC.Controllers
         public ActionResult SaveQuestion(int? questionnaireId)
         {
             var model = new QuestionnaireModel(questionnaireId);
-            //var bodyStream = new StreamReader(HttpContext.Request.InputStream);
-            //bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
-            //var bodyText = bodyStream.ReadToEnd();
-            //var errors = model.SaveQuestion(bodyText, GetCurrentUser());
+            var bodyStream = new StreamReader(HttpContext.Request.Body);
+            bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
+            var bodyText = bodyStream.ReadToEnd();
+            var errors = model.SaveQuestion(bodyText, GetCurrentUser());
 
 
             var json = JsonConvert.SerializeObject(new { Errors = "errors" });
             return Content(json, "application/json");
         }
-
-
 
         public ActionResult SaveQuestionnaire(int? questionnaireId)
         {
-            //var model = new QuestionnaireModel(questionnaireId);
-            //var bodyStream = new StreamReader(HttpContext.Request.InputStream);
-            //bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
-            //var bodyText = bodyStream.ReadToEnd();
-            //var errors = model.SaveQuestionnaire(bodyText, GetCurrentUser());
+            var model = new QuestionnaireModel(questionnaireId);
+            var bodyStream = new StreamReader(HttpContext.Request.Body);
+            bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
+            var bodyText = bodyStream.ReadToEnd();
+            var errors = model.SaveQuestionnaire(bodyText, GetCurrentUser());
 
             var json = JsonConvert.SerializeObject(new { Errors = "errors" });
             return Content(json, "application/json");
         }
-
 
         public ActionResult DeleteQuestion(int? questionnaireId, int? questionId)
         {
@@ -135,22 +84,15 @@ namespace MVC.Controllers
             return Content(json, "application/json");
         }
 
-
-
         public ActionResult SaveAnsvers(int? questionnaireId, int? patientId)
         {
-            //var model = new QuestionnaireModel(questionnaireId);
-            //var bodyStream = new StreamReader(HttpContext.Request.InputStream);
-            //bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
-            //var bodyText = bodyStream.ReadToEnd();
-
-            ////			var errors = model.SaveAnsvers(bodyText,GetCurrentUser(),patientId);
-
-            //string json = base.GetJsonSafe(() => model.SaveAnsvers(bodyText, GetCurrentUser(), patientId));
-
+            var model = new QuestionnaireModel(questionnaireId);
+            var bodyStream = new StreamReader(HttpContext.Request.Body);
+            bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
+            var bodyText = bodyStream.ReadToEnd();
+            string json = base.GetJsonSafe(() => model.SaveAnsvers(bodyText, GetCurrentUser(), patientId));
             return Content("json", "application/json");
         }
-
 
         public ActionResult UploadFile(int? questionnaireId, string questionnaireName)
         {
@@ -198,7 +140,7 @@ namespace MVC.Controllers
 
         private UserDTO GetCurrentUser()
         {
-            throw new NotImplementedException();
+            return new UserDTO();
         }
     }
 }

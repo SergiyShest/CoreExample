@@ -5,6 +5,7 @@ using DAL;
 using Sasha.Lims.WebUI.Areas.Questions;
 using Core;
 using NUnit.Framework.Internal;
+using BLL;
 
 namespace Tests
 {
@@ -19,7 +20,7 @@ namespace Tests
          [Test]
         public void CreateQuestion()
         {
-            var question = new Question();
+            var question = new QuestionBo();
             question.Save(_user);
 
         }
@@ -27,7 +28,7 @@ namespace Tests
          [Test]
         public void DeleteQuestion()
         {
-            var question = new Question();
+            var question = new QuestionBo();
             question.Save(_user);
 
             question.Delete(_user);
@@ -40,7 +41,7 @@ namespace Tests
         {
             var questionnaireRecord = UOW.GetRepository<Questionnaire>().FirstOrDefault();
             var questionnaire = new QuestionnaireBo(questionnaireRecord);
-            var question = new Question();
+            var question = new QuestionBo();
             questionnaire.Questions.Add(question);
             questionnaire.Save(_user);
         }
@@ -72,19 +73,19 @@ namespace Tests
 
 
 
-        [Test]
-        public void LoadFromFileQuestionnaire()
-        {
+       // [Test]
+       // public void LoadFromFileQuestionnaire()
+       // {
 
-            var questionnaireRecord = UOW.GetRepository<A_prop>().Where(x => x.Code == "QUESTIONNAIRE").ToList().OrderBy(x => x.Id).LastOrDefault();
-            ExcelLoader loader = new ExcelLoader();
+       //     var questionnaireRecord = UOW.GetRepository<A_prop>().Where(x => x.Code == "QUESTIONNAIRE").ToList().OrderBy(x => x.Id).LastOrDefault();
+       //     ExcelLoader loader = new ExcelLoader();
 
-       //     var questionniare = loader.AddQuestions("c:/Users/Sergey.DESKTOP-6MTKSUM/Documents/TestQuestionnaire.xlsx", questionnaireRecord.id);
-        //    questionniare.Save(_user);
+       ////     var questionniare = loader.AddQuestions("c:/Users/Sergey.DESKTOP-6MTKSUM/Documents/TestQuestionnaire.xlsx", questionnaireRecord.id);
+       // //    questionniare.Save(_user);
 
 
 
-        }
+       // }
 
 
         private QuestionnaireBo createQuestionnaire(bool withQuestion = true)
@@ -93,7 +94,7 @@ namespace Tests
             var questionnaire = new QuestionnaireBo(questionnaireRecord);
             if (withQuestion)
             {
-                var question = new Question() { Name = "Test" };
+                var question = new QuestionBo() { Name = "Test" };
                 questionnaire.Questions.Add(question);
             }
             questionnaire.Save(_user);

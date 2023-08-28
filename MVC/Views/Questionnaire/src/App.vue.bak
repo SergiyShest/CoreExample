@@ -1,0 +1,33 @@
+<template>
+  <v-app>
+    <v-main>
+      <v-form v-model="valid">
+        <v-jsf v-model="model" :schema="schema"/>
+      </v-form>
+      <p>valid=</p>
+      <pre></pre>
+    </v-main>
+  </v-app>
+</template>
+
+<script>
+import VJsf from '@koumoul/vjsf/lib/VJsf.js'
+import '@koumoul/vjsf/lib/VJsf.css'
+import '@koumoul/vjsf/lib/deps/third-party.js'
+
+export default {
+  name: 'App',
+  components: { VJsf },
+  data: () => ({
+    valid: false,
+    model: {},
+    schema: {
+      type: 'object',
+      properties: {
+        stringProp: { type: 'string' },
+        colorProp: { type: 'string', 'x-display': 'color-picker' },
+      }
+    }
+  }),
+};
+</script>

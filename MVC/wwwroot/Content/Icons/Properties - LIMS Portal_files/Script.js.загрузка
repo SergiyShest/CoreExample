@@ -1,0 +1,67 @@
+	function getIndex(array, val) {
+
+		for (var i = 0; i < array.length; i++) {
+			var value = array[i];
+			if (value == val) {
+				return i;
+			}
+		}
+		return -1;
+	}
+(function () {
+
+
+    var adjustmentDelegates = [];
+
+    function AddAdjustmentDelegate(adjustmentDelegate) {
+        adjustmentDelegates.push(adjustmentDelegate);
+    }
+    function onControlsInitialized(s, e) {
+        adjustPageControls();
+    }
+    function onBrowserWindowResized(s, e) {
+        adjustPageControls();
+    }
+    function adjustPageControls() {
+        for (var i = 0; i < adjustmentDelegates.length; i++) {
+            adjustmentDelegates[i]();
+        }
+    }
+
+    function onPageToolbarInit(s, e) {
+        var adjustmentMethod = function () {
+            document.getElementById("pageContent").style.paddingTop = s.GetHeight() + "px";
+        };
+        AddAdjustmentDelegate(adjustmentMethod);
+
+        /**
+         * необходимо для первоначальной инициализации
+         * TODO: перенести в стили
+         */
+        document.getElementById("pageContent").style.paddingTop = s.GetHeight() + "px";
+    }
+
+    window.onControlsInitialized = onControlsInitialized;
+    window.onBrowserWindowResized = onBrowserWindowResized;
+    window.onPageToolbarInit = onPageToolbarInit;
+    window.adjustPageControls = adjustPageControls;
+    window.AddAdjustmentDelegate = AddAdjustmentDelegate;
+
+	window.dxConfirm = function (text) {
+		if (text && text.length)
+			ConfirmLabel.SetText(text);
+
+		ConfirmYes.Click.ClearHandlers();
+		ConfirmYes.Click.AddHandler(Hide);
+
+		ConfirmPopup.Show();
+		return {
+			success: function (onSuccess) {
+				ConfirmYes.Click.AddHandler(onSuccess);
+			}
+		};
+	};
+	function Hide() {
+		ConfirmPopup.Hide();
+	}
+})();

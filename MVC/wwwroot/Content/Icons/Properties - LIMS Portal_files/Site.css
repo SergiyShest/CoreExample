@@ -1,0 +1,108 @@
+html, body {
+    height: 100%;
+}
+
+#wrap {
+    min-height: 100%;
+}
+
+#main {
+    overflow:auto;
+    padding-bottom:50px; /* this needs to be bigger than footer height*/
+}
+
+.footer {
+    position: relative;
+    margin-top: -50px; /* negative value of footer height */
+    height: 50px;
+    clear:both;
+    padding-top:20px;
+} 
+
+
+body {
+    padding-top: 50px;
+    padding-bottom: 10px;
+}
+
+.hidden {
+	display: none;
+}
+
+.button_center {
+	margin: 16px auto;
+	width: 160px;
+}
+
+.del_btn {
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+}
+
+.col3 {
+	text-align: right;
+}
+
+.uploadContainer {
+	padding-top: 10px;
+	witdh: 600px;
+}
+
+.filesContainer.inner {
+	padding: 0;
+	witdh: 600px;
+}
+
+.fullHeight {
+	height: 100% !important;
+}
+
+.fullWidth {
+	width: 100% !important;
+}
+
+.titleMenuItemStyle {
+	
+	font-weight: bold; 
+	font-color: #bbb;
+	font-size: large;
+}
+.disabled {
+	filter: brightness(80%) contrast(80%);
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column
+}
+
+.textHeader {
+	margin: 5px;
+	vertical-align: center
+}
+
+.textBody {
+	color: #444;
+	margin: 5px;
+	font-weight: bold;
+	min-width: 50px;
+}
+
+.licensePanel {
+	background-color: #F4F0DB !important;
+	padding: 20px 0 20px !important;
+}
+
+.licensePanelContent {
+	font-size: 14px;
+	text-align: center;
+	white-space: normal;
+}

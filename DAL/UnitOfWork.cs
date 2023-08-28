@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Sasha.Lims.WebUI.Areas.Questions;
 using System.Linq.Expressions;
 
-namespace Sasha.Lims.WebUI.Areas.Questions
-{
+namespace DAL {
 
         public class UnitOfWork : IUnitOfWorkEx
         {

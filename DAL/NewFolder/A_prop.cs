@@ -1,8 +1,8 @@
-﻿using Core;
+﻿
 
-namespace Sasha.Lims.WebUI.Areas.Questions
+namespace Core
 {
-    public partial class A_prop: IEntity
+  public partial class A_prop: IEntity
     {
         public int? Id { get; set; }
         
@@ -10,6 +10,7 @@ namespace Sasha.Lims.WebUI.Areas.Questions
     
         public string? Code { get; internal set; }
     }
+
   public partial class Questionnaire : IEntity
     {
         public int? Id { get; set; }
