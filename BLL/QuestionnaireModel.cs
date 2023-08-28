@@ -96,11 +96,7 @@ namespace BLL
 			try
 			{
 				var questionnaire = JsonConvert.DeserializeObject<QuestionnaireBo>(bodyText);
-				if (questionnaire.ParentId == null)
-				{
-					var parent = UOW.GetRepository<A_prop>().FirstOrDefault(x => x.Code == "QUESTIONNAIRE_LIST");
-					questionnaire.ParentId = parent.Id;
-				}
+	
 				questionnaire.Save(user);
 			}
 			catch (Exception ex)

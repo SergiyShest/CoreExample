@@ -76,3 +76,378 @@ File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
 2023-08-28 02:38:24.1393 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
 2023-08-28 02:38:24.1526 Info Configuration initialized.
 2023-08-28 02:38:24.1526 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 04:46:02.9060 Info Message Template Auto Format enabled
+2023-08-28 04:46:03.0979 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 04:46:03.1146 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 04:46:03.3078 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 04:46:03.3078 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 04:46:03.3078 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 04:46:03.3727 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 04:46:03.3906 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 04:46:03.4052 Info Configuration initialized.
+2023-08-28 04:46:03.4191 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 05:23:17.0106 Info Message Template Auto Format enabled
+2023-08-28 05:23:17.1119 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 05:23:17.1290 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 05:23:17.2628 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 05:23:17.2628 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 05:23:17.2628 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 05:23:17.2628 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 05:23:17.2836 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 05:23:17.2957 Info Configuration initialized.
+2023-08-28 05:23:17.3082 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 05:28:27.8962 Info Message Template Auto Format enabled
+2023-08-28 05:28:28.0143 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 05:28:28.0303 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 05:28:28.2482 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 05:28:28.2482 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 05:28:28.2482 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 05:28:28.2482 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 05:28:28.2697 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 05:28:28.2820 Info Configuration initialized.
+2023-08-28 05:28:28.2940 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 07:38:14.1979 Info Message Template Auto Format enabled
+2023-08-28 07:38:14.3869 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 07:38:14.4029 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 07:38:14.6014 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 07:38:14.6037 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 07:38:14.6037 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 07:38:14.6037 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 07:38:14.6213 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 07:38:14.6213 Info Configuration initialized.
+2023-08-28 07:38:14.7830 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 08:26:51.2219 Info Message Template Auto Format enabled
+2023-08-28 08:26:51.3388 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 08:26:51.3570 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 08:26:51.4734 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 08:26:51.4734 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 08:26:51.4768 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 08:26:51.4768 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 08:26:51.4929 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 08:26:51.4929 Info Configuration initialized.
+2023-08-28 08:26:51.5177 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 08:40:35.9849 Info Message Template Auto Format enabled
+2023-08-28 08:40:37.1697 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 08:40:37.1928 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 08:40:37.8653 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 08:40:37.8674 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 08:40:37.8674 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 08:40:37.8674 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 08:40:37.8866 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 08:40:37.8993 Info Configuration initialized.
+2023-08-28 08:40:37.8993 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 08:45:58.0842 Info Message Template Auto Format enabled
+2023-08-28 08:45:58.1775 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 08:45:58.1933 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 08:45:58.3938 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 08:45:58.3938 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 08:45:58.3989 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 08:45:58.3989 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 08:45:58.4237 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 08:45:58.4394 Info Configuration initialized.
+2023-08-28 08:45:58.4533 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 08:46:20.2655 Info Message Template Auto Format enabled
+2023-08-28 08:46:20.2827 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 08:46:20.2827 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 08:46:20.3894 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 08:46:20.3894 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 08:46:20.3894 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 08:46:20.3894 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 08:46:20.4120 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 08:46:20.4251 Info Configuration initialized.
+2023-08-28 08:46:20.4378 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 09:02:59.8715 Info Message Template Auto Format enabled
+2023-08-28 09:02:59.9580 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 09:02:59.9711 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 09:03:00.1140 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 09:03:00.1140 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 09:03:00.1176 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 09:03:00.1176 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 09:03:00.1336 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 09:03:00.1336 Info Configuration initialized.
+2023-08-28 09:03:00.1581 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 09:05:09.4457 Info Message Template Auto Format enabled
+2023-08-28 09:05:09.5187 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 09:05:09.5254 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 09:05:09.6427 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 09:05:09.6427 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 09:05:09.6427 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 09:05:09.6427 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 09:05:09.6621 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 09:05:09.6742 Info Configuration initialized.
+2023-08-28 09:05:09.6882 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 09:08:38.7053 Info Message Template Auto Format enabled
+2023-08-28 09:08:38.8425 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 09:08:38.8425 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 09:08:38.9552 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 09:08:38.9552 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 09:08:38.9552 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 09:08:38.9552 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 09:08:38.9751 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 09:08:38.9871 Info Configuration initialized.
+2023-08-28 09:08:39.0001 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 09:12:27.6682 Info Message Template Auto Format enabled
+2023-08-28 09:12:27.7258 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 09:12:27.7416 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 09:12:27.9295 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 09:12:27.9315 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 09:12:27.9315 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 09:12:27.9315 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 09:12:27.9496 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 09:12:27.9633 Info Configuration initialized.
+2023-08-28 09:12:27.9633 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 11:53:30.3131 Info Message Template Auto Format enabled
+2023-08-28 11:53:30.4510 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 11:53:30.4680 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 11:53:30.6796 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 11:53:30.6823 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 11:53:30.6823 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 11:53:30.6823 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 11:53:30.7014 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 11:53:30.7139 Info Configuration initialized.
+2023-08-28 11:53:30.7285 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 13:09:11.2498 Info Message Template Auto Format enabled
+2023-08-28 13:09:11.3119 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 13:09:11.3280 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 13:09:11.4382 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 13:09:11.4382 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 13:09:11.4382 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 13:09:11.4382 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 13:09:11.4592 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 13:09:11.4712 Info Configuration initialized.
+2023-08-28 13:09:11.4833 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False
+2023-08-28 13:32:35.7638 Info Message Template Auto Format enabled
+2023-08-28 13:32:35.8044 Info Loading assembly: NLog.Web.AspNetCore
+2023-08-28 13:32:35.8172 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Web.AspNetCore
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'. Не удается найти указанный файл.
+File name: 'NLog.Web.AspNetCore, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Internal.AssemblyHelpers.LoadFromName(String assemblyName)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssembly(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-08-28 13:32:35.9792 Info Registered target NLog.Targets.FileTarget(Name=allfile)
+2023-08-28 13:32:35.9792 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-request-url - LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-request-url'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 13:32:35.9792 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to parse layout containing type: aspnet-mvc-action - LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+ ---> System.ArgumentException: LayoutRenderer type-alias is unknown: 'aspnet-mvc-action'. Extension NLog.Web.AspNetCore not included?
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(String typeName, ConfigurationItemFactory configurationItemFactory, Nullable`1 throwConfigExceptions)
+   --- End of inner exception stack trace ---
+2023-08-28 13:32:35.9792 Info Registered target NLog.Targets.FileTarget(Name=ownFile-web)
+2023-08-28 13:32:36.0009 Info Validating config: TargetNames=allfile, ownFile-web, ConfigItems=42, FilePath=G:\source\repos\Core\MVC\bin\Debug\net7.0\NLog.config
+2023-08-28 13:32:36.0126 Info Configuration initialized.
+2023-08-28 13:32:36.0378 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.1.5.1789. Product version: 5.1.5+5fa37c2002cc3e3255264e79f0eb30113a5544e7. GlobalAssemblyCache: False

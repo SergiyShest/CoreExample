@@ -20,7 +20,7 @@ namespace Tests
          [Test]
         public void CreateQuestion()
         {
-            var question = new QuestionBo();
+            var question = new QuestionBo() { Name= "New" };
             question.Save(_user);
 
         }
@@ -28,7 +28,7 @@ namespace Tests
          [Test]
         public void DeleteQuestion()
         {
-            var question = new QuestionBo();
+            var question = new QuestionBo() { Name = "fffff" };
             question.Save(_user);
 
             question.Delete(_user);
@@ -41,15 +41,17 @@ namespace Tests
         {
             var questionnaireRecord = UOW.GetRepository<Questionnaire>().FirstOrDefault();
             var questionnaire = new QuestionnaireBo(questionnaireRecord);
-            var question = new QuestionBo();
+            var question = new QuestionBo() {Name="First"};
             questionnaire.Questions.Add(question);
             questionnaire.Save(_user);
+
+
         }
 
         [Test]
         public void SaveQuestionnaire()
         {
-            var questionnaire = createQuestionnaire();
+           var questionnaire = createQuestionnaire(true, true); 
             var newQuestionId = questionnaire.Questions.FirstOrDefault(x => x.Name == "Test").Id;
 
             var newQuestion = UOW.GetRepository<Vjsf>().FirstOrDefault(x => x.Id == newQuestionId);
@@ -88,10 +90,14 @@ namespace Tests
        // }
 
 
-        private QuestionnaireBo createQuestionnaire(bool withQuestion = true)
+        private QuestionnaireBo createQuestionnaire(bool withQuestion = true,bool cteateNew=false)
         {
-            var questionnaireRecord = UOW.GetRepository<Questionnaire>().FirstOrDefault();
-            var questionnaire = new QuestionnaireBo(questionnaireRecord);
+			var questionnaire = new QuestionnaireBo() { Name = Guid.NewGuid().ToString()};
+            if (!cteateNew)
+            {
+                var questionnaireRecord = UOW.GetRepository<Questionnaire>().FirstOrDefault();
+                questionnaire = new QuestionnaireBo(questionnaireRecord);
+            }
             if (withQuestion)
             {
                 var question = new QuestionBo() { Name = "Test" };

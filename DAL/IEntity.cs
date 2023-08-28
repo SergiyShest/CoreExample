@@ -85,7 +85,7 @@ namespace Core
     public abstract class BaseObj<T> : IBaseObject where T : class, IEntity, new()
     {
 
-        IUnitOfWorkEx _uow = new UnitOfWork();
+      protected  IUnitOfWorkEx _uow = new UnitOfWork();
 
         #region Fields and properties
 
@@ -169,8 +169,8 @@ namespace Core
                     if (Id != null)
                     {
 
-                        //record = _wfWorkService.Get<T>((int)Id);
-                        //DbValues = RecordValues(record);
+                        record = _uow.Get<T>((int)Id);
+                        DbValues = RecordValues(record);
                         if (record == null)
                         {
                             throw new ApplicationException($"Dont find id {Id} for type {typeof(T).FullName}");

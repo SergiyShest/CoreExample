@@ -5,9 +5,14 @@ using Sasha.Lims.WebUI.Areas.Questions;
 namespace BLL { 
     public class QuestionnaireBo : BaseObj<Questionnaire>
     {
-        public string? Code { get; set; }
+		public string Name { get { return Record?.Name; } set { Record.Name = value; } }
 
-        List<QuestionBo> _questions;
+		public string Code { get { return Record?.Code; } set { Record.Code = value; } }
+
+
+
+
+		List<QuestionBo> _questions;
         public List<QuestionBo> Questions
         {
             get
@@ -15,22 +20,22 @@ namespace BLL {
                 if (_questions == null)
                 {
                     _questions = new List<QuestionBo>();
-                    // var prRep = base._wfWorkService.Database.GetRepository<a_prop>();
-                    // var questionRecords = prRep.Where(x => x.prop_id == Id).OrderBy(x => x.num).ToList();
-                    //int i = 0;
-                    //bool nullable = false;
-                    //foreach (var record in questionRecords)
-                    //{
-                    //    i++;
-                    //    if (record.num == null || record.num != i || nullable)
-                    //    {
-                    //        nullable = true;
-                    //        record.num = i;
-                    //        prRep.Update(record);
-                    //        //--prRep.Save();
-                    //    }
-                    //    _questions.Add(new Question(record));
-                    //}
+                    var prRep = base._uow.GetRepository<Vjsf>();
+                    var questionRecords = prRep.Where(x => x.QuestionnaireId == Id).OrderBy(x => x.Order).ToList();
+                    int i = 0;
+                    bool nullable = false;
+                    foreach (var record in questionRecords)
+                    {
+                        i++;
+                        if (record.Order == null || record.Order != i || nullable)
+                        {
+                            nullable = true;
+                            record.Order = i;
+                            prRep.Update(record);
+                            //--prRep.Save();
+                        }
+                        _questions.Add(new QuestionBo(record));
+                    }
                 }
                 return _questions;
             }
@@ -57,8 +62,6 @@ namespace BLL {
 
         #endregion
         internal string Error { get; private set; }
-        public string Name { get; internal set; }
-        public int? ParentId { get; internal set; }
 
         public override void Save(UserDTO user)
         {

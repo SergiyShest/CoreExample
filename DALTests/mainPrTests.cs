@@ -50,8 +50,6 @@ namespace ConsoleDB.Tests
         [TestMethod()]
         public void UowTestRead()
         {
-           
-
          var UOW = new UnitOfWork();
             {
                var r =  UOW.GetRepository<Vjsf>();
@@ -62,13 +60,11 @@ namespace ConsoleDB.Tests
                     logger.Debug($"{u.Id}.{u.Name} - {u.Code}");
                 }
             }
-    }
+         }
 
         [TestMethod()]
         public void UowTestCreate()
         {
-
-
             var UOW = new UnitOfWork();
             {
                 var r = UOW.GetRepository<Vjsf>();
@@ -82,12 +78,10 @@ namespace ConsoleDB.Tests
         [TestMethod()]
         public void UowTestCreate2()
         {
-
-
             var UOW = new UnitOfWork();
             {
                 var r = UOW.GetRepository<Questionnaire>();
-                var vjsf = new Questionnaire() { Name = "Name", Code = "Code"  };
+                var vjsf = new Questionnaire() { Name = "Name1", Code = "Code1"  };
                 r.Create(vjsf);
                 r.Save();
 

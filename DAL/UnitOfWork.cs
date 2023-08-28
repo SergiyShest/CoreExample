@@ -148,7 +148,6 @@ namespace DAL {
         {
 
             _db.Entry(item).State = EntityState.Added;
-            _db.Database.EnsureDeleted();
             _db.Database.EnsureCreated();
 #if DEBUG
 
