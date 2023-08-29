@@ -1,49 +1,29 @@
 {
-  "name": "location",
+  "name": "questinnaire",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "watch-build": "vue-cli-service  build --watch --mode development",
-    "watch-build-pr": "vue-cli-service  build --watch --mode production",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build-w": "vue-cli-service build --watch  --mode development"
   },
   "dependencies": {
-    "@koumoul/vjsf": "^2.18.2",
-    "core-js": "^3.6.5",
-    "vue": "^2.6.11",
-    "vue-easy-dnd": "^1.22.0",
-    "vue-material-design-icons": "^5.0.0",
+    "@koumoul/vjsf": "^2.21.4",
+    "core-js": "^3.8.3",
+    "vue": "^2.6.14",
     "vue-prism-editor": "^1.3.0",
-    "vue-simple-context-menu": "^3.4.2",
-    "vuetify": "^2.4.0"
+    "vuetify": "^2.6.0"
   },
   "devDependencies": {
-    "@mdi/font": "^6.5.95",
-    "@vue/cli-plugin-babel": "^4.5.15",
-    "@vue/cli-service": "^4.5.15",
-    "sass": "~1.32.12",
+    "@babel/core": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
-    "vue-cli-plugin-vuetify": "~2.4.4",
+    "vue-cli-plugin-vuetify": "~2.5.8",
     "vue-template-compiler": "^2.6.14",
     "vuetify-loader": "^1.7.0"
-  },
-  "eslintConfig": {
-    "root": false,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {
-      "vue/no-unused-components": "off"
-    }
   },
   "browserslist": [
     "> 1%",
