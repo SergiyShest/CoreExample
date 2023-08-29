@@ -70,7 +70,7 @@ namespace BLL
             //}
         }
 
-        public QuestionnarieAnswers(int patientId, int questonnarieId)
+        public QuestionnarieAnswers(string sessionId, int questonnarieId)
         {
             //Record.table_id = (int)TableType.Patient;
             //Record.commentType_id = (int)CommentType.QuestionarieAnsvers;

@@ -12,8 +12,8 @@ namespace BLL {
         public string Code { get { return Record?.Code; } 
             set { Record.Code = value; } }
 
-		public int? Order { get { return Record?.Description; } 
-            set { Record.Description = value; } }
+		public int? Order { get { return Record?.Order; } 
+            set { Record.Order = value; } }
 
 		public dynamic Schema
         {
@@ -75,8 +75,6 @@ namespace BLL {
 
 		internal string Error { get; private set; }
 
-
-
 		public int? QuestionnaireId
 		{
 			get { return Record.QuestionnaireId; }
@@ -85,10 +83,9 @@ namespace BLL {
 
 		public string Description
 		{
-			get { return Record?.Code; }
-			set { Record.Code = value; }
+			get { return Record?.Description; }
+			set { Record.Description = value; }
 		}
-
 
 
 		#region Constructors

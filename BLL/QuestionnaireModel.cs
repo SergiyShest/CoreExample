@@ -146,19 +146,46 @@ namespace BLL
 		//	return json;
 		//}
 
+		public void SaveAnsvers(string bodyText, UserDTO user, string? sessionId)
+		{
+
+			if (string.IsNullOrEmpty(sessionId) )
+			{ throw new NullReferenceException("sessionId can not be null"); }
+			var answers = GetAnswers(sessionId);
+
+			var ansver = answers.FirstOrDefault(x => x.QuestionnarieId == Id);
+			if (ansver == null) { ansver = new QuestionnarieAnswers(sessionId, (int)Id); }
+			ansver.QuestionnarieAnsvers = JsonConvert.DeserializeObject(bodyText);
+			ansver.Save(user);
+		}
 		public void SaveAnsvers(string bodyText, UserDTO user, int? patientId)
 		{
 
 			if (!patientId.HasValue)
-			{ throw new NullReferenceException("patientId can not be null"); }
-			var answers = GetAnswers((int)patientId);
+			{ throw new NullReferenceException("sessionId can not be null"); }
+			//var answers = GetAnswers(patientId);
 
-			var ansver = answers.FirstOrDefault(x => x.QuestionnarieId == Id);
-			if (ansver == null) { ansver = new QuestionnarieAnswers((int)patientId, (int)Id); }
-			ansver.QuestionnarieAnsvers = JsonConvert.DeserializeObject(bodyText);
-			ansver.Save(user);
+			//var ansver = answers.FirstOrDefault(x => x.QuestionnarieId == Id);
+			//if (ansver == null) { ansver = new QuestionnarieAnswers(patientId, (int)Id); }
+			//ansver.QuestionnarieAnsvers = JsonConvert.DeserializeObject(bodyText);
+			//ansver.Save(user);
 		}
-
+		public List<QuestionnarieAnswers> GetAnswers(string sessionId)
+		{
+			//	var comments = UOW.GetRepository<a_comment>().Where(x =>
+			//	x.commentType_id == (int) CommentType.QuestionarieAnsvers &&
+			//	x.table_id == (int) TableType.Patient &&
+			//	x.row_id == (int) patientId
+			//	).ToList();
+			//	var answers = new List<QuestionnarieAnswers>();
+			//	foreach (var commentRecord in comments)
+			//	{
+			//		answers.Add(new QuestionnarieAnswers(commentRecord));
+			//	}
+			//	return answers;
+			//}
+			return null;
+		}
 		public List<QuestionnarieAnswers> GetAnswers(int patientId)
 		{
 			//	var comments = UOW.GetRepository<a_comment>().Where(x =>
@@ -175,7 +202,6 @@ namespace BLL
 			//}
 			return null;
 		}
-
 
 	}
 }

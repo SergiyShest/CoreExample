@@ -1,33 +1,46 @@
 <template>
-  <v-app id="app" style="width: 100%; padding: 0%" @keydown.ctrl.83.prevent.stop="Save"
+  <v-app id="app" style="width: 100%; padding: 3px" @keydown.ctrl.83.prevent.stop="Save"
     @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
     <div class="modal" v-if="loadingData">
       <img class="loader-icon" :src="require('../../../wwwroot/Content/Images/loading.gif')" />
     </div>
     <v-main>
+          <v-row  v-if="Questionnarie != null " class="panel" style="background-color: aquamarine; ; ">
+          <h2>  {{ Questionnarie.Name }} </h2>
+          </v-row> 
+           <!-- <div>{{currentModel.answerModel}}  </div>        <div>{{ enableNext }}  </div>     -->
+      <div style="min-height:600px ;display: flex;flex-direction: column; justify-content: space-between;" class="panel" >
 
-
-      <v-row style="border: outset; padding: 5px; background-color: lightgray">
-        <v-form ref="form" v-model="currentModel.valid" style="width: 100%; padding: 5px">
-          <div style="text-align: center" v-if="currentQuestion != null">
-            {{ currentQuestion.Name }} ({{ currentQuestion.Id }})
+       <div style="display:flex; justify-content: space-between;">
+          
+          <h3  v-if="currentQuestion != null">
+            {{ currentQuestion.Name }}
+          </h3>
+           <div  style="width:60px ;min-width: 60px; height: 35px; background-color: rgb(8, 219, 8);border-radius: 25px; padding:5px;margin: 5px;" v-if="this.Questionnarie.Questions != null">
+            {{currentQuestion.Order }} of {{ this.Questionnarie.Questions.length }} 
           </div>
-           <div style="text-align: center" v-if="this.Questionnarie.Questions != null">
-            {{ this.Questionnarie.Questions.length }} 
-          </div>         
-          <v-jsf v-if="currentQuestion != null" v-model="currentModel.answerModel" :schema="currentQuestion.Schema"
-            :options="currentQuestion.Options" />
+        </div>
+        <v-form ref="form" v-model="currentModel.valid" >
+          <v-jsf v-if="currentQuestion != null" 
+          v-model="currentModel.answerModel" 
+          :schema="currentQuestion.Schema"
+          :options="currentQuestion.Options" />
         </v-form>
-        <v-row style="width: 100%; padding: 5px">
-          <v-spacer></v-spacer>
-          <v-btn style="width: 60px; margin: 3px" @click="SelectPrevQuestion()" :disabled="currentQuestion.Order == 1">
-            <img :src="require('../../../wwwroot/Content/Icons/prev.png')" width="20" height="20" />Prev</v-btn>
-          <v-btn style="width: 60px; margin: 3px" @click="SelectNextQuestion()" :disabled="currentQuestion.Order >= Questionnarie.Questions.length
+        <div style="text-align: left" v-if="currentQuestion != null">
+            {{ currentQuestion.Description }}
+        </div> 
+        <v-spacer></v-spacer>               
+        <div style=" display: flex; width: 100% ;height:50px; padding: 3px;margin: 3px;">
+          
+          <v-btn  class="buttion" @click="SelectPrevQuestion()" v-if="currentQuestion.Order > 1">
+            Prev</v-btn>
+         <v-spacer></v-spacer> 
+          <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext" v-if="currentQuestion.Order < Questionnarie.Questions.length
             ">
-            Next<img :src="require('../../../wwwroot/Content/Icons/next.png')" width="20" height="20" />
-          </v-btn>
-        </v-row>
-      </v-row>
+            Next
+         </v-btn> <!-- <img :src="require('../../../wwwroot/Content/Icons/next.png')" width="20" height="20" /> -->
+        </div>
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -36,6 +49,11 @@
 if (Id == undefined) {
   var Id = 1
 }
+if (SessionId == undefined) {
+ // var SessionId= 'xxx'
+}
+
+import { data } from "./data.js";
 import { baseMixin } from "./BaseMixin.js";
 import VJsf from '@koumoul/vjsf/lib/VJsf.js'
 import '@koumoul/vjsf/lib/VJsf.css'
@@ -86,25 +104,21 @@ export default {
       Options: radioOptions,
       Schema: radioShema,
     },
-
+    session:SessionId
   }),
+  computed: {
+     enableNext() {
+      return Object.keys(this.currentModel.answerModel).length>0
+    },
+    
+  },
   methods: {
     validateForm() {
       this.$refs.form.validate();
     },
 
 
-    IsQueryValid(question) {
 
-      if (this.patient && this.patient.id > 0) {
-        let model = this.models.find((x) => x.QuestionId == question.Id);
-
-        return model && model.valid;
-
-      }
-
-      return false;
-    },
 
 
     SetSelectedStyle(question) {
@@ -137,6 +151,7 @@ export default {
         this.SelectQuestion(nextQuestion);
       }
       console.log(nextQuestion) 
+      this.SaveAnsver()
     },
     SelectPrevQuestion() {
 
@@ -204,46 +219,42 @@ export default {
         }
       }
     },
-    GetAnswers() {
-      this.fetch(
-        this.SetAnswers,
-        "/Questions/Questionnaire/GetAnsvers?questionnaireId=" +
-        Id +
-        "&patientId=" +
-        this.patient.id
-      );
-    },
-    SetAnswers(val) {
-      console.log(val);
-      if (val.Errors) {
-        this.ShowErrors(val);
-      }
-      if (val.Item) {
-        // this.$nextTick(() => {
-        this.models = val.Item;
-        this.SetModel();
-        // });
-      } else {
-        this.models = [];
-      }
-    },
+
     SaveAnsver() {
       this.fetch(
         this.ok,
-        "/Questions/Questionnaire/SaveAnsvers?questionnaireId=" +
-        Id +
-        "&patientId=" +
-        this.patient.id,
+        'Questionnaire/SaveAnsvers?questionnaireId='+Id+'&sessionId='+this.session,
         this.models
       );
     },
 
   },
   mounted: function () {
-    if (Id) {
-      this.GetQuestions();
-
-    }
+   // if (Id) {
+   //   this.GetQuestions();
+   this.SetQuestions(data);
+   // }
   },
 };
 </script>
+<style>
+html,
+body {
+  height: 100%;
+ 
+}
+
+.buttion{
+  width: 60px;
+  border-radius: 25px;
+  background-color: green !important; 
+  margin: 3px
+}
+.panel{
+ border: outset; 
+ border-radius: 15px;
+ padding:15px ;
+ margin: 5px;
+ background-color: rgb(201, 247, 248)
+}
+</style>

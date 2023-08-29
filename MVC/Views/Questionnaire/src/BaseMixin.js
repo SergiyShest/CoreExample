@@ -92,7 +92,8 @@ export const baseMixin = {
 				})
 				.then((response) => {
 					this.loadingData = false;
-					if (response ){
+					if (response && response.bodyUsed!=false)
+					{
 						return response.json();
 					}  
 				})

@@ -11,6 +11,12 @@ builder.Services.AddCors(options =>
 						  policy.WithOrigins("*");
 					  });
 });
+
+builder.WebHost.UseKestrel(options =>
+ {
+	 options.AllowSynchronousIO = true;
+ });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

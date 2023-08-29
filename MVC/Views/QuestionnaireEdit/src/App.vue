@@ -48,6 +48,7 @@
 <script>
 if (Id == undefined) {
   var Id = 1
+  var SessionId= 'xxx'
 }
 import { data } from "./data.js";
 import { baseMixin } from "./BaseMixin.js";
@@ -100,7 +101,7 @@ export default {
       Options: radioOptions,
       Schema: radioShema,
     },
-
+    session:SessionId
   }),
   computed: {
      enableNext() {
@@ -114,17 +115,7 @@ export default {
     },
 
 
-    IsQueryValid(question) {
 
-      if (this.patient && this.patient.id > 0) {
-        let model = this.models.find((x) => x.QuestionId == question.Id);
-
-        return model && model.valid;
-
-      }
-
-      return false;
-    },
 
 
     SetSelectedStyle(question) {
@@ -157,6 +148,7 @@ export default {
         this.SelectQuestion(nextQuestion);
       }
       console.log(nextQuestion) 
+      this.SaveAnsver()
     },
     SelectPrevQuestion() {
 
@@ -224,36 +216,11 @@ export default {
         }
       }
     },
-    GetAnswers() {
-      this.fetch(
-        this.SetAnswers,
-        "/Questions/Questionnaire/GetAnsvers?questionnaireId=" +
-        Id +
-        "&patientId=" +
-        this.patient.id
-      );
-    },
-    SetAnswers(val) {
-      console.log(val);
-      if (val.Errors) {
-        this.ShowErrors(val);
-      }
-      if (val.Item) {
-        // this.$nextTick(() => {
-        this.models = val.Item;
-        this.SetModel();
-        // });
-      } else {
-        this.models = [];
-      }
-    },
+
     SaveAnsver() {
       this.fetch(
         this.ok,
-        "/Questions/Questionnaire/SaveAnsvers?questionnaireId=" +
-        Id +
-        "&patientId=" +
-        this.patient.id,
+        `Questionnaire/SaveAnsvers?questionnaireId={Id} +'&sessionId= + {this.session}`,
         this.models
       );
     },
