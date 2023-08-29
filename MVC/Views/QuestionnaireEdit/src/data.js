@@ -1,3 +1,12 @@
+export const limitedAge= {
+    type: 'integer',
+    title: 'Age must be between 0 and 120',
+    minimum: 0,
+    maximum: 120
+}
+
+
+
 export const  data =  {
     "Item": {
         "Id": 1,
@@ -5,13 +14,14 @@ export const  data =  {
         "Code": "QUESTIONNAIRE",
 
         "Questions": [
-            {
+            {   "Id": 1,
                 "Order":1,
                 "Name": 'Do you have a current diagnosis of Atopic Dermatitis (Atopic Eczema)?',
                 "Code": "QUESTION",
                 "Description": "Atopic Dermatitis, also known as Atopic Eczema, is a type of inflammation of the skin, resulting in itchy, red, swollen, and cracked skin.",
                 "Schema": {
                     "type": "object",
+                     requred: ["ListProp"],
                     "properties": {
                         "ListProp": {
                             "type": "number",
@@ -20,7 +30,6 @@ export const  data =  {
                             "x-fromData": "context.Items",
                             "x-itemKey": "Id",
                             "x-itemTitle": "Name",
-                            "description": "This description is used as a help message."
                         }
                     }
                 },
@@ -44,33 +53,35 @@ export const  data =  {
                     "selectAll": true
                 },
                 "QuestionnaireId": 1,
-                "Id": 1
+
             },
-            {
+            {    "Id": 2,"Order":2,
                 "Name": "How old are yow",
                 "Code": "QUESTION",
                 "Description": "",
-                "Order":2,
+
                 "Schema": {
                         type: "object",
-                        requred: ["NumProp"],
+                        requred: ["age"],
                         properties: {
-                          NumProp: {
+                          age: {
                             type: "string",
                             format: "number",
-                            title: "Input numper please",
-                            description: "Help",
+                            title: "Input your age please",
+                            description: "Age must be between 0 and 120",
+                            minimum: 0,
+                            maximum: 120
                           },
                         },
 
                 },
                 "Options": { },
                 "QuestionnaireId": 1,
-                "Id": 2,
+
 
             }
             ,
-            {   "Id": 3,
+            {"Id": 3,
                 "Order":3,
                 "Name": 'When where yoy diagnosed Atopic Dermatitis (Atopic Eczema)?',
                 "Code": "QUESTION",
@@ -106,11 +117,11 @@ export const  data =  {
                 },
                 "QuestionnaireId": 1
             },
-            {"Id": 3,
-            "Order":3,
-            "Name": "",
+            {"Id": 4,
+            "Order":4,
+            "Name": "How would you describe your current Atopic Dermatitis (Atopic Eczema)?",
             "Code": "QUESTION",
-            "Description": "How would you describe your current Atopic Dermatitis (Atopic Eczema)?",
+            "Description": "",
             "Schema": {
                 "type": "object",
                 "properties": {
@@ -128,7 +139,6 @@ export const  data =  {
             "Options": {
                 "context": {
                     "Items": [
-                       
                         {
                             "Id": 1,
                             "Name": "No active disease: I currently have no symptoms"
@@ -140,13 +150,9 @@ export const  data =  {
                         },
                         {
                             "Id": 3,
-                            "Name": "extensive areas of dry, rough and red skin. There is also cracking, flaking of the skin, weeping or oozing of fluid, or bleeding. The skin itches at least 3-4 days a week. It has moderate impact on everyday activities, such as sleeping, getting dressed, showering and exercising."
-                        },
-                        {
-                            "Id": 4,
                             "Name": "Moderate disease: More extensive areas of dry, rough   and red skin. There is also cracking, flaking of the skin, weeping or oozing of fluid, or bleeding. The skin itches atextensive areas of dry, rough and red skin. There is also cracking, flaking of the skin, weeping or oozing of fluid, or bleeding. The skin itches at least 3-4 days a week. It has moderate impact on everyday activities, such as sleeping, getting dressed, showering and exercising."
                         },
-                          {   "Id": 5,
+                          {   "Id": 4,
                             "Name": "Severe disease: Widespread areas of dry, rough and red skin. There is a lot of cracking, flaking of the skin, weeping or oozing of fluid, or bleeding. The skin itches all the time. It has severe"
                         }
                     ]
@@ -156,8 +162,8 @@ export const  data =  {
             "QuestionnaireId": 1,
 
         },           
-        {"Id": 4,
-        "Order":4,
+        {"Id": 5,
+        "Order":5,
         "Name": "Have you applied corticosteroids (also called 'steroids') for your Atopic Dermatitis (Atopic Eczema) within the last 6 months?",
         "Code": "QUESTION",
         "Description": "There are many different types of these medications available that differ in strength. Some require a prescription from a doctor, but others do not. They can be either ointments, creams, lotions, or sprays. Common types of topical corticosteroids (steroids) are for example: Alclometasone (brand name example: Aclovate), Betamethasone (brand name examples: Diprolene, Beta-Val), Clobetasol (brand name example: Temovate)"
@@ -205,8 +211,8 @@ export const  data =  {
         "QuestionnaireId": 1,
 
     }             ,
-            {   "Id": 5,
-                "Order":5,
+            {   "Id": 6,
+                "Order":6,
                 "Name": "Do or did these topical corticosteroids (also called 'steroids') help with your Atopic Dermatitis (Atopic Eczema) symptoms (like dry skin, itching, redness, or skin thickening/cracking?",
                 "Code": "QUESTION",
                 "Description": "",
@@ -254,8 +260,8 @@ export const  data =  {
                 "QuestionnaireId": 1,
 
             },
-            {   "Id": 6,
-                "Order":6,
+            {   "Id": 7,
+                "Order":7,
                 "Name": "Are you currently pregnant, breastfeeding or planning to become pregnant in the next 6 months?",
                 "Code": "QUESTION",
                 "Description": "",
