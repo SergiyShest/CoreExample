@@ -13,6 +13,7 @@ namespace MVC.Controllers
     {
         protected Logger log = LogManager.GetCurrentClassLogger();
 
+        protected UnitOfWork uow= new UnitOfWork();
 
         protected JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings();
 
