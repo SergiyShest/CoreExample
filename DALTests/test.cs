@@ -63,13 +63,16 @@ namespace Tests
         [Test]
         public void SaveAnsvers()
         {
-            var questionnaire = createQuestionnaire();
-            var patientId = UOW.GetRepository<c_patient>().GetAll().FirstOrDefault().id;
-            var model = new QuestionnaireModel(questionnaire.Id);
-            model.SaveAnsvers("{bodyText:'bodyText'}", _user, patientId);
-            var ansvers = model.GetAnswers((int)patientId);
-            var answer = ansvers.FirstOrDefault(x => x.QuestionnarieId == questionnaire.Id);
-            Assert.NotNull(answer);
+			AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+			var model = new QuestionnaireModel(1);
+            var bodyText = 
+                "[" +
+                "{\"QuestionId\":1,\"answerModel\":{\"ListProp\":1},\"valid\":true}," +
+				"{\"QuestionId\":2,\"answerModel\":{\"Age\":1},\"valid\":true}," +
+				"{\"QuestionId\":7,\"answerModel\":{\"Phone\":'345-23-45-455-45'},\"valid\":true}" +
+				"]";
+
+			model.SaveAnsvers(bodyText, _user, "sessionId");
 
         }
 

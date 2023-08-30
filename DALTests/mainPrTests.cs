@@ -31,7 +31,7 @@ namespace ConsoleDB.Tests
                 }
             }
 
-       using (QContext db = new QContext())
+          using (QContext db = new QContext())
             {
                 // получаем объекты из бд и выводим на консоль
                 var vjcfs = db.Vjsf.ToList();
@@ -88,6 +88,17 @@ namespace ConsoleDB.Tests
             }
         }
 
+        [TestMethod()]
+        public void UowTestCreateAnswer()
+        {
+            var UOW = new UnitOfWork();
+            {
+                var r = UOW.GetRepository<Answer>();
+                var ansver  = new Answer() { Name = "Name1", Value = "Code1",QuestionnarieId=99  };
+                r.Create(ansver);
+                r.Save();
 
+            }
+        }
     }
 }

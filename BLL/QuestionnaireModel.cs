@@ -2,8 +2,7 @@
 using Core;
 using DAL;
 using Newtonsoft.Json;
-
-
+using Sasha.Lims.WebUI.Areas.Questions;
 
 namespace BLL
 {
@@ -60,12 +59,12 @@ namespace BLL
 		{
 			NullTest(patientId, "patientId");
 
-			var answers = GetAnswers((int)patientId);
-			var answer = answers.FirstOrDefault(x => x.QuestionnarieId == Id);
-			if (answer == null) return null;
-			if (answer.QuestionnarieAnsvers == null) return null;
-			return answer.QuestionnarieAnsvers;
-
+			//var answers = GetAnswers((int)patientId);
+			//var answer = answers.FirstOrDefault(x => x.QuestionnarieId == Id);
+			//if (answer == null) return null;
+			//if (answer.QuestionnarieAnsvers == null) return null;
+			//return answer.QuestionnarieAnsvers;
+			return null;
 		}
 
 
@@ -151,12 +150,15 @@ namespace BLL
 
 			if (string.IsNullOrEmpty(sessionId) )
 			{ throw new NullReferenceException("sessionId can not be null"); }
-			var answers = GetAnswers(sessionId);
+		  //	var answers = GetAnswers(sessionId);
 
-			var ansver = answers.FirstOrDefault(x => x.QuestionnarieId == Id);
-			if (ansver == null) { ansver = new QuestionnarieAnswers(sessionId, (int)Id); }
-			ansver.QuestionnarieAnsvers = JsonConvert.DeserializeObject(bodyText);
-			ansver.Save(user);
+			// ansver = answers.FirstOrDefault(x => x.QuestionnarieId == Id);
+			//if (ansver == null)
+			var ansver = new AnswersBo(sessionId, (int)Id,  bodyText);
+
+			
+
+			ansver.Save();
 		}
 		public void SaveAnsvers(string bodyText, UserDTO user, int? patientId)
 		{
@@ -170,8 +172,24 @@ namespace BLL
 			//ansver.QuestionnarieAnsvers = JsonConvert.DeserializeObject(bodyText);
 			//ansver.Save(user);
 		}
-		public List<QuestionnarieAnswers> GetAnswers(string sessionId)
-		{
+		//public List<QuestionnarieAnswers> GetAnswers(string sessionId)
+		//{
+		//	//var comments = UOW.GetRepository<a_comment>().Where(x =>
+		//	//x.commentType_id == (int)CommentType.QuestionarieAnsvers &&
+		//	//x.table_id == (int)TableType.Patient &&
+		//	//x.row_id == (int)patientId
+		//	//).ToList();
+		//	//var answers = new List<QuestionnarieAnswers>();
+		//	//foreach (var commentRecord in comments)
+		//	//{
+		//	//	answers.Add(new QuestionnarieAnswers(commentRecord));
+		//	//}
+		//	//return answers;
+
+		//	return null;
+		//}
+		//public List<QuestionnarieAnswers> GetAnswers(int patientId)
+		//{
 			//	var comments = UOW.GetRepository<a_comment>().Where(x =>
 			//	x.commentType_id == (int) CommentType.QuestionarieAnsvers &&
 			//	x.table_id == (int) TableType.Patient &&
@@ -184,24 +202,8 @@ namespace BLL
 			//	}
 			//	return answers;
 			//}
-			return null;
-		}
-		public List<QuestionnarieAnswers> GetAnswers(int patientId)
-		{
-			//	var comments = UOW.GetRepository<a_comment>().Where(x =>
-			//	x.commentType_id == (int) CommentType.QuestionarieAnsvers &&
-			//	x.table_id == (int) TableType.Patient &&
-			//	x.row_id == (int) patientId
-			//	).ToList();
-			//	var answers = new List<QuestionnarieAnswers>();
-			//	foreach (var commentRecord in comments)
-			//	{
-			//		answers.Add(new QuestionnarieAnswers(commentRecord));
-			//	}
-			//	return answers;
-			//}
-			return null;
-		}
+		//	return null;
+		//}
 
 	}
 }

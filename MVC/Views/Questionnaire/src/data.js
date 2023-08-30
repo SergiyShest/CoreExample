@@ -77,8 +77,6 @@ export const  data =  {
                 },
                 "Options": { },
                 "QuestionnaireId": 1,
-
-
             }
             ,
             {"Id": 3,
@@ -125,7 +123,7 @@ export const  data =  {
             "Schema": {
                 "type": "object",
                 "properties": {
-                    "ListProp": {
+                    "disease": {
                         "type": "number",
                         "title": "Choose the right Ansver",
                         "x-display": "radio",
@@ -171,7 +169,7 @@ export const  data =  {
         "Schema": {
             "type": "object",
             "properties": {
-                "ListProp": {
+                "using": {
                     "type": "number",
                     "title": "Choose the right Ansver",
                     "x-display": "radio",
@@ -189,7 +187,6 @@ export const  data =  {
                         "Id": 1,
                         "Name": "Yes, currently using these"
                     },
-                   
                     {
                         "Id": 2,
                         "Name": "Yes, but stopped in the last 6 months"
@@ -219,7 +216,7 @@ export const  data =  {
                 "Schema": {
                     "type": "object",
                     "properties": {
-                        "ListProp": {
+                        "Helping": {
                             "type": "number",
                             "title": "Choose the right Ansver",
                             "x-display": "radio",
@@ -291,7 +288,7 @@ export const  data =  {
                                 "Name": "No"
                             },
                             {
-                                "Id": 2,
+                                "Id": 3,
                                 "Name": "Unsure"
                             }
                         ]
@@ -299,8 +296,46 @@ export const  data =  {
                     "selectAll": true
                 },
                 "QuestionnaireId": 1,
+            },
+            {    "Id": 8,"Order":8,
+            "Name": "If you need to consult a doctor, please leave your phone number and we will call you back.",
+            "Code": "QUESTION",
+            "Description": "",
 
+            "Schema": {
+                    type: "object",
+                    requred: ["age"],
+                    properties: {
+                      phone: {
+                        type: "string",
+                        title: "Input your phone please",
+                        minLength: 10,
+                        maxLength: 100
+                      },
+                    },
+
+            },
+            "Options": { },
+            "QuestionnaireId": 1,
             }
+        ,            {    "Id": 9,"Order":9,
+        "Name": "Thanks for contacting.",
+        "Code": "QUESTION",
+        "Description": "",
+
+        "Schema": {
+                type: "object",
+                  properties: {
+                  none: {
+                    type: "string",
+                    title: ""
+                  },
+                },
+
+        },
+        "Options": { },
+        "QuestionnaireId": 1,
+        }
         ]
  
     }
