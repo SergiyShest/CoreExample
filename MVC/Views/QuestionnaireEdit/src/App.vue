@@ -1,10 +1,85 @@
 <template>
-  <v-app id="app" style="width: 100%; padding: 3px" @keydown.ctrl.83.prevent.stop="Save"
-    @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
+  <v-app id="app" style="width: 100%; padding: 3px" 
+  @keydown.ctrl.83.prevent.stop="Save"
+  @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" 
+  @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
     <div class="modal" v-if="loadingData">
-      <img class="loader-icon" :src="require('../../../wwwroot/Content/Images/loading.gif')" />
+      <img class="loader-icon" 
+      :src="require('../../../wwwroot/Content/Images/loading.gif')" />
     </div>
+    <vue-simple-context-menu
+      :options="[]"
+      :elementId="contentMenuId"
+      :ref="'contextMenu'"
+      @option-clicked="contextMenuClicked"
+    ></vue-simple-context-menu>
     <v-main>
+      <v-row>
+        <v-col cols="2" style="height: 70vh; overflow: scroll"><!--v-if="mode == 'edit'"-->
+          <v-row style="height: 50px" >
+              <v-menu class="center" offset-y="40">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn height="25" v-bind="attrs" v-on="on">
+                    Add Question
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item
+                    v-for="(item, index) in questionTemplates"
+                    :key="index"
+                    link
+                  >
+                    <v-list-item-title @click="AddQuestion(item)">{{
+                      item.Name
+                    }}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </v-row>
+            <div
+              style="
+                display: inline-flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                width: 100%;
+              "
+              v-for="(q, i) in orderedQuestions"
+              :key="q.Id"
+              no-gutters
+            >
+              {{ i }})
+              <button
+                class="button"
+                :style="SetSelectedStyle(q)"
+                title="Ask Question"
+                @click="SelectQuestion(q)"
+                @contextmenu.prevent.stop="handleContextMenu($event, q)"
+              >
+                <div style="display: inline-flex">
+                  <img
+                    v-if="IsQueryValid(q)"
+                    :src="require('../../../wwwroot/Content/Icons/checked.png')"
+                    width="20"
+                    height="20"
+                  />
+                  <img
+                    v-else
+                    :src="require('../../../wwwroot/Content/Icons/unChecked.png')"
+                    width="20"
+                    height="20"
+                  />
+                  <input
+                    type="text"
+                    :readonly="mode == 'work'"
+                    v-model="q.Name"
+                    style="width: 100%; overflow: hidden"
+                  />
+                </div>
+              </button>
+              <div></div>
+            </div> 
+        </v-col>
+        <v-col col="10">
           <v-row  v-if="Questionnarie != null " class="panel" style="background-color: aquamarine; ; ">
           <h2>  {{ Questionnarie.Name }} </h2>
           </v-row> 
@@ -41,7 +116,30 @@
          </v-btn> <!-- <img :src="require('../../../wwwroot/Content/Icons/next.png')" width="20" height="20" /> -->
         </div>
       </div>
-    </v-main>
+    </v-col>
+    </v-row>
+    <v-footer fixed class="d-flex justify-end">
+        <v-btn
+          height="25"
+          @click="SaveAnsver()"
+          :disabled="!(patient.id > 0)"
+          v-if="mode == 'work'"
+        >
+          Save Ansvers
+        </v-btn>
+        <v-btn
+          height="25"
+          @click="SaveQuestionnaire()"
+          style="min-width: 130px"
+          v-else
+          >Save Questionnaire</v-btn
+        >
+        <v-btn @click="CloseThis()" height="25" style="min-width: 130px"
+          >Cancel</v-btn
+        >
+        <div style="width: 30px" />
+      </v-footer>
+  </v-main>
   </v-app>
 </template>
 
@@ -50,11 +148,15 @@ if (Id == undefined) {
   var Id = 1
   var SessionId= 'xxx'
 }
+
+
 import { data } from "./data.js";
 import { baseMixin } from "./BaseMixin.js";
+import VueSimpleContextMenu from "vue-simple-context-menu";
 import VJsf from '@koumoul/vjsf/lib/VJsf.js'
 import '@koumoul/vjsf/lib/VJsf.css'
 import '@koumoul/vjsf/lib/deps/third-party.js'
+
 const radioOptions = {
   context: {
     Items: [
@@ -65,6 +167,9 @@ const radioOptions = {
     ],
   },
   selectAll: true,
+};
+const emptyOptions = {
+  context: {},
 };
 const radioShema = {
   type: "object",
@@ -81,6 +186,69 @@ const radioShema = {
     },
   },
 };
+const stringShema = {
+  type: "object",
+  requred: ["StrProp"],
+  properties: {
+    StrProp: {
+      type: "string",
+      title: "Input string please",
+      description: "Help",
+    },
+  },
+};
+const dateShema = {
+  type: "object",
+  requred: ["DateProp"],
+  properties: {
+    DateProp: {
+      type: "string",
+      format: "date",
+      title: "Input date please",
+      description: "Help",
+    },
+  },
+};
+const numShema = {
+  type: "object",
+  requred: ["NumProp"],
+  properties: {
+    NumProp: {
+      type: "string",
+      format: "number",
+      title: "Input numper please",
+      description: "Help",
+    },
+  },
+};
+
+const radioItem = {
+  type: "number",
+  title: "Select",
+  "x-display": "radio",
+  "x-fromData": "context.Items",
+  "x-itemKey": "Id",
+  "x-itemTitle": "Name",
+  description: "",
+};
+
+const stringItem = {
+  type: "string",
+  title: "Input string please",
+  description: "Help",
+};
+const dateItem = {
+  type: "string",
+  format: "date",
+  title: "Input date please",
+  description: "Help",
+};
+const numItem = {
+  type: "string",
+  format: "number",
+  title: "Input numper please",
+  description: "Help",
+};
 
 export default {
   name: 'App',
@@ -90,7 +258,9 @@ export default {
   },
   data: () => ({
     valid: false,
+    contentMenuId: 1,
     currentModel: { answerModel: {}, valid: false },
+    mode :"edit",
     models: [],
     Questionnarie: { Questions: [] },
 
@@ -101,9 +271,24 @@ export default {
       Options: radioOptions,
       Schema: radioShema,
     },
-    session:SessionId
+    session:SessionId,
+    questionTemplates: [
+      { Id: 0, Name: "radio", Options: radioOptions, Schema: radioShema },
+      { Id: 0, Name: "string", Options: emptyOptions, Schema: stringShema },
+      { Id: 0, Name: "date", Options: emptyOptions, Schema: dateShema },
+      { Id: 0, Name: "number", Options: emptyOptions, Schema: numShema },
+    ],
+    questionItemTemplates: [
+      { Name: "radio", Item: radioItem },
+      { Name: "string", Item: stringItem },
+      { Name: "date", Item: dateItem },
+      { Name: "number", Item: numItem },
+    ],
   }),
   computed: {
+    orderedQuestions() {
+      return this.Questionnarie.Questions.sort((a, b) => a.Order - b.Order);
+    },
      enableNext() {
       return Object.keys(this.currentModel.answerModel).length>0
     },
@@ -113,8 +298,112 @@ export default {
     validateForm() {
       this.$refs.form.validate();
     },
+    handleContextMenu(event, item) {
+      console.log("handleContextMenu");
+      this.$refs.contextMenu.options = this.GetContextMenuItems(item);
+      this.$refs.contextMenu.showMenu(event, item);
+    },
+    // getting a menu depending on the item that is selected clear,showSamples,addSamples,addChaild,rename ,delete
+    GetContextMenuItems(item) {
+      var items = [];
+
+      if (this.mode == "edit") {
+        items.push({ name: "Save question", slug: "save" });
+        items.push({ name: "Move up", slug: "up" });
+        items.push({ name: "Move down", slug: "down" });
+        items.push({ name: "Delete question", slug: "delete" });
+        items.push({ name: 'Switch OFF "Edit questions mode"', slug: "work" });
+      } else {
+        items.push({ name: 'Switch to "Edit questions mode"', slug: "edit" });
+      }
+      return items;
+    },
+    contextMenuClicked(event) {
+      switch (event.option.slug) {
+        case "up":
+          this.move("up", event.item);
+          break;
+        case "down":
+          this.move("down", event.item);
+          break;
+        case "edit":
+          this.mode = "edit";
+          break;
+        case "save":
+          this.SaveQuestion(event.item);
+          break;
+        case "work":
+          this.mode = "work";
+          break;
+        case "delete":
+          const DeleteQuestion = this.DeleteQuestion;
+          dxConfirm('Are you sure to delete "' + event.item.Name + '"').success(
+            function () {
+              DeleteQuestion(event.item);
+            }
+          );
+          break;
+      }
+    },
+    move(dir, node) {
+      let findNum;
+      if (dir == "up") {
+        findNum = node.Num - 1;
+      } else {
+        findNum = node.Num + 1;
+      }
+      let pairNode = this.orderedQuestions.find((x) => x.Num == findNum);
+      if (pairNode) {
+        pairNode.Num = node.Num;
+        this.SaveQuestion(pairNode);
+        node.Num = findNum;
+        this.SaveQuestion(node);
+      }
+    },
+    IsQueryValid(question) {
+ 
+      if (this.patient && this.patient.id > 0) {
+        let model = this.models.find((x) => x.QuestionId == question.Id);
+
+        return model && model.valid;
+       
+      }
+
+      return false;
+    },
+    AddQuestion(question) {
+      this.addedCouner--;
+      question.Id = this.addedCouner; //Сѓ РєР°Р¶РґРѕРіРѕ РґРѕР±Р°РІР»РµРЅРЅРѕРіРѕ РІРѕРїСЂРѕСЃР° РїРѕРєР° РѕРЅ РЅРµ СЃРѕС…СЂР°РЅРµРЅ id РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Р№
+      if (this.currentQuestion.Num) {
+        //
+        question.Num = this.currentQuestion.Num + 1;
+
+        var filtred = this.Questionnarie.Questions.filter(
+          (x) => x.Num > this.currentQuestion.Num
+        );
+        for (const key in filtred) {
+          const question = filtred[key];
+          question.Num++;
+        }
+      }
+
+      this.Questionnarie.Questions.push(question);
+      console.log(question);
+      this.SelectQuestion(question);
+    },
+    AddItemInQuestion(item) {
+      item.Item.title = this.newItemText;
+
+      this.currentQuestion.Schema.properties._new_Name_ = item.Item;
+
+      let schStr = JSON.stringify(this.currentQuestion.Schema);
+      schStr = schStr.replace("_new_Name_", this.newItemName);
+
+      this.schemaStr = schStr;
+    },
 
 
+ 
 
 
 
@@ -124,8 +413,8 @@ export default {
       }
     },
     SelectQuestion(question) {
-      if (this.currentQuestion.Id == question.Id) return; //если это повторный вызов
-      if (question.Id == 0) return; //если это фейк  currentQuestion нужный для инициализации Vue
+      if (this.currentQuestion.Id == question.Id) return; //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+      if (question.Id == 0) return; //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ  currentQuestion пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Vue
 
       let prmodel = this.models.find(
         (x) => x.QuestionId == this.currentQuestion.Id
@@ -173,6 +462,46 @@ export default {
         this.models.push(model);
       }
       this.currentModel = model;
+    },
+    Save()
+    {
+      if(mode=='edit'){
+        this.SaveQuestionnaire()
+      }else{
+        this.SaveAnsver()
+      }
+    },
+    SaveQuestion() {
+      this.fetch(
+        this.ok,
+        "/Questions/Questionnaire/SaveQuestion?questionnaireId=" + Id,
+        this.currentQuestion
+      );
+    },
+    SaveQuestionnaire() {
+      this.fetch(
+        this.CloseThis,
+        "/Questions/Questionnaire/SaveQuestionnaire?questionnaireId=" + Id,
+        this.Questionnarie
+      );
+    },
+    DeleteQuestion(question) {
+      if (question.Id <= 0) {
+        for (var i = 0; i < this.Questionnarie.Questions.length; i++) {
+          if (arr[i].Id === question.Id) {
+            this.Questionnarie.Questions.splice(i, 1);
+            break;
+          }
+        }
+      } else {
+        this.fetch(
+          this.GetQuestions,
+          "/Questions/Questionnaire/DeleteQuestion?questionnaireId=" +
+            Id +
+            "&questionId=" +
+            question.Id
+        );
+      }
     },
 
 
@@ -253,5 +582,63 @@ body {
  padding:15px ;
  margin: 5px;
  background-color: rgb(201, 247, 248)
+}
+.vue-simple-context-menu {
+  top: 0;
+  left: 0;
+  margin: 0, 0;
+  padding: 0, 0;
+  display: none;
+  list-style: none;
+  position: absolute;
+  z-index: 1000000;
+  background-color: rgb(202, 210, 212);
+  border-bottom-width: 0px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  box-shadow: 10px 3px 6px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+}
+
+.vue-simple-context-menu--active {
+  display: block;
+}
+
+.vue-simple-context-menu__item {
+  display: flex;
+  color: black;
+  height: 35px;
+  cursor: pointer;
+  padding: 3px, 6px;
+  margin-left: 5px;
+  margin-right: 5px;
+  align-items: center;
+}
+
+.vue-simple-context-menu__item:hover {
+  background-color: #ecf0f1;
+}
+/*	color: white;*/
+
+.vue-simple-context-menu__divider {
+  box-sizing: content-box;
+  height: 2px;
+  background-color: gray;
+  padding: 4px 0;
+  background-clip: content-box;
+  pointer-events: none;
+}
+input {
+  border-color: gray;
+  border-style: solid;
+  border-width: 1px;
+}
+.inputStyle {
+  height: 20px;
+  border-color: gray;
+  border-style: solid;
+  border-width: 1px;
+  width: 80%;
 }
 </style>
