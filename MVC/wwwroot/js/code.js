@@ -7,7 +7,6 @@
     document.body.removeChild(el);
 };
 
-var statuses = ["All", 'Switzerland', 'Belgium', 'Brazil', 'France', 'Brazil', 'Germany',];
 //добавление пункта меню копировать
 function contextMenuPreparing(e) {
     if (e.target == 'header') {

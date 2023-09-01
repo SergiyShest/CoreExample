@@ -150,7 +150,7 @@ namespace BLL
 
 			if (string.IsNullOrEmpty(sessionId) )
 			{ throw new NullReferenceException("sessionId can not be null"); }
-		  //	var answers = GetAnswers(sessionId);
+		 	//var answers = GetAnswers(sessionId);
 
 			// ansver = answers.FirstOrDefault(x => x.QuestionnarieId == Id);
 			//if (ansver == null)
