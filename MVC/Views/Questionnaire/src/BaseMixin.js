@@ -77,8 +77,8 @@ export const baseMixin = {
 		fetch: function (execFunction, pathEnd, data = null) {
 			this.loadingData = true;
 			var fetchRef = execFunction;
-			//var path = document.location.origin + pathEnd
-			var path ='https://localhost:7297/'+ pathEnd
+			var path = document.location.origin + pathEnd
+			//var path ='https://localhost:7297/'+ pathEnd
 			var json = JSON.stringify(data);
 			fetch(path,
 				{

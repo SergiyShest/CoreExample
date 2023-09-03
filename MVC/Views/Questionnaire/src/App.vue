@@ -116,7 +116,8 @@ export default {
         this.SelectQuestion(nextQuestion);
       }
       console.log(nextQuestion)
-      if(this.currentQuestion.Order > this.Questionnarie.Questions.length-1){
+      //if(this.currentQuestion.Order > this.Questionnarie.Questions.length-1) //save on the end of Questionnarie
+      {
          this.SaveAnsver()
       }
 
