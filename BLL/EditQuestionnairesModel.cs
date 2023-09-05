@@ -4,11 +4,11 @@ using NLog;
 using DAL;
 using System.Dynamic;
 using Core;
-using Sasha.Lims.WebUI.Areas.Questions;
+using DAL.Core;
 
 namespace BLL
 {
-	public class EditQuestionnairesModel
+    public class EditQuestionnairesModel
 	{
 
 		protected Logger log = LogManager.GetCurrentClassLogger();

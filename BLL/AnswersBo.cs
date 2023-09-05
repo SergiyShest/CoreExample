@@ -1,12 +1,13 @@
 ﻿using Core;
 using DAL;
+using DAL.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Sasha.Lims.WebUI.Areas.Questions;
+
 
 namespace BLL
 {
-	public class AnswersBo
+    public class AnswersBo
 	{
 		UnitOfWork _uow = new UnitOfWork();
 

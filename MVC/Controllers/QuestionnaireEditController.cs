@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using DAL;
 using System.Collections.Generic;
 using BLL;
+using DAL.Core;
 
 namespace MVC.Controllers
 {

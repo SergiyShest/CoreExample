@@ -1,14 +1,13 @@
 <template>
   <v-app id="app" style="width: 100%; padding: 3px" @keydown.ctrl.83.prevent.stop="Save"
     @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
-    <div class="modal" v-if="loadingData">
+    <!-- <div class="modal" v-if="loadingData">
       <img class="loader-icon" :src="require('../../../wwwroot/Content/Images/loading.gif')" />
-    </div>
+    </div>-->
     <v-main>
       <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine; ; ">
         <h2> {{ Questionnarie.Name }} </h2>
       </v-row>
-      <!-- <div>{{currentModel.answerModel}}  </div>        <div>{{ enableNext }}  </div>     -->
       <div style="min-height:600px ;display: flex;flex-direction: column; justify-content: space-between;" class="panel">
 
         <div style="display:flex; justify-content: space-between;">

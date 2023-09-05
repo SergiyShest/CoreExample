@@ -1,9 +1,9 @@
 
 using Core;
 using DAL;
+using DAL.Core;
 using Newtonsoft.Json;
 using NLog;
-using Sasha.Lims.WebUI.Areas.Questions;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -11,7 +11,7 @@ using System.Dynamic;
 
 namespace BLL
 {
-	public class EditQuestionModel: IVueModel
+    public class EditQuestionModel: IVueModel
 	{
 
 		protected Logger log = LogManager.GetCurrentClassLogger();
@@ -19,7 +19,7 @@ namespace BLL
 
 
 
-        DAL.IUnitOfWorkEx UOW;
+        IUnitOfWorkEx UOW;
 		public EditQuestionModel(int? id)
 		{
 			UOW = new UnitOfWork();

@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-
-
-using DAL;
 using System.Dynamic;
 using NLog;
 using BLL;
+using DAL.Core;
 
 namespace MVC.Controllers
 {

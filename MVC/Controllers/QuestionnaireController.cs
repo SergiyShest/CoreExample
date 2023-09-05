@@ -8,6 +8,7 @@ using DAL;
 using System.Collections.Generic;
 using BLL;
 using System.Text;
+using DAL.Core;
 
 namespace MVC.Controllers
 {

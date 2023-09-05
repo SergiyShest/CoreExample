@@ -1,6 +1,6 @@
 ﻿using Core;
 using DAL;
-using Sasha.Lims.WebUI.Areas.Questions;
+
 
 namespace BLL { 
     public class QuestionnaireBo : BaseObj<Questionnaire>

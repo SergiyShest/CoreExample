@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
-using Sasha.Lims.WebUI.Areas.Questions;
+
 using Core;
+using DAL.Core;
 //using NUnit.Framework;
 
 namespace ConsoleDB.Tests
@@ -16,33 +17,7 @@ namespace ConsoleDB.Tests
   
     public class mainPrTests
     {  NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        [TestMethod()]
-        public void maTest()
-        {
 
-            using (QContext db = new QContext())
-            {
-                // получаем объекты из бд и выводим на консоль
-                var vjcfs = db.Users.ToList();
-                logger.Debug("Список объектов:");
-                foreach (var u in vjcfs)
-                {
-                    logger.Debug($"{u.Id}.{u.Name} - {u.UserOstId}- {u.Email}");
-                }
-            }
-
-          using (QContext db = new QContext())
-            {
-                // получаем объекты из бд и выводим на консоль
-                var vjcfs = db.Vjsf.ToList();
-                logger.Debug("Список схем:");
-                foreach (var u in vjcfs)
-                {
-                    logger.Debug($"{u.Id}.{u.Name} - {u.Code}");
-                }
-            }
-
-        }
 
       
     
