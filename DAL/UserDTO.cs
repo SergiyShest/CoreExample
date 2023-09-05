@@ -1,5 +1,5 @@
 ﻿using Core;
-
+using DAL.Core;
 using NLog.Fluent;
 
 namespace DAL
