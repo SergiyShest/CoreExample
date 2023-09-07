@@ -1,13 +1,14 @@
 ﻿using Core;
 using DAL;
 using DevExtreme.AspNet.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace MVC.Controllers
-{
+{        [Authorize]
     public class AnswerJournalController : BaseController
     {
 
@@ -17,7 +18,7 @@ namespace MVC.Controllers
             return View();
         }
 
-		public ActionResult GetAll(DataSourceLoadOptions loadOptions)
+        public ActionResult GetAll(DataSourceLoadOptions loadOptions)
 		{
 
 		  var ansvers=	uow.GetRepository<Answer>().GetAll();

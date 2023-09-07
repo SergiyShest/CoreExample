@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 using Core;
-using DAL.NewFolder;
+
 
 namespace DAL;
 
@@ -30,6 +30,7 @@ public partial class QContext : DbContext
 		AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
 	}
 
+    
 
     protected override void OnConfiguring(DbContextOptionsBuilder options) {
       //  => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=UserPortal;Username=postgres;Password=Qazwsx123");
@@ -58,6 +59,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 		  modelBuilder.Entity<User>(entity =>
         {
+            entity.ToTable("Users");
             entity.HasIndex(e => e.Email, "IX_user_email");
             entity.Property(e => e.Id).HasColumnName("id");
 

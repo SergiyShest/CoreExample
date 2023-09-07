@@ -1,23 +1,26 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace DAL.NewFolder;
+namespace DAL;
 
-public partial class User
+public partial class User : IEntity
 {
-    public int Id { get; set; }
+    [Key]
+    public int? Id { get; set; }
 
     public string? Name { get; set; }
 
     public string? Email { get; set; }
 
-    public DateOnly? Date { get; set; }
 
     public string? Comment { get; set; }
 
-    public int? WorkOstId { get; set; }
+    public string? PasswordHash { get; set; }
+        
+    public string? Salt { get; set; }
 
-    public int? UserOstId { get; set; }
 
     public DateTime? LDate { get; set; }
 

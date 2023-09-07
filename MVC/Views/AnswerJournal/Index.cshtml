@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = "_Layout";
+}
 
-<html>
-<head>
+@section Scripts {
     <title>Questionniaire answers</title>
     <script src="../../../lib/jquery/dist/jquery.min.js"></script>
     <script src="../../../Scripts/dx.all.js"></script>
@@ -9,8 +10,9 @@
     <script src="../../../js/code.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../Content/dx.common.css" />
     <link rel="stylesheet" type="text/css" href="../../../Content/grey.css" />
-</head>
-<body>
+}
+
+<h1>View user responses</h1>
     <div id="grid"></div>
 <script>
         document.addEventListener("DOMContentLoaded", (event) => {
@@ -20,6 +22,3 @@
 </script>
 
 
-</body>
-
-</html>

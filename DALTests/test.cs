@@ -18,7 +18,8 @@ namespace Tests
         UserDTO _user = new UserDTO();
 
 
-         [Test]
+
+        [Test]
         public void CreateQuestion()
         {
             var question = new QuestionBo() { Name= "New" };
