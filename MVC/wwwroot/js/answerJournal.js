@@ -71,15 +71,31 @@ function getColumnFieldName(dataGridInstance, getter) {
 
 
     $("#grid").dxDataGrid({
-        height: 500,
         remoteOperations: { paging: true, filtering: true, sorting: true, grouping: true, summary: true, groupPaging: true },
 
         dataSource: DevExpress.data.AspNet.createStore({
             key: "id",
             loadUrl: "../AnswerJournal/Get",
         }),
+
+        scrolling: {
+            rowRenderingMode: 'virtual',
+        },
         paging: {
-            pageSize: 30
+            pageSize: 30,
+        },
+        pager: {
+            visible: true,
+            allowedPageSizes: [30, 50, 100],
+            showPageSizeSelector: true,
+            showInfo: true,
+            showNavigationButtons: true,
+        },
+        grouping: {
+            contextMenuEnabled: true
+        },
+        groupPanel: {
+            visible: true   // or "auto"
         },
         onContextMenuPreparing: contextMenuPreparing,
         focusedRowEnabled: true,
@@ -96,7 +112,11 @@ function getColumnFieldName(dataGridInstance, getter) {
             visible: true,
             applyFilter: "auto"
         },
-
+        stateStoring: {
+            enabled: true,
+            type: 'localStorage',
+            storageKey: 'AnswerGrid',
+        },
         headerFilter: { visible: true },
         filterPanel: { visible: true },
         selection: {

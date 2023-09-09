@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 using Core;
-
+using NLog.Extensions.Logging;
 
 namespace DAL;
 
@@ -26,14 +26,15 @@ public partial class QContext : DbContext
     public QContext(DbContextOptions<QContext> options)
         : base(options)
     {
-		AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-		AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
-	}
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+    }
 
-    
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options) {
-      //  => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=UserPortal;Username=postgres;Password=Qazwsx123");
+
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    {
+        //  => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=UserPortal;Username=postgres;Password=Qazwsx123");
 
 
         var loggerFactory = LoggerFactory.Create(builder =>
@@ -44,33 +45,35 @@ public partial class QContext : DbContext
         }
 
         );
+        loggerFactory.AddNLog().ConfigureNLog("NLog.config"); ;
 
         options.UseLoggerFactory(loggerFactory) //tie-up DbContext with LoggerFactory object
             .EnableSensitiveDataLogging();
 
         var connect = Configuration.GetConnectionString("WebApiDatabase");
         options.UseNpgsql(connect);
-}
-protected override void OnModelCreating(ModelBuilder modelBuilder)
+    }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
             .HasPostgresExtension("pgcrypto");
 
 
-		  modelBuilder.Entity<User>(entity =>
-        {
-            entity.ToTable("Users");
-            entity.HasIndex(e => e.Email, "IX_user_email");
-            entity.Property(e => e.Id).HasColumnName("id");
+        modelBuilder.Entity<User>(entity =>
+      {
+          entity.ToTable("Users");
+          entity.HasIndex(e => e.Email, "IX_user_email");
+          entity.Property(e => e.Id).HasColumnName("id");
 
-        });
+      });
 
         modelBuilder.Entity<Vjsf>(entity =>
         {
-           entity.Property(p => p.Id).ValueGeneratedOnAdd();
-           entity.HasIndex(e => e.Name, "IX_Vjsf_Name").IsUnique();
-           entity.Property(e => e.Options).HasColumnType("jsonb");
-           entity.Property(e => e.Schema).HasColumnType("jsonb");
+            entity.Property(p => p.Id).ValueGeneratedOnAdd();
+            entity.HasIndex(e => e.Name, "IX_Vjsf_Name").IsUnique();
+            entity.Property(e => e.Options).HasColumnType("jsonb");
+            entity.Property(e => e.Schema).HasColumnType("jsonb");
         });
         modelBuilder.Entity<Questionnaire>(entity =>
         {
@@ -78,12 +81,12 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             entity.HasIndex(e => e.Name, "IX_Questionnaire_Name").IsUnique();
 
         });
-		modelBuilder.Entity<Answer>(entity =>
-		{
-			entity.Property(p => p.Id).ValueGeneratedOnAdd();
-		});
+        modelBuilder.Entity<Answer>(entity =>
+        {
+            entity.Property(p => p.Id).ValueGeneratedOnAdd();
+        });
 
-		OnModelCreatingPartial(modelBuilder);
+        OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
