@@ -12,55 +12,53 @@ export const data = {
     Code: "QUESTIONNAIRE",
 
     Questions: [
-        
-      {
-        Id: 1,
-        Order: 1,
-        Name: "Do you have a current diagnosis of Atopic Dermatitis (Atopic Eczema)?",
-        Code: "QUESTION",
-        Description:
-          "Atopic Dermatitis, also known as Atopic Eczema, is a type of inflammation of the skin, resulting in itchy, red, swollen, and cracked skin.",
+
+        {
+            Id: 1,
+            Order: 1,
+            Name: "Do you have a current diagnosis of Atopic Dermatitis (Atopic Eczema)?",
+               Description:
+                "Atopic Dermatitis, also known as Atopic Eczema, is a type of inflammation of the skin, resulting in itchy, red, swollen, and cracked skin.",
         Schema: {
           type: "object",
-          requred: ["ListProp"],
-          properties: {
-            ListProp: {
-              type: "number",
-              title: "Choose the right Answer",
-              "x-display": "radio",
-              "x-fromData": "context.Items",
-              "x-itemKey": "Id",
-              "x-itemTitle": "Name",
+                requred: ["ListProp"],
+                properties: {
+                    ListProp: {
+                        type: "number",
+                        title: "Choose the right Answer",
+                        "x-display": "radio",
+                        "x-fromData": "context.Items",
+                        "x-itemKey": "Id",
+                        "x-itemTitle": "Name",
+                    },
+                },
             },
-          },
+            Options: {
+                context: {
+                    Items: [
+                        {
+                            Id: 1,
+                            Name: "Yes",
+                        },
+                        {
+                            Id: 2,
+                            Name: "No, but currently undergoing medical examinations",
+                        },
+                        {
+                            Id: 3,
+                            Name: "No",
+                        },
+                    ],
+                },
+                selectAll: true,
+            },
+            QuestionnaireId: 1,
         },
-        Options: {
-          context: {
-            Items: [
-              {
-                Id: 1,
-                Name: "Yes",
-              },
-              {
-                Id: 2,
-                Name: "No, but currently undergoing medical examinations",
-              },
-              {
-                Id: 3,
-                Name: "No",
-              },
-            ],
-          },
-          selectAll: true,
-        },
-        QuestionnaireId: 1,
-      },
       {
         Id: 2,
         Order: 2,
         Name: "How old are you",
-        Code: "QUESTION",
-        Description: "",
+       Description: "",
 
         Schema: {
           type: "object",
@@ -84,8 +82,7 @@ export const data = {
         Id: 3,
         Order: 3,
         Name: "When where yoy diagnosed Atopic Dermatitis (Atopic Eczema)?",
-        Code: "QUESTION",
-        Description: "",
+       Description: "",
         Schema: {
           type: "object",
           properties: {
@@ -121,8 +118,7 @@ export const data = {
         Id: 4,
         Order: 4,
         Name: "How would you describe your current Atopic Dermatitis (Atopic Eczema)?",
-        Code: "QUESTION",
-        Description: "",
+       Description: "",
         Schema: {
           type: "object",
           properties: {
@@ -166,8 +162,7 @@ export const data = {
         Id: 5,
         Order: 5,
         Name: "Have you applied corticosteroids (also called 'steroids') for your Atopic Dermatitis (Atopic Eczema) within the last 6 months?",
-        Code: "QUESTION",
-        Description:
+       Description:
           "There are many different types of these medications available that differ in strength. Some require a prescription from a doctor, but others do not. They can be either ointments, creams, lotions, or sprays. Common types of topical corticosteroids (steroids) are for example: Alclometasone (brand name example: Aclovate), Betamethasone (brand name examples: Diprolene, Beta-Val), Clobetasol (brand name example: Temovate)",
         Schema: {
           type: "object",
@@ -209,8 +204,7 @@ export const data = {
         Id: 6,
         Order: 6,
         Name: "Do or did these topical corticosteroids (also called 'steroids') help with your Atopic Dermatitis (Atopic Eczema) symptoms (like dry skin, itching, redness, or skin thickening/cracking?",
-        Code: "QUESTION",
-        Description: "",
+       Description: "",
         Schema: {
           type: "object",
           properties: {
@@ -258,8 +252,7 @@ export const data = {
         Id: 7,
         Order: 7,
         Name: "Are you currently pregnant, breastfeeding or planning to become pregnant in the next 6 months?",
-        Code: "QUESTION",
-        Description: "",
+       Description: "",
         NextButtonText:"NEXT",
         Schema: {
           type: "object",
@@ -300,8 +293,7 @@ export const data = {
         Id: 8,
         Order: 8,
         Name: "If you need to consult a doctor, please leave your phone number and we will call you back.",
-        Code: "QUESTION",
-        Description: "",
+       Description: "",
         NextButtonText:"Finish",
 
         Schema: {
@@ -311,10 +303,11 @@ export const data = {
             phone: {
               type: "string",
               title: "Input your phone please",
-              pattern: '^[\+]?[\s\-(]?\d[\s-]?\d[\s-]?\d[\s\-)]*\d[\s-]?\d[\s-]?\d[\s-]?\d[\s-]?\d[\s-]?\d[\s-]?\d[\s-]?\d[\s-]?\d?[\s]?',
+              pattern: '^\\s?[\\s(]?\\s?\\d[\\s-]?\\d[\s-]?\\d[\\s\\-)]?\\s?\\d[\\s-]?\\d[\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s]?$|'+
+              '^[\\+]?\\d\\s?[\\s(]?\\s?\\d[\\s-]?\\d[\s-]?\\d[\\s\\-)]?\\s?\\d[\\s-]?\\d[\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s]?$',
               'x-options': {
 				messages: {
-					pattern: 'Valid number mast be contains 11 numbers (444)00 000 000'
+					pattern: 'Valid number mast be contains 11 numbers +1 (000) 000 00 00 or 10 numbers (000) 000 00 00 '
 				}
             }
             },
@@ -327,8 +320,7 @@ export const data = {
         Id: 9,
         Order: 9,
         Name: "Thanks for contacting.",
-        Code: "QUESTION",
-        Description: "",
+       Description: "",
         Schema: {},
         Options: {},
         QuestionnaireId: 1,

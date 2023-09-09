@@ -1,10 +1,8 @@
 <template>
   <v-app id="app" style="width: 100%; padding: 3px" @keydown.ctrl.83.prevent.stop="Save"
     @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
-    <!-- <div class="modal" v-if="loadingData">
-      <img class="loader-icon" :src="require('../../../wwwroot/Content/Images/loading.gif')" />
-    </div>-->
-    <v-main><p>valid={{currentModel.valid}}</p>
+
+    <v-main>
       <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine; ; ">
         <h2> {{ Questionnarie.Name }} </h2>
       </v-row>
@@ -48,14 +46,7 @@ if (Id == undefined) {
   var Id = 1
 }
 if (SessionId == undefined) {
-    var SessionId = 'baseMixin.GenerateGuid()'
-}
-
-const options =  {
-	rules: {
-		even: function(e){return!e||e%2==0||"Only even numbers accepted"}
-	},
-	idPrefix: 'example-validation-basic-'
+    //var SessionId = 'baseMixin.GenerateGuid()'
 }
 
 
@@ -87,7 +78,7 @@ export default {
   }),
   computed: {
     enableNext() {
-      return true;
+     
       return this.currentModel.valid!=false&& Object.keys(this.currentModel.answerModel).length > 0
     },
     NextButtonText() {
