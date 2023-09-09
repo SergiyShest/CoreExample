@@ -4,7 +4,7 @@
     <!-- <div class="modal" v-if="loadingData">
       <img class="loader-icon" :src="require('../../../wwwroot/Content/Images/loading.gif')" />
     </div>-->
-    <v-main>
+    <v-main><p>valid={{currentModel.valid}}</p>
       <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine; ; ">
         <h2> {{ Questionnarie.Name }} </h2>
       </v-row>
@@ -34,9 +34,8 @@
           <v-btn class="buttion" @click="SelectPrevQuestion()" v-if="currentQuestion.Order > 1">
             Prev</v-btn>
           <v-spacer></v-spacer>
-          <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext" v-if="currentQuestion.Order < Questionnarie.Questions.length
-            ">
-            Next
+          <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext" v-if="currentQuestion.Order < Questionnarie.Questions.length">
+           {{ NextButtonText}}
           </v-btn> <!-- <img :src="require('../../../wwwroot/Content/Icons/next.png')" width="20" height="20" /> -->
         </div>
       </div>
@@ -49,8 +48,16 @@ if (Id == undefined) {
   var Id = 1
 }
 if (SessionId == undefined) {
-  // var SessionId= 'xxx'
+    var SessionId = 'baseMixin.GenerateGuid()'
 }
+
+const options =  {
+	rules: {
+		even: function(e){return!e||e%2==0||"Only even numbers accepted"}
+	},
+	idPrefix: 'example-validation-basic-'
+}
+
 
 import { data } from "./data.js";
 import { baseMixin } from "./BaseMixin.js";
@@ -65,8 +72,7 @@ export default {
     VJsf
   },
   data: () => ({
-    valid: false,
-    currentModel: { answerModel: {}, valid: false },
+    currentModel: { answerModel: {}, valid: null },
     models: [],
     Questionnarie: { Questions: [] },
 
@@ -81,9 +87,12 @@ export default {
   }),
   computed: {
     enableNext() {
-      return Object.keys(this.currentModel.answerModel).length > 0
+      return true;
+      return this.currentModel.valid!=false&& Object.keys(this.currentModel.answerModel).length > 0
     },
-
+    NextButtonText() {
+      return  this.currentQuestion.NextButtonText?this.currentQuestion.NextButtonText:"NEXT"
+    },
   },
   methods: {
     validateForm() {
@@ -113,8 +122,8 @@ export default {
       );
       if (nextQuestion) {
         this.SelectQuestion(nextQuestion);
+
       }
-      console.log(nextQuestion)
       //if(this.currentQuestion.Order > this.Questionnarie.Questions.length-1) //save on the end of Questionnarie
       {
          this.SaveAnsver()
@@ -139,7 +148,7 @@ export default {
         model = {
           QuestionId: this.currentQuestion.Id,
           answerModel: {},
-          valid: false,
+          valid: null,
         };
         this.models.push(model);
       }
@@ -209,6 +218,6 @@ body {
   border-radius: 15px;
   padding: 15px;
   margin: 5px;
-  background-color: rgb(201, 247, 248)
+  background-color: rgb(247, 247, 247)
 }
 </style>
