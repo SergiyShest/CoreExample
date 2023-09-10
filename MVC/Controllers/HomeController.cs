@@ -4,9 +4,10 @@ using Microsoft.Extensions.Logging;
 using CookieReaders.Models;
 using Microsoft.AspNetCore.Authorization;
 using MVC.Models;
+using Microsoft.AspNetCore.Hosting.Server;
 
 namespace CookieReaders.Controllers
-{
+{   [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,21 +16,48 @@ namespace CookieReaders.Controllers
         {
             _logger = logger;
         }
-        [Authorize]
+
         public IActionResult Index()
         {
             return View();
         }
-        [Authorize]
-        public IActionResult Privacy()
+
+
+        [HttpPost]
+        public async Task<IActionResult> Upload(List<IFormFile> files)
         {
-            return View();
+            long size = files.Sum(f => f.Length);
+
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+                    var filePath = Path.GetTempFileName();
+
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
+                        await formFile.CopyToAsync(stream);
+                    }
+                }
+            }
+
+            // Process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+            return Ok(new { count = files.Count, size });
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+
+
+
+        public FileResult Download()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\folder\myfile.ext");
+            string fileName = "myfile.ext";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
+
+        
     }
 }

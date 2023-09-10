@@ -1,10 +1,51 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Admin Page";
 }
 @{
     Layout = "_Layout";
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-left">
+
+    <a class="nav-link text-lite" asp-area="" asp-controller="Home" asp-action="Download">Download setting file</a>
+    <form asp-area="" asp-controller="Home" asp-action="Upload"
+          enctype="multipart/form-data" onsubmit="AJAXSubmit(this);return false;"
+          method="post">
+
+        <input class="btn btn-secondary" type="submit" value="Upload file" />  
+        <input id="FileUpload_FormFile" type="file"
+                       name="FileUpload.FormFile" />
+
+
+        
+
+        <div style="margin-top:15px">
+            <output name="result"></output>
+        </div>
+    </form>
+
+  
 </div>
+<script>
+    async function AJAXSubmit(oFormElement) {
+        console.log(oFormElement)
+        var resultElement = oFormElement.elements.namedItem("result");
+        const formData = new FormData(oFormElement);
+
+        try {
+            const response = await fetch(oFormElement.action, {
+                method: 'POST',
+                body: formData
+            });
+
+            // if (response.ok) {
+            //     window.location.href = '/';
+            // }
+
+            resultElement.value = 'Result: ' + response.status + ' ' +
+                response.statusText;
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+</script>

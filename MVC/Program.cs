@@ -7,11 +7,11 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddCors(options =>
 {
-	options.AddPolicy(name: "MyAllowSpecificOrigins",
-					  policy =>
-					  {
-						  policy.WithOrigins("*");
-					  });
+    options.AddPolicy(name: "MyAllowSpecificOrigins",
+                      policy =>
+                      {
+                          policy.WithOrigins("*");
+                      });
 });
 
 builder.Services.AddAuthentication(options =>
@@ -31,12 +31,15 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
+//builder.WebHost.UseIISIntegration();
+////builder.WebHost.UseIISIntegration(); options =>
+////{
+////    options.AllowSynchronousIO = true;
+////});
 
 builder.WebHost.UseKestrel(options =>
  {
-	 options.AllowSynchronousIO = true;
+     options.AllowSynchronousIO = true;
  });
 
 var app = builder.Build();
@@ -54,9 +57,9 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-            app.UseCookiePolicy();
+app.UseCookiePolicy();
 
-            app.UseAuthentication();
+app.UseAuthentication();
 
 app.UseRouting();
 
