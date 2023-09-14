@@ -7,7 +7,6 @@ namespace CookieReaders.Models
         [Required, Compare("Password")]
         public string ConfirmPassword { get; set; }
 
-
         protected override string GetError()
         {
             string error = base.GetError();

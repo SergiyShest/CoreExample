@@ -5,17 +5,26 @@ using CookieReaders.Models;
 using Microsoft.AspNetCore.Authorization;
 using MVC.Models;
 using Microsoft.AspNetCore.Hosting.Server;
+using BLL;
+using Core;
+using Newtonsoft.Json;
+using System.Text;
+using MVC.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Web.Helpers;
+using System.IO;
+using DAL.Core;
+using DAL;
+using DevExtreme.AspNet.Data;
 
 namespace CookieReaders.Controllers
-{   [Authorize]
-    public class HomeController : Controller
+{
+    [Authorize]
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+
+
 
         public IActionResult Index()
         {
@@ -23,41 +32,73 @@ namespace CookieReaders.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> Upload(List<IFormFile> files)
+        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
         {
-            long size = files.Sum(f => f.Length);
+            var answers = uow.GetRepository<Questionnaire>().GetAll();
 
-            foreach (var formFile in files)
+            loadOptions.PrimaryKey = new[] { "Id" };
+            loadOptions.PaginateViaPrimaryKey = true;
+            return Json(await DataSourceLoader.LoadAsync(answers, loadOptions));
+        }
+
+
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> Upload(int? id)
+        {
+            var file_ = base.Request.Form.Files[0];
+            string content = String.Empty;
+            using (var memoryStream = new MemoryStream())
             {
-                if (formFile.Length > 0)
+                file_.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+                using (var reader = new StreamReader(memoryStream))
                 {
-                    var filePath = Path.GetTempFileName();
-
-                    using (var stream = System.IO.File.Create(filePath))
-                    {
-                        await formFile.CopyToAsync(stream);
-                    }
+                    content = reader.ReadToEnd();
                 }
+            }
+            try
+            {
+                var questionniare = JsonConvert.DeserializeObject<QuestionnaireBo>(content);
+                if (questionniare == null) { throw new ApplicationException ("now file"); }
+                var exists = uow.GetRepository<Questionnaire>().GetAll().Any(x => x.Name == questionniare.Name);
+                if(exists) { throw new ApplicationException("Questionnaire with the same name already exists. Change  name please."); }
+                if (id == null)
+                {
+                    questionniare.Id = null;
+                    foreach (var q in questionniare.Questions)
+                    { q.Id = null; }
+                }
+                questionniare.Save(null);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new {error = ex.GetAllMessages()});
             }
 
             // Process uploaded files
             // Don't rely on or trust the FileName property without validation.
 
-            return Ok(new { count = files.Count, size });
+            return Ok();
         }
 
 
 
-
-        public FileResult Download()
+        public FileResult Download(int id)
         {
+            var questionnaire = uow.GetRepository<Questionnaire>().FirstOrDefault();
 
-            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\folder\myfile.ext");
-            string fileName = "myfile.ext";
+            var qustionniare = new QuestionnaireBo(questionnaire);
+            var json = JsonConvert.SerializeObject(qustionniare, Formatting.Indented);
+            byte[] fileBytes = Encoding.ASCII.GetBytes(json);
+            string fileName = qustionniare.Name + ".json";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
-        
+
     }
 }

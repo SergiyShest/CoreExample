@@ -1,12 +1,4 @@
-export const limitedAge = {
-  type: "integer",
-  title: "Age must be between 0 and 120",
-  minimum: 0,
-  maximum: 120,
-};
-
-export const data = {
-  Item: {
+ {
     Id: 1,
     Name: "Answer a few questions and see if you or someone you are looking after may be eligible",
     Code: "QUESTIONNAIRE",
@@ -252,7 +244,7 @@ export const data = {
         Id: 7,
         Order: 7,
         Name: "Are you currently pregnant, breastfeeding or planning to become pregnant in the next 6 months?",
-       Description: "",
+        Description: "",
         NextButtonText:"NEXT",
         Schema: {
           type: "object",
@@ -303,8 +295,7 @@ export const data = {
             phone: {
               type: "string",
               title: "Input your phone please",
-              pattern: '^\\s?[\\s(]?\\s?\\d[\\s-]?\\d[\s-]?\\d[\\s\\-)]?\\s?\\d[\\s-]?\\d[\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s]?$|'+
-              '^[\\+]?\\d\\s?[\\s(]?\\s?\\d[\\s-]?\\d[\s-]?\\d[\\s\\-)]?\\s?\\d[\\s-]?\\d[\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s]?$',
+              pattern  : '^\\s?[\\s(]?\\s?\\d[\\s-]?\\d[\\s-]?\\d[\\s\\-)]?\\s?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s]?$|^[\\+]?\\d\\s?[\\s(]?\\s?\\d[\\s-]?\\d[\\s-]?\\d[\\s\\-)]?\\s?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s]?$',
               'x-options': {
 				messages: {
 					pattern: 'Valid number mast be contains 11 numbers +1 (000) 000 00 00 or 10 numbers (000) 000 00 00 '
@@ -326,5 +317,5 @@ export const data = {
         QuestionnaireId: 1,
       },
     ],
-  },
-};
+  }
+

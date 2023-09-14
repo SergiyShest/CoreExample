@@ -37,18 +37,8 @@ namespace MVC.Controllers
         {
             var model = new QuestionnaireModel(questionnaireId);
 
-            //var bodyStream = new StreamReader(HttpContext.Request.Body);
-            var request = HttpContext.Request;
-			var bodyText = string.Empty;
-			request.EnableBuffering();
-//			request.Body.Position = 0;
-			using (var reader = new StreamReader(request.Body, Encoding.UTF8, true, 1024, true))
-			{
-				bodyText = reader.ReadToEnd();
-			}
-			request.Body.Position = 0;
 
-			string json = base.GetJsonSafe(() => model.SaveAnsvers(bodyText, GetCurrentUser(), sessionId));
+			string json = base.GetJsonSafe(() => model.SaveAnsvers(base.Body(), GetCurrentUser(), sessionId));
             return Content("", "application/json");
         }
 

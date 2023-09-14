@@ -71,14 +71,14 @@ public partial class QContext : DbContext
         modelBuilder.Entity<Vjsf>(entity =>
         {
             entity.Property(p => p.Id).ValueGeneratedOnAdd();
-            entity.HasIndex(e => e.Name, "IX_Vjsf_Name").IsUnique();
+            //entity.HasIndex(e => e.Name, "IX_Vjsf_Name").IsUnique();
             entity.Property(e => e.Options).HasColumnType("jsonb");
             entity.Property(e => e.Schema).HasColumnType("jsonb");
         });
         modelBuilder.Entity<Questionnaire>(entity =>
         {
             entity.Property(p => p.Id).ValueGeneratedOnAdd();
-            entity.HasIndex(e => e.Name, "IX_Questionnaire_Name").IsUnique();
+            //entity.HasIndex(e => e.Name, "IX_Questionnaire_Name").IsUnique();
 
         });
         modelBuilder.Entity<Answer>(entity =>

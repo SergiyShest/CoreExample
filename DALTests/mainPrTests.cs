@@ -69,10 +69,9 @@ namespace ConsoleDB.Tests
         {
             {
                 var r = UOW.GetRepository<Questionnaire>();
-                var vjsf = new Questionnaire() { Name = "Name1", Code = "Code1"  };
+                var vjsf = new Questionnaire() { Name = "Name1", Text = "Code1"  };
                 r.Create(vjsf);
                 r.Save();
-
             }
         }
 

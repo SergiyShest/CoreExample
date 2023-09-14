@@ -1,21 +1,86 @@
 ﻿using Core;
 using DAL;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Dynamic;
+using System.Text.Json.Nodes;
 
-namespace BLL {
+namespace BLL
+{
+    [JsonObject]
     public class QuestionBo : BaseObj<Vjsf>
     {
-        public string Name { get { return Record?.Name; } 
-            set { Record.Name = value; } }
+        #region Properties
+        #region Name
+        public string Name
+        {
+            get { return Record?.Name; }
+            set { Record.Name = value; }
+        }
+        #endregion
 
-        public string Code { get { return Record?.Code; } 
-            set { Record.Code = value; } }
+        #region Text
 
-		public int? Order { get { return Record?.Order; } 
-            set { Record.Order = value; } }
+        public string Text
+        {
+            get { return Record?.Code; }
+            set { Record.Code = value; }
+        }
+        #endregion
 
-		public dynamic Schema
+        #region Order
+        public int? Order
+        {
+            get { return Record?.Order; }
+            set { Record.Order = value; }
+        }
+        #endregion
+
+        #region NextButtonText
+        public string? NextButtonText
+        {
+            get { return Record?.NextButtonText; }
+            set { Record.NextButtonText = value; }
+        }
+
+        #endregion
+
+        #region PrevButtonText
+        public string? PrevButtonText
+        {
+            get { return Record?.PrevButtonText; }
+            set { Record.PrevButtonText = value; }
+        }
+
+        #endregion
+        
+        #region BackGroundColor
+        public string? BackGroundColor
+        {
+            get { return Record?.BackGroundColor; }
+            set { Record.BackGroundColor = value; }
+        }
+        #endregion
+
+        #region ForeColor
+        public string? ForeColor
+        {
+            get { return Record?.ForeColor; }
+            set { Record.ForeColor = value; }
+        }
+        #endregion
+
+        #region Font
+        public string? Font
+        {
+            get { return Record?.Font; }
+            set { Record.Font = value; }
+        }
+        #endregion
+
+        #region Schema
+
+        public dynamic Schema
         {
             get
             {
@@ -23,8 +88,16 @@ namespace BLL {
                     Record.Schema = getDefaultShema();
                 return JsonConvert.DeserializeObject(Record.Schema);
             }
-            set { 
-                Record.Schema = value;
+            set
+            {
+                if (value != null && value.GetType() == typeof(JObject))
+                { 
+                    Record.Schema = value.ToString(); 
+                }
+                else
+                {
+                    Record.Schema = value;
+                }
             }
         }
 
@@ -44,8 +117,12 @@ namespace BLL {
             ListProp.description = "This description is used as a help message.";
 
             dynObj.properties.ListProp = ListProp;
-            return   JsonConvert.SerializeObject( dynObj);
+            return JsonConvert.SerializeObject(dynObj);
         }
+
+        #endregion
+
+        #region Options
 
         public dynamic Options
         {
@@ -53,9 +130,17 @@ namespace BLL {
             {
                 if (Record.Options == null)
                     Record.Options = getDefaultOptions();
-                  return JsonConvert.DeserializeObject(Record.Options); 
+                return JsonConvert.DeserializeObject(Record.Options);
             }
-            set { Record.Options = value; }
+            set
+            {
+                if (value != null && value.GetType() == typeof(JObject))
+                {
+                    Record.Options = value.ToString();
+                }
+                else
+                    Record.Options = value;
+            }
         }
 
         private string getDefaultOptions()
@@ -70,52 +155,62 @@ namespace BLL {
             };
             dynObj.context = context;
             dynObj.selectAll = true;
-			return JsonConvert.SerializeObject(dynObj);
-		}
+            return JsonConvert.SerializeObject(dynObj);
+        }
 
-		internal string Error { get; private set; }
+        #endregion
 
-		public int? QuestionnaireId
-		{
-			get { return Record.QuestionnaireId; }
-			set { Record.QuestionnaireId = value; }
-		}
+        #region QuestionnaireId
 
-		public string Description
-		{
-			get { return Record?.Description; }
-			set { Record.Description = value; }
-		}
+        public int? QuestionnaireId
+        {
+            get { return Record.QuestionnaireId; }
+            set { Record.QuestionnaireId = value; }
+        }
 
+        #endregion
 
-		#region Constructors
-		public QuestionBo(int? id)
+        #region Description
+
+        public string Description
+        {
+            get { return Record?.Description; }
+            set { Record.Description = value; }
+        }
+
+        #endregion
+
+        internal string Error { get; private set; }
+
+        #endregion
+       
+        #region Constructors
+        public QuestionBo(int? id)
 
         {
             this.Id = id;
-            Code = "QUESTION";
+
         }
         public QuestionBo(Vjsf record) : base(record)
         {
-            Code = "QUESTION";
+
         }
         public QuestionBo() : base()
         {
-            Code = "QUESTION";
+
         }
         #endregion
 
-
-
         public override void Save(UserDTO user)
         {
-            Code = "QUESTION";
+
             if (Id <= 0)
             {
                 SetId(0);
             }
             base.Save(user);
         }
+
 
     }
 }

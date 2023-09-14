@@ -104,7 +104,7 @@ namespace DAL.Core
             {
                 try
                 {
-                    //  added.repository.Delete(added.entity.Id);
+                      added.repository.Delete((int)added.entity.Id);
                 }
                 catch
                 {

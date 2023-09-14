@@ -4,6 +4,7 @@ using System.Dynamic;
 using NLog;
 using BLL;
 using DAL.Core;
+using System.Text;
 
 namespace MVC.Controllers
 {
@@ -49,6 +50,20 @@ namespace MVC.Controllers
             return json;
         }
 
+
+
+        protected string Body()
+        {
+            var request = HttpContext.Request;
+            var bodyText = string.Empty;
+            request.EnableBuffering();
+            using (var reader = new StreamReader(request.Body, Encoding.UTF8, true, 1024, true))
+            {
+                bodyText = reader.ReadToEnd();
+            }
+            request.Body.Position = 0;
+            return bodyText;
+        }
 
     }
 }

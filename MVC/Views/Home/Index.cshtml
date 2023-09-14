@@ -5,6 +5,19 @@
 @{
     Layout = "_Layout";
 }
+
+@section Scripts {
+    <title>Questionniaires List</title>
+    <script src="../../../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../../../Scripts/dx.all.js"></script>
+    <script src="../../../Scripts/dx.aspnet.data.js"></script>
+    <script src="../../../js/questionniaireJournal.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../Content/dx.common.css" />
+    <link rel="stylesheet" type="text/css" href="../../../Content/grey.css" />
+}
+
+<h1>Questionniaires List</h1>
+<div id="grid"></div>
 <div class="text-left">
 
     <a class="nav-link text-lite" asp-area="" asp-controller="Home" asp-action="Download">Download setting file</a>
@@ -13,14 +26,10 @@
           method="post">
 
         <input class="btn btn-secondary" type="submit" value="Upload file" />  
-        <input id="FileUpload_FormFile" type="file"
-                       name="FileUpload.FormFile" />
-
-
-        
+        <input id="FileUpload_FormFile" type="file" name="FileUpload.FormFile"  />
 
         <div style="margin-top:15px">
-            <output name="result"></output>
+            <output style="color:red" name="result"></output>
         </div>
     </form>
 
@@ -38,12 +47,16 @@
                 body: formData
             });
 
-            // if (response.ok) {
-            //     window.location.href = '/';
-            // }
+            resultElement.value = 'Result: ' + response.status + ' ' +  response.statusText;
+            var answer = response.json().then(x => {
+                console.log(x)
+                console.log(x.error);
+                resultElement.value = x.error;
+            }
+           );
+            
+           
 
-            resultElement.value = 'Result: ' + response.status + ' ' +
-                response.statusText;
         } catch (error) {
             console.error('Error:', error);
         }

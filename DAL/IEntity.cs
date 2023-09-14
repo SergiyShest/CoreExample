@@ -4,7 +4,7 @@ using NLog;
 
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Core
 
@@ -68,7 +68,7 @@ namespace Core
     public interface IBaseObject
     {
         int? Id { get; }
-
+        [JsonIgnore]
         IEntity Record { get; }
 
         void Save(UserDTO user);
@@ -90,7 +90,7 @@ namespace Core
 
         #region Fields and properties
 
-
+        protected virtual bool IsNew { get; set; }
 
         #region Logger
 
@@ -115,9 +115,9 @@ namespace Core
             set
             {
                 _id = value;
-                if (_record != null && value != null)
+                if (_record != null )
                 {
-                    _record.Id = (int)value;
+                    _record.Id = value;
                 }
             }
 
@@ -154,13 +154,13 @@ namespace Core
         #region Record
 
         protected T _record;
+       
         [JsonIgnore]
-        public bool IsSerialased { get; set; }
-
+        virtual  public bool IsSerialased { get; set; }
 
 
         [JsonIgnore]
-        public T Record
+       virtual    public T Record
         {
             get
             {

@@ -23,7 +23,17 @@ namespace Core
         public int? Order { get; set; }
 
 		public string? Description { get; set; }
-	}
+        
+        public string? NextButtonText { get; set; }
+        
+        public string? PrevButtonText { get; set; }
+        
+        public string? BackGroundColor { get; set; }
+        
+        public string? ForeColor { get; set; }
+
+        public string? Font { get; set; }
+    }
 
 }
 
