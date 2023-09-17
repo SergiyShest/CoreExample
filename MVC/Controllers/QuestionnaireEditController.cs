@@ -56,7 +56,7 @@ namespace MVC.Controllers
             var bodyStream = new StreamReader(HttpContext.Request.Body);
             bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
             var bodyText = bodyStream.ReadToEnd();
-            var errors = model.SaveQuestion(bodyText, GetCurrentUser());
+            var errors = model.SaveQuestion( uow ,bodyText, GetCurrentUser());
 
 
             var json = JsonConvert.SerializeObject(new { Errors = "errors" });
@@ -69,7 +69,7 @@ namespace MVC.Controllers
             var bodyStream = new StreamReader(HttpContext.Request.Body);
             bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
             var bodyText = bodyStream.ReadToEnd();
-            var errors = model.SaveQuestionnaire(bodyText, GetCurrentUser());
+            var errors = model.SaveQuestionnaire(uow ,bodyText, GetCurrentUser());
 
             var json = JsonConvert.SerializeObject(new { Errors = "errors" });
             return Content(json, "application/json");

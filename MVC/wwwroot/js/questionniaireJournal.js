@@ -26,10 +26,16 @@ function contextMenuPreparing(e) {
     }
 }
 
+function OnRowDblClick(e) {
+    console.log('OnRowDblClick')
+    console.log(e)
+}
+
 const columns_ = [
     {
         dataField: "id",
         dataType: "number",
+        allowEditing: false,
         formItem: {
             visible: true
         },
@@ -37,11 +43,9 @@ const columns_ = [
     },
     { caption: "Name ", dataField: "name" },
     { caption: "Text ", dataField: "text" },
-
+    { caption: "Main ", dataField: "main", dataType: "boolean" },
 
 ];
-
-
 
 $(function () {
 
@@ -59,15 +63,13 @@ function processFilter(dataGridInstance, filter) {
     }
 }
 
-$("#buttonContainer").dxButton({
-    text: "проверка фильтра",
-    onClick: function (e) {
-        var grid = $("#grid").dxDataGrid("instance"),
-        filter = grid.getCombinedFilter();
-        processFilter(grid, filter);
-        alert(filter);
+    function OnFocusedRowChanged(e) {
+        const focusedRowKey = e.component.option('focusedRowKey');
+        $('#selectedId').text(focusedRowKey);
+        let row = e.component.getRowElement(e.rowIndex);
+       // if (row)
+        //row[0].style.backgroundColor = 'red';
     }
-}).dxButton("instance");
 //поиск имени конолки по фильтру
 function getColumnFieldName(dataGridInstance, getter) {
     var column,
@@ -93,6 +95,14 @@ function getColumnFieldName(dataGridInstance, getter) {
         dataSource: DevExpress.data.AspNet.createStore({
             key: "id",
             loadUrl: "../Home/Get",
+            insertUrl: "../Home/Insert",
+            updateUrl: "../Home/Update",
+            deleteUrl: "../Home/Delete",
+            //loadParams: { id: this.getFirmaId() },
+            onBeforeSend: function (method, ajaxOptions) {
+                ajaxOptions.xhrFields = { withCredentials: true };
+            }  
+
         }),
 
         scrolling: {
@@ -112,21 +122,12 @@ function getColumnFieldName(dataGridInstance, getter) {
             contextMenuEnabled: true
         },
         groupPanel: {
-            visible: true   // or "auto"
+            visible: false   // or "auto"
         },
-        onContextMenuPreparing: contextMenuPreparing,
-        focusedRowEnabled: true,
         rowAlternationEnabled: true,
-        focusedRowKey: 3,
-        // filterValue: [["OrderID", ">", "400"], "and", ["OrderID", '<',"100000"]],
-        onInitNewRow: function (e) {
-            e.data = {
-                OrderDate: new Date()
-            };
-        },
         columnAutoWidth: true,
         filterRow: {
-            visible: true,
+            visible: false,
             applyFilter: "auto"
         },
         stateStoring: {
@@ -135,12 +136,29 @@ function getColumnFieldName(dataGridInstance, getter) {
             storageKey: 'QuesionniareGrid',
         },
         headerFilter: { visible: true },
-        filterPanel: { visible: true },
+        filterPanel: { visible: false },
         selection: {
-            mode: "multiple",
-            allowSelectAll: true
+            mode: "single" // or "multiple" | "none"
+            ,
+            showCheckBoxesMode: "onClick"    // or "onClick" | "onLongTap" | "none" 
         },
-        columns: columns_
+        columnAutoWidth: true,
+        columns: columns_,
+        focusedRowEnabled: true,
+        focusedRowKey: null,
+        onFocusedRowChanged: OnFocusedRowChanged,
+        editing: {
+            mode: 'row',
+            allowUpdating: true,
+            allowAdding: true,
+            allowDeleting: true,
+            popup: {
+                title: 'Quesionniare',
+                showTitle: true,
+                width: 700,
+                height: 525,
+            },
+        }
     });
 
 

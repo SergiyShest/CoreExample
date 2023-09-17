@@ -54,7 +54,7 @@ if (!app.Environment.IsDevelopment())
 
 AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCookiePolicy();
@@ -67,6 +67,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Questionnaire}/{action=Index}/{id?}");
+//     pattern: "{controller=Home}/{action=Index}/{id?}");
+   pattern: "{controller=Questionnaire}/{action=Index}/{id?}");
 
 app.Run();

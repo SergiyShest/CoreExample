@@ -78,7 +78,7 @@ export const baseMixin = {
 			this.loadingData = true;
 			var fetchRef = execFunction;
 			var path = document.location.origin  +'/'+ pathEnd
-			//var path ='https://localhost:7297/'+ pathEnd
+			//var path ='http://localhost:5056/'+ pathEnd
 			var json = JSON.stringify(data);
 			fetch(path,
 				{
@@ -92,7 +92,7 @@ export const baseMixin = {
 				})
 				.then((response) => {
 					this.loadingData = false;
-					if (response && response.bodyUsed!=false)
+					if (response )
 					{
 						return response.json();
 					}  

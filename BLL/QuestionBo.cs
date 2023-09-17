@@ -1,5 +1,6 @@
 ﻿using Core;
 using DAL;
+using DAL.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Dynamic;
@@ -54,27 +55,26 @@ namespace BLL
 
         #endregion
         
-        #region BackGroundColor
-        public string? BackGroundColor
+        #region CssStyle
+        public dynamic CssStyle
         {
-            get { return Record?.BackGroundColor; }
-            set { Record.BackGroundColor = value; }
-        }
-        #endregion
-
-        #region ForeColor
-        public string? ForeColor
-        {
-            get { return Record?.ForeColor; }
-            set { Record.ForeColor = value; }
-        }
-        #endregion
-
-        #region Font
-        public string? Font
-        {
-            get { return Record?.Font; }
-            set { Record.Font = value; }
+            get
+            {
+                if (Record.CssStyle == null)
+                    return   null;
+                return JsonConvert.DeserializeObject(Record.CssStyle);
+            }
+            set
+            {
+                if (value != null && value.GetType() == typeof(JObject))
+                {
+                    Record.CssStyle = value.ToString();
+                }
+                else
+                {
+                    Record.CssStyle = value;
+                }
+            }
         }
         #endregion
 
@@ -201,14 +201,14 @@ namespace BLL
         }
         #endregion
 
-        public override void Save(UserDTO user)
+        public override void Save(IUnitOfWorkEx uow, UserDTO user, bool withSave=true)
         {
 
             if (Id <= 0)
             {
                 SetId(0);
             }
-            base.Save(user);
+            base.Save(uow, user,withSave);
         }
 
 

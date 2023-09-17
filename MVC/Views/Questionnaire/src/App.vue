@@ -3,15 +3,15 @@
     @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
 
     <v-main>
-      <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine; ; ">
-        <h2> {{ Questionnarie.Name }} </h2>
+      <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine;" :style="headerCssStyle" >
+        <h2> {{ Questionnarie.Text }} </h2>
       </v-row>
-      <div style="min-height:600px ;display: flex;flex-direction: column; justify-content: space-between;" class="panel">
+      <div style="min-height:600px ;display: flex;flex-direction: column; justify-content: space-between;" :style="currentQuestionCssStyle"  class="panel" >
 
         <div style="display:flex; justify-content: space-between;">
 
           <h3 v-if="currentQuestion != null">
-            {{ currentQuestion.Name }}
+            {{ currentQuestion.Text }}
           </h3>
           <div
             style="width:60px ;min-width: 60px; height: 35px; background-color: rgb(8, 219, 8);border-radius: 25px; padding:5px;margin: 5px;"
@@ -19,7 +19,7 @@
             {{ currentQuestion.Order }} of {{ this.Questionnarie.Questions.length }}
           </div>
         </div>
-        <v-form ref="form" v-model="currentModel.valid">
+        <v-form ref="form" v-model="currentModel.valid"   >
           <v-jsf v-if="currentQuestion != null" v-model="currentModel.answerModel" :schema="currentQuestion.Schema"
             :options="currentQuestion.Options" />
         </v-form>
@@ -43,8 +43,9 @@
 
 <script>
 if (Id == undefined) {
-  var Id = 1
+  //var Id = 39
 }
+console.log(Id)
 if (SessionId == undefined) {
     //var SessionId = 'baseMixin.GenerateGuid()'
 }
@@ -84,12 +85,24 @@ export default {
     NextButtonText() {
       return  this.currentQuestion.NextButtonText?this.currentQuestion.NextButtonText:"NEXT"
     },
+
+    currentQuestionCssStyle(){
+      if(this.currentQuestion.CssStyle){
+        return this.currentQuestion.CssStyle;
+      }
+      },
+      headerCssStyle(){
+
+      if(this.Questionnarie.CssStyle){
+        return this.Questionnarie.CssStyle;
+      }
+      }
+      
   },
   methods: {
     validateForm() {
       this.$refs.form.validate();
     },
-
     SelectQuestion(question) {
       if (this.currentQuestion.Id == question.Id) return; //если это повторный вызов
       if (question.Id == 0) return; //если это фейк  currentQuestion нужный для инициализации Vue
@@ -157,7 +170,7 @@ export default {
       console.log('SetQuestions(val)')
       this.fetch(
         this.SetQuestions,
-        "Questionnaire/GetQuestions?id=" + Id
+        "Questionnaire/Get?id=" + Id
       );
     },
     SetQuestions(val) {
@@ -183,10 +196,11 @@ export default {
 
   },
   mounted: function () {
-    // if (Id) {
-    //   this.GetQuestions();
-    this.SetQuestions(data);
-    // }
+    console.log(Id);
+     if (Id) {
+    this.GetQuestions();
+    //   this.SetQuestions(data);
+   }
   },
 };
 </script>
@@ -194,7 +208,7 @@ export default {
 html,
 body {
   height: 100%;
-
+  
 }
 
 .buttion {
@@ -205,6 +219,7 @@ body {
 }
 
 .panel {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   border: outset;
   border-radius: 15px;
   padding: 15px;

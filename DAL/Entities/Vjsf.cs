@@ -28,11 +28,9 @@ namespace Core
         
         public string? PrevButtonText { get; set; }
         
-        public string? BackGroundColor { get; set; }
+        public string? CssStyle  { get; set; }
         
-        public string? ForeColor { get; set; }
 
-        public string? Font { get; set; }
     }
 
 }

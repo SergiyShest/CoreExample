@@ -11,11 +11,13 @@ using Newtonsoft.Json;
 using System.Text;
 using MVC.Controllers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Web.Helpers;
 using System.IO;
 using DAL.Core;
 using DAL;
 using DevExtreme.AspNet.Data;
+using System.Net.Http.Formatting;
+using System.Net;
+using NPOI.XWPF.UserModel;
 
 namespace CookieReaders.Controllers
 {
@@ -23,14 +25,10 @@ namespace CookieReaders.Controllers
     public class HomeController : BaseController
     {
 
-
-
-
         public IActionResult Index()
         {
             return View();
         }
-
 
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
         {
@@ -41,10 +39,49 @@ namespace CookieReaders.Controllers
             return Json(await DataSourceLoader.LoadAsync(answers, loadOptions));
         }
 
+        public async Task<IActionResult> Insert()
+        {
+            var body = base.Body();
+            var form = new FormDataCollection(body);
+            var values = form.Get("values");
+
+            var newQ = new Questionnaire();
+
+            JsonConvert.PopulateObject(values, newQ);
+            uow.Save();
+
+            return Ok();
+        }
+
+        public async Task<IActionResult> Update()
+        {
+            var  body= base.Body();
+            var form = new FormDataCollection(body);
+            var values = form.Get("values");
+            var id = Convert.ToInt32(form.Get("key"));
+            var quer = uow.GetRepository<Questionnaire>().FirstOrDefault(x=>x.Id==id,false );
+            var prMain = quer.Main == true;
+            JsonConvert.PopulateObject(values, quer);
+            if (quer.Main == true && !prMain){ 
+
+              var prevMain = uow.GetRepository<Questionnaire>().FirstOrDefault(x=>x.Main==true,false );
+              if(prevMain!=null)
+                prevMain.Main = false;
+            }
+            uow.Save();
 
 
+            return Ok();
+        }
 
-
+        public async Task<IActionResult> Delete()
+        {
+            var body = base.Body();
+            var form = new FormDataCollection(body);
+            var id = Convert.ToInt32(form.Get("key"));
+            uow.Delete<Questionnaire>(id);
+            return Ok();
+        }
 
         [HttpPost]
         public async Task<IActionResult> Upload(int? id)
@@ -63,21 +100,28 @@ namespace CookieReaders.Controllers
             try
             {
                 var questionniare = JsonConvert.DeserializeObject<QuestionnaireBo>(content);
-                if (questionniare == null) { throw new ApplicationException ("now file"); }
-                var exists = uow.GetRepository<Questionnaire>().GetAll().Any(x => x.Name == questionniare.Name);
-                if(exists) { throw new ApplicationException("Questionnaire with the same name already exists. Change  name please."); }
-                if (id == null)
+                if (questionniare == null) { throw new ApplicationException("now file"); }
+                   var exists = uow.GetRepository<Questionnaire>().GetAll().Any(x => x.Name == questionniare.Name && x.Id != id);
+                if (exists) { throw new ApplicationException("Questionnaire with the same name already exists. Change  name please."); }
+                if (id != null)
                 {
-                    questionniare.Id = null;
-                    foreach (var q in questionniare.Questions)
-                    { q.Id = null; }
+                    var row = uow.GetRepository<Questionnaire>().FirstOrDefault(x => x.Id == id);
+
+                    if (row != null)
+                    {
+                        var q = new QuestionnaireBo(row) ;
+                        q.Delete(uow ,null, false);
+                    }
                 }
-                questionniare.Save(null);
+                questionniare.Id = id;
+                foreach (var q in questionniare.Questions)
+                { q.Id = null; }
+                questionniare.Save(uow,null);
                 return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(new {error = ex.GetAllMessages()});
+                return BadRequest(new { error = ex.GetAllMessages() });
             }
 
             // Process uploaded files
@@ -86,11 +130,9 @@ namespace CookieReaders.Controllers
             return Ok();
         }
 
-
-
         public FileResult Download(int id)
         {
-            var questionnaire = uow.GetRepository<Questionnaire>().FirstOrDefault();
+            var questionnaire = uow.GetRepository<Questionnaire>().FirstOrDefault(x=>x.Id==id);
 
             var qustionniare = new QuestionnaireBo(questionnaire);
             var json = JsonConvert.SerializeObject(qustionniare, Formatting.Indented);
@@ -98,7 +140,6 @@ namespace CookieReaders.Controllers
             string fileName = qustionniare.Name + ".json";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
-
 
     }
 }

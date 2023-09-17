@@ -1,23 +1,68 @@
 ﻿using Core;
 using DAL;
+using DAL.Core;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
-namespace BLL { 
+namespace BLL
+{
+
     public class QuestionnaireBo : BaseObj<Questionnaire>
     {
-		public string Name { 
-            get { return Record?.Name; } 
-            set { Record.Name = value; } }
+        #region Properties
 
+        #region Name
+        public string Name
+        {
+            get { return Record?.Name; }
+            set { Record.Name = value; }
+        }
+        #endregion
 
+        #region Text
 
-        public string Text { get { return Record.Text; } 
-            set { Record.Text = value; } }
+        public string Text
+        {
+            get { return Record.Text; }
+            set { Record.Text = value; }
+        }
+        #endregion
 
+        #region Main
 
+        public bool? Main
+        {
+            get { return Record.Main; }
+            set { Record.Main = value; }
+        }
+        #endregion
 
+        #region CssStyle
+        public dynamic CssStyle
+        {
+            get
+            {
+                if (Record.CssStyle == null)
+                    return null;
+                return JsonConvert.DeserializeObject(Record.CssStyle);
+            }
+            set
+            {
+                if (value != null && value.GetType() == typeof(JObject))
+                {
+                    Record.CssStyle = value.ToString();
+                }
+                else
+                {
+                    Record.CssStyle = value;
+                }
+            }
+        }
+        #endregion
 
-		List<QuestionBo> _questions;
+        #region Questions
+
+        List<QuestionBo> _questions;
         public List<QuestionBo> Questions
         {
             get
@@ -25,42 +70,47 @@ namespace BLL {
                 if (_questions == null)
                 {
                     _questions = new List<QuestionBo>();
-                    if (!IsNew) { 
-                        var prRep = base._uow.GetRepository<Vjsf>();
-                    var questionRecords = prRep.Where(x => x.QuestionnaireId == Id).OrderBy(x => x.Order).ToList();
-                    int i = 0;
-                    bool nullable = false;
-                    foreach (var record in questionRecords)
+                    if (!IsNew)
                     {
-                        i++;
-                        if (record.Order == null || record.Order != i || nullable)
+                        var prRep = base.Uow.GetRepository<Vjsf>();
+                        var questionRecords = prRep.Where(x => x.QuestionnaireId == Id).OrderBy(x => x.Order).ToList();
+                        int i = 0;
+                        bool nullable = false;
+                        foreach (var record in questionRecords)
                         {
-                            nullable = true;
-                            record.Order = i;
-                            prRep.Update(record);
+                            i++;
+                            if (record.Order == null || record.Order != i || nullable)
+                            {
+                                nullable = true;
+                                record.Order = i;
+                                prRep.Update(record);
+                            }
+                            _questions.Add(new QuestionBo(record));
                         }
-                        _questions.Add(new QuestionBo(record));
-                    } }
+                    }
                 }
                 return _questions;
             }
         }
 
+        #endregion
 
+        internal string Error { get; private set; }
 
+        #endregion
 
         #region constructors
 
-        public QuestionnaireBo(int? id) : base(id)
+        public QuestionnaireBo( int? id) : base(id)
         {
 
-         
+
         }
 
         public QuestionnaireBo(Questionnaire record) : base(record)
         {
 
-         
+
         }
 
         public QuestionnaireBo() : base()
@@ -70,30 +120,34 @@ namespace BLL {
         }
 
         #endregion
-        internal string Error { get; private set; }
 
-        public override void Save(UserDTO user)
+        #region Methods
+
+        public override void Save(IUnitOfWorkEx uow, UserDTO user, bool withSave = false)
         {
-            base.Save(user);
+            this.Uow = uow;
+            base.Save(uow, user, false);
             foreach (var question in Questions)
             {
                 question.QuestionnaireId = Id;
-
-                question.Save(user);
+                question.Save(uow, user, false);
             }
+            base.Uow.Save();
         }
 
-        public override void Delete(UserDTO user)
+        public override void Delete(IUnitOfWorkEx uow, UserDTO user, bool withSave = false)
         {
+            this.Uow = uow;
 
             foreach (var question in Questions)
             {
-               question.Delete(user);
-            }            
-            base.Delete(user);
+                question.Delete(uow,user, withSave);
+            }
+            base.Delete(uow,user, withSave);
 
         }
 
+        #endregion
 
     }
 

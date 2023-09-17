@@ -71,7 +71,7 @@ namespace BLL
 
 
 
-		public List<ObjectError> SaveQuestion(string bodyText, UserDTO user)
+		public List<ObjectError> SaveQuestion(IUnitOfWorkEx uow, string bodyText, UserDTO user)
 		{
 			var err = new List<ObjectError>();
 			try
@@ -81,7 +81,7 @@ namespace BLL
 				{
 					query.QuestionnaireId = Id;
 				}
-				query.Save(user);
+				query.Save(uow,user);
 			}
 			catch (Exception ex)
 			{
@@ -90,14 +90,14 @@ namespace BLL
 			return err;
 		}
 
-		public List<ObjectError> SaveQuestionnaire(string bodyText, UserDTO user)
+		public List<ObjectError> SaveQuestionnaire(IUnitOfWorkEx uow, string bodyText, UserDTO user)
 		{
 			var err = new List<ObjectError>();
 			try
 			{
 				var questionnaire = JsonConvert.DeserializeObject<QuestionnaireBo>(bodyText);
 	
-				questionnaire.Save(user);
+				questionnaire.Save(uow, user);
 			}
 			catch (Exception ex)
 			{

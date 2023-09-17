@@ -71,9 +71,9 @@ namespace Core
         [JsonIgnore]
         IEntity Record { get; }
 
-        void Save(UserDTO user);
+        void Save(IUnitOfWorkEx uow, UserDTO user, bool withSave);
 
-        void Delete(UserDTO user);
+        void Delete(IUnitOfWorkEx uow, UserDTO user, bool withSave);
 
         List<string> Validate(bool throwEx = false);
 
@@ -86,7 +86,13 @@ namespace Core
     public abstract class BaseObj<T> : IBaseObject where T : class, IEntity, new()
     {
 
-      protected  IUnitOfWorkEx _uow = new UnitOfWork();
+      protected IUnitOfWorkEx Uow { get; set; } = new UnitOfWork();
+
+        public virtual void SetUow( IUnitOfWorkEx uow)
+        {
+            Uow = uow;
+        }
+
 
         #region Fields and properties
 
@@ -170,7 +176,7 @@ namespace Core
                     if (Id != null)
                     {
 
-                        record = _uow.Get<T>((int)Id);
+                        record = Uow.Get<T>((int)Id);
                         DbValues = RecordValues(record);
                         if (record == null)
                         {
@@ -225,12 +231,13 @@ namespace Core
 
         public BaseObj(int? id)
         {
+
             if (id.HasValue)
                 SetId((int)id);
         }
 
         protected BaseObj(T record, bool useRecordValues = false)
-        {
+        {   
             UseRecordValues = useRecordValues;
             Record = record;
             DbValues = RecordValues(record);
@@ -245,8 +252,9 @@ namespace Core
             var x = Record; //
         }
 
-        public virtual void Save(UserDTO user)
+        public virtual void Save(IUnitOfWorkEx uow, UserDTO user,bool withSave = true)
         {
+            Uow = uow;
             if (IsSerialased)
             {
                 if (Id == null || Id == 0)
@@ -255,7 +263,7 @@ namespace Core
                 }
                 else
                 {
-                    Record = _uow.Get<T>((int)Id);
+                    Record = Uow.Get<T>((int)Id);
                 }
                 IsSerialased = false;
             }
@@ -266,15 +274,16 @@ namespace Core
                 string error = string.Join(Environment.NewLine, valResult);
                 throw new ValidationException(error);
             }
-            _uow.Save(Record);
+            Uow.Save(Record, withSave);
             Id = Record.Id;
         }
 
-        public virtual void Delete(UserDTO user)
+        public virtual void Delete(IUnitOfWorkEx uow, UserDTO user, bool withSave = true)
         {
+            Uow = uow;
             if (Record.Id != null)
             {
-              _uow.Delete<T>((int)Record.Id);
+              Uow.Delete<T>((int)Record.Id,withSave);
             }
            
         }

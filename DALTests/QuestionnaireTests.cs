@@ -21,7 +21,7 @@ namespace Tests
         public void CreateQuestion()
         {
             var question = new QuestionBo() { Name = Guid.NewGuid().ToString() };
-            question.Save(_user);
+            question.Save(base.UOW,_user);
 
         }
 
@@ -29,9 +29,9 @@ namespace Tests
         public void DeleteQuestion()
         {
             var question = new QuestionBo() { Name = "fffff" };
-            question.Save(_user);
+            question.Save(UOW,_user);
 
-            question.Delete(_user);
+            question.Delete( UOW,_user);
 
         }
 
@@ -43,7 +43,7 @@ namespace Tests
             var questionnaire = new QuestionnaireBo(questionnaireRecord);
             var question = new QuestionBo() { Name = Guid.NewGuid().ToString() };
             questionnaire.Questions.Add(question);
-            questionnaire.Save(_user);
+            questionnaire.Save(base.UOW,_user);
 
 
         }
@@ -106,7 +106,7 @@ namespace Tests
             var questionnaires = UOW.GetRepository<Questionnaire>().GetAll();
             foreach (var x in questionnaires) {
                 var q = new QuestionnaireBo(x);
-                q.Delete(_user);
+                q.Delete(base.UOW, _user);
             }
 
         }
@@ -124,7 +124,7 @@ namespace Tests
             { q.Id=null; }
 
            
-            questionniare.Save(_user);
+            questionniare.Save(base.UOW, _user);
             var  jso1 = JsonConvert.SerializeObject(questionniare, Formatting.Indented);
             File.WriteAllText("C:tmp\\jso1", jso1);
 
@@ -152,7 +152,7 @@ namespace Tests
                 var question = new QuestionBo() { Name = "Test" };
                 questionnaire.Questions.Add(question);
             }
-            questionnaire.Save(_user);
+            questionnaire.Save(base.UOW,_user);
             return questionnaire;
         }
 

@@ -17,7 +17,7 @@ namespace DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "pgcrypto");
@@ -31,13 +31,22 @@ namespace DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
 
-                    b.Property<string>("Code")
+                    b.Property<string>("CssStyle")
                         .HasColumnType("text");
+
+                    b.Property<bool?>("Main")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Name" }, "IX_Questionnaire_Name")
+                        .IsUnique();
 
                     b.ToTable("Questionnaire");
                 });
@@ -50,19 +59,13 @@ namespace DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
 
-                    b.Property<string>("BackGroundColor")
-                        .HasColumnType("text");
-
                     b.Property<string>("Code")
                         .HasColumnType("text");
 
+                    b.Property<string>("CssStyle")
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Font")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ForeColor")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -87,6 +90,9 @@ namespace DAL.Migrations
                         .HasColumnType("jsonb");
 
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Name" }, "IX_Vjsf_Name")
+                        .IsUnique();
 
                     b.ToTable("Vjsf");
                 });
