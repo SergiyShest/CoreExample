@@ -14,7 +14,7 @@
             {{ currentQuestion.Text }}
           </h3>
           <div
-            style="width:60px ;min-width: 60px; height: 35px; background-color: rgb(8, 219, 8);border-radius: 25px; padding:5px;margin: 5px;"
+            class='questionInfo'
             v-if="this.Questionnarie.Questions != null">
             {{ currentQuestion.Order }} of {{ this.Questionnarie.Questions.length }}
           </div>
@@ -34,7 +34,7 @@
           <v-spacer></v-spacer>
           <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext" v-if="currentQuestion.Order < Questionnarie.Questions.length">
            {{ NextButtonText}}
-          </v-btn> <!-- <img :src="require('../../../wwwroot/Content/Icons/next.png')" width="20" height="20" /> -->
+          </v-btn> 
         </div>
       </div>
     </v-main>
@@ -118,7 +118,8 @@ export default {
       this.currentQuestion = question;
       this.notValidOptions = null;
       this.notValidSchema = null;
-      this.SetModel();
+        this.SetModel();
+        this.PlayOk()
     },
     SelectNextQuestion() {
       const nextQuestion = this.Questionnarie.Questions.find(
@@ -208,7 +209,17 @@ export default {
 html,
 body {
   height: 100%;
-  
+
+}
+
+.questionInfo {
+        width: 60px;
+        min-width: 60px;
+        height: 35px;
+        background-color: green;
+        border-radius: 25px;
+        padding: 5px;
+        margin: 5px;
 }
 
 .buttion {

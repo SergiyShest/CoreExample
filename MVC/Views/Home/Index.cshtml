@@ -22,7 +22,7 @@
 <div id="app">
 <div class="text-left">
        
-        <a v-if="id!=null" class="nav-link text-lite" v-bind:href="'/Home/Download/'+ id">Download selected {{id}}</a>
+        <a v-if="id!=null" class="nav-link text-lite" v-bind:href="'/Home/Download/'+ id">Download current</a>
         <div style="display:none" id="selectedId"></div>
         <div style="display:flex;flex-direction:row">
         <div v-for="(fileInf,num) in filesList" :v-key="fileInf">
@@ -33,12 +33,29 @@
          
             <input id="file" type="file" v-on:change="addFiles()"  class="inputfile" />
            
-            <label v-if="filesList.length==0" for="file" class="openFileDialogButton">select json file for change {{id}}</label>
-            <button v-if="filesList.length>0" class="openFileDialogButton" @@click="loadFile()">Change {{id}}</button>
+            <label v-if="filesList.length==0" for="file" class="openFileDialogButton">Select file for current </label>
+            <button v-if="filesList.length>0" class="openFileDialogButton" @@click="loadFile()">Load current</button>
+            <div style="color:red">-{{uploadError}}-</div>
         </div>
+        <a class="nav-link text-lite" href="/Home/DownloadCss">Download main css</a>
+        <div style="display:flex;flex-direction:row">
+            <div v-for="(fileInf,num) in filesListCss" :v-key="fileInf">
+                <span style="margin:3px">{{fileInf.file.name}}</span>
+                <span style="margin:3px">{{fileInf.fileSize}}</span>
+            </div>
+
+
+            <input id="fileCss" type="file" v-on:change="addFilesCss()" class="inputfile" />
+
+            <label v-if="filesListCss.length==0" for="fileCss" class="openFileDialogButton">Select Css file </label>
+            <button v-if="filesListCss.length>0" class="openFileDialogButton" @@click="loadCss()">Load Css</button>
+            <div style="color:red">{{uploadCssError}}</div>
+
+        </div>
+
 </div>
 </div>
-<script src="https://unpkg.com/vue@next"></script>
+<script src="/Content/vue.js"></script>
 <script>
 
 
@@ -55,20 +72,20 @@
         }
         return fileSizeStr;
     }
-    function uploadFile(fileInf, id, collBack) {
+    function uploadFile(fileInf, id, collBack,path='Home/Upload') {
         console.log('uploadFile')
         var req = new XMLHttpRequest();
         var formData = new FormData();
         formData.append("file", fileInf.file);
         formData.append("id", id);
-        req.open("POST", 'Home/Upload');
+        req.open("POST", path);
         req.send(formData);
         req.onreadystatechange = function () {
             if (this.readyState == 3) {
                 collBack(fileInf, this.readyState, this.responseText, id);
             }
         }
-        req.onload = function () { collBack(fileInf, this.readyState, '', id); }
+        req.onload = function () { collBack(fileInf, this.readyState, 'none', id); }
 
         req.onerror = function (error) {
             collBack(fileInf, this.readyState, error, id);
@@ -83,7 +100,10 @@
             return {
                 addNew:true,
                 id:null,
-                filesList:[]
+                filesList:[],
+                uploadError:null,
+                filesListCss:[],
+                uploadCssError:null,
             }
             
         }
@@ -107,8 +127,10 @@
                     this.filesList.push(fileInfo);
                 }
                 fileInput.value = '';
+                this.loadFile()
             },
             loadFile: function () {
+                this.uploadError = '';
                 for (var i = 0; i < this.filesList.length; i++) {
                     var ff = this.filesList[i];
                     if (ff.status != 0) continue;
@@ -121,8 +143,9 @@
                 console.log(fileInf.file.name + '  ' + state + '  ' + new Date().getSeconds() + ':' + new Date().getMilliseconds());
                 fileInf.status = state;
                 console.log(respText);
-                if (typeof (respText) !== 'undefined') {
+                if (typeof (respText) !== 'undefined' && respText != 'none') {
                     fileInf.error = "upload error";
+                    this.uploadError = respText;
                 }
 
                 var f = this.filesList.filter(function (fileInfo) {
@@ -144,7 +167,37 @@
             },
             remove: function () { 
                 this.filesList=[]
-            }
+            },
+            addFilesCss: function () {
+                if (!event) { event = window.event; }
+                var fileInput = (event.target || event.srcElement);
+                for (var f = 0; f < fileInput.files.length; f++) {
+                    var file = fileInput.files[f];
+                    var fileInfo = {
+                        file: file,
+                        fileSize: GetFormatedFileSize(file.size),
+                        status: 0
+                    }
+                    if (file.size / (1024 * 1024) > 10) {
+                        fileInfo.status = 3;
+                        fileInfo.error = 'Превышен максимальный размер 10 Мбт.'
+                    }
+                    this.filesListCss.push(fileInfo);
+                }
+                fileInput.value = '';
+                this.loadFileCss()
+            },
+            loadFileCss: function () {
+                for (var i = 0; i < this.filesListCss.length; i++) {
+                    var ff = this.filesList[i];
+                    if (ff.status != 0) continue;
+                    ff.status = 2;
+                    uploadFile(ff, this.id, this.fileProgress, 'Home/UploadCss');
+                    console.log('done');
+                }
+            },
+
+
 
         },
         mounted() {

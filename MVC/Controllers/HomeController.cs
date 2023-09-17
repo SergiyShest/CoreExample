@@ -137,9 +137,21 @@ namespace CookieReaders.Controllers
             var qustionniare = new QuestionnaireBo(questionnaire);
             var json = JsonConvert.SerializeObject(qustionniare, Formatting.Indented);
             byte[] fileBytes = Encoding.ASCII.GetBytes(json);
-            string fileName = qustionniare.Name + ".json";
+            string fileName = qustionniare.Name + id+".json";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
+
+
+        public FileResult DownloadCss(int id)
+        {
+            var fileContent = System.IO.File.ReadAllText("wwwroot\\Scripts\\vue-apps\\css_questionnaire\\app.css");
+            byte[] fileBytes = Encoding.ASCII.GetBytes(fileContent);
+            string fileName = "qustionniareMain.css";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+
+
 
     }
 }
