@@ -50,8 +50,6 @@ namespace MVC.Controllers
             return json;
         }
 
-
-
         protected string Body()
         {
             var request = HttpContext.Request;

@@ -35,7 +35,7 @@
            
             <label v-if="filesList.length==0" for="file" class="openFileDialogButton">Select file for current </label>
             <button v-if="filesList.length>0" class="openFileDialogButton" @@click="loadFile()">Load current</button>
-            <div style="color:red">-{{uploadError}}-</div>
+            <div style="color:red">{{uploadError}}</div>
         </div>
         <a class="nav-link text-lite" href="/Home/DownloadCss">Download main css</a>
         <div style="display:flex;flex-direction:row">

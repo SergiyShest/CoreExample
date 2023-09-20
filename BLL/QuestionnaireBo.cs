@@ -126,6 +126,14 @@ namespace BLL
         public override void Save(IUnitOfWorkEx uow, UserDTO user, bool withSave = false)
         {
             this.Uow = uow;
+            if (Main == true)
+            {
+                var prevMain = uow.GetRepository<Questionnaire>().FirstOrDefault(x => x.Main == true && x.Id != Id, false);
+                if (prevMain != null)
+                {
+                    prevMain.Main = false;
+                }
+            }
             base.Save(uow, user, false);
             foreach (var question in Questions)
             {
