@@ -14,6 +14,9 @@
       @option-clicked="contextMenuClicked"
     ></vue-simple-context-menu>
     <v-main>
+            <v-container fluid>
+
+   
       <v-row>
         <v-col cols="2" style="height: 70vh; overflow: scroll"><!--v-if="mode == 'edit'"-->
           <v-row style="height: 50px" >
@@ -80,19 +83,21 @@
             </div> 
         </v-col>
         <v-col col="10">
-          <v-row  v-if="Questionnarie != null " class="panel" style="background-color: aquamarine; ; ">
-          <h2>  {{ Questionnarie.Name }} </h2>
+          <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine;" :style="headerCssStyle" >
+            <h2> {{ Questionnarie.Text }} </h2>
           </v-row> 
            <!-- <div>{{currentModel.answerModel}}  </div>        <div>{{ enableNext }}  </div>     -->
       <div style="min-height:600px ;display: flex;flex-direction: column; justify-content: space-between;" class="panel" >
 
        <div style="display:flex; justify-content: space-between;">
           
-          <h3  v-if="currentQuestion != null">
-            {{ currentQuestion.Name }}
+          <h3 v-if="currentQuestion != null">
+            {{ currentQuestion.Text }}
           </h3>
-           <div  style="width:60px ;min-width: 60px; height: 35px; background-color: rgb(8, 219, 8);border-radius: 25px; padding:5px;margin: 5px;" v-if="this.Questionnarie.Questions != null">
-            {{currentQuestion.Order }} of {{ this.Questionnarie.Questions.length }} 
+          <div
+            class='questionInfo'
+            v-if="this.Questionnarie.Questions != null">
+            {{ currentQuestion.Order }} of {{ this.Questionnarie.Questions.length }}
           </div>
         </div>
         <v-form ref="form" v-model="currentModel.valid" >
@@ -107,17 +112,17 @@
         <v-spacer></v-spacer>               
         <div style=" display: flex; width: 100% ;height:50px; padding: 3px;margin: 3px;">
           
-          <v-btn  class="buttion" @click="SelectPrevQuestion()" v-if="currentQuestion.Order > 1">
-            Prev</v-btn>
+          <v-btn class="buttion" @click="SelectPrevQuestion()" v-if="currentQuestion.Order > 1">
+            {{ PrevButtonText}}</v-btn>
          <v-spacer></v-spacer> 
-          <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext" v-if="currentQuestion.Order < Questionnarie.Questions.length
-            ">
-            Next
-         </v-btn> <!-- <img :src="require('../../../wwwroot/Content/Icons/next.png')" width="20" height="20" /> -->
+          <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext" v-if="currentQuestion.Order < Questionnarie.Questions.length">
+           {{ NextButtonText}}
+         </v-btn>
         </div>
       </div>
     </v-col>
     </v-row>
+  </v-container>
     <v-footer fixed class="d-flex justify-end">
         <v-btn
           height="25"
@@ -150,111 +155,27 @@ if (Id == undefined) {
 }
 
 
-import { data } from "./data.js";
+import { data,radioOptions,radioShema,emptyOptions,stringShema,dateShema,numShema,radioItem,stringItem,dateItem,numItem } from "./data.js";
 import { baseMixin } from "./BaseMixin.js";
-import VueSimpleContextMenu from "vue-simple-context-menu";
+//import VueSimpleContextMenu from "vue-simple-context-menu";
 import VJsf from '@koumoul/vjsf/lib/VJsf.js'
 import '@koumoul/vjsf/lib/VJsf.css'
 import '@koumoul/vjsf/lib/deps/third-party.js'
+import { PrismEditor } from "vue-prism-editor";
+import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
+import { highlight, languages } from "prismjs/components/prism-core";
+import "prismjs/components/prism-clike";
+import "prismjs/components/prism-javascript";
+import "prismjs/themes/prism.css"; // import syntax highlighting styles
 
-const radioOptions = {
-  context: {
-    Items: [
-      { Id: 1, Name: "item 1" },
-      { Id: 2, Name: "item 2" },
-      { Id: 3, Name: "item 3" },
-      { Id: 4, Name: "item 4" },
-    ],
-  },
-  selectAll: true,
-};
-const emptyOptions = {
-  context: {},
-};
-const radioShema = {
-  type: "object",
-  requred: ["ListProp"],
-  properties: {
-    ListProp: {
-      type: "number",
-      title: "Select",
-      "x-display": "radio",
-      "x-fromData": "context.Items",
-      "x-itemKey": "Id",
-      "x-itemTitle": "Name",
-      description: "",
-    },
-  },
-};
-const stringShema = {
-  type: "object",
-  requred: ["StrProp"],
-  properties: {
-    StrProp: {
-      type: "string",
-      title: "Input string please",
-      description: "Help",
-    },
-  },
-};
-const dateShema = {
-  type: "object",
-  requred: ["DateProp"],
-  properties: {
-    DateProp: {
-      type: "string",
-      format: "date",
-      title: "Input date please",
-      description: "Help",
-    },
-  },
-};
-const numShema = {
-  type: "object",
-  requred: ["NumProp"],
-  properties: {
-    NumProp: {
-      type: "string",
-      format: "number",
-      title: "Input numper please",
-      description: "Help",
-    },
-  },
-};
-
-const radioItem = {
-  type: "number",
-  title: "Select",
-  "x-display": "radio",
-  "x-fromData": "context.Items",
-  "x-itemKey": "Id",
-  "x-itemTitle": "Name",
-  description: "",
-};
-
-const stringItem = {
-  type: "string",
-  title: "Input string please",
-  description: "Help",
-};
-const dateItem = {
-  type: "string",
-  format: "date",
-  title: "Input date please",
-  description: "Help",
-};
-const numItem = {
-  type: "string",
-  format: "number",
-  title: "Input numper please",
-  description: "Help",
-};
 
 export default {
   name: 'App',
   mixins: [baseMixin],
   components: {
-    VJsf
+    VJsf,
+     PrismEditor,
+   // VueSimpleContextMenu,
   },
   data: () => ({
     valid: false,
@@ -289,11 +210,31 @@ export default {
     orderedQuestions() {
       return this.Questionnarie.Questions.sort((a, b) => a.Order - b.Order);
     },
-     enableNext() {
-      return Object.keys(this.currentModel.answerModel).length>0
-    },
-    
-  },
+    enableNext() {
+     
+     return this.currentModel.valid!=false&& Object.keys(this.currentModel.answerModel).length > 0
+   },
+   PrevButtonText() {
+     return  this.currentQuestion.PrevButtonText?this.currentQuestion.PrevButtonText:"Prev"
+   },
+   NextButtonText() {
+     return  this.currentQuestion.NextButtonText?this.currentQuestion.NextButtonText:"NEXT"
+   },
+
+   currentQuestionCssStyle(){
+     if(this.currentQuestion.CssStyle){
+       return this.currentQuestion.CssStyle;
+     }
+     },
+     headerCssStyle(){
+
+     if(this.Questionnarie.CssStyle){
+       return this.Questionnarie.CssStyle;
+     }
+     }
+     
+ },
+
   methods: {
     validateForm() {
       this.$refs.form.validate();
@@ -413,8 +354,8 @@ export default {
       }
     },
     SelectQuestion(question) {
-      if (this.currentQuestion.Id == question.Id) return; //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
-      if (question.Id == 0) return; //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ  currentQuestion пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Vue
+      if (this.currentQuestion.Id == question.Id) return; //если это повторный вызов
+      if (question.Id == 0) return; //если это фейк  currentQuestion нужный для инициализации Vue
 
       let prmodel = this.models.find(
         (x) => x.QuestionId == this.currentQuestion.Id
@@ -428,6 +369,7 @@ export default {
       this.notValidOptions = null;
       this.notValidSchema = null;
       this.SetModel();
+this.PlayOk()
     },
     SelectNextQuestion() {
       const nextQuestion = this.Questionnarie.Questions.find(
@@ -457,7 +399,7 @@ export default {
         model = {
           QuestionId: this.currentQuestion.Id,
           answerModel: {},
-          valud: false,
+          valid: null,
         };
         this.models.push(model);
       }
@@ -517,21 +459,7 @@ export default {
           this.SetQuestions,
        "Questionnaire/GetQuestions?id=" + Id
         );
-    //  const callback=this.SetQuestions
-    //   let httpReq = new XMLHttpRequest();
-
-    //   httpReq.open('GET', 'https://localhost:7297/' + "Questionnaire/GetQuestions?id=" + Id);
-    //   httpReq.setRequestHeader('Access-Control-Allow-Origin', 'https://localhost:7297');
-    //   httpReq.setRequestHeader("Content-Type", "application/json"); 
-    //   httpReq.onreadystatechange = function () { 
-    //     if (this.readyState === 4 && this.status == 200 ) 
-    //     {  
-    //       console.log('ok')
-    //       callback(httpReq); 
-    //     }
-    //   }
-    //   httpReq.send()
-      
+   
     },
     SetQuestions(val) {
       console.log(val)
@@ -570,18 +498,30 @@ body {
  
 }
 
-.buttion{
+.questionInfo {
+        width: 60px;
+        min-width: 60px;
+        height: 35px;
+        background-color: green;
+        border-radius: 25px;
+        padding: 5px;
+        margin: 5px;
+}
+
+.buttion {
   width: 60px;
   border-radius: 25px;
   background-color: green !important; 
   margin: 3px
 }
-.panel{
+
+.panel {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
  border: outset; 
  border-radius: 15px;
- padding:15px ;
+ padding: 15px;
  margin: 5px;
- background-color: rgb(201, 247, 248)
+ background-color: rgb(247, 247, 247)
 }
 .vue-simple-context-menu {
   top: 0;
