@@ -1,6 +1,8 @@
 <template>
-  <v-app id="app" style="width: 100%; padding: 3px" @keydown.ctrl.83.prevent.stop="Save"
-    @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
+  <v-app id="app" style="width: 100%; padding: 3px" 
+  @keydown.ctrl.83.prevent.stop="Save"
+  @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" 
+  @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
 
     <v-main>
       <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine;" :style="headerCssStyle" >
@@ -20,7 +22,9 @@
           </div>
         </div>
         <v-form ref="form" v-model="currentModel.valid"   >
-          <v-jsf v-if="currentQuestion != null" v-model="currentModel.answerModel" :schema="currentQuestion.Schema"
+          <v-jsf v-if="currentQuestion != null" 
+          v-model="currentModel.answerModel"
+          :schema="currentQuestion.Schema"
             :options="currentQuestion.Options" />
         </v-form>
         <div style="text-align: left" v-if="currentQuestion != null">
@@ -30,7 +34,7 @@
         <div style=" display: flex; width: 100% ;height:50px; padding: 3px;margin: 3px;">
 
           <v-btn class="buttion" @click="SelectPrevQuestion()" v-if="currentQuestion.Order > 1">
-            Prev</v-btn>
+            {{ PrevButtonText}}</v-btn>
           <v-spacer></v-spacer>
           <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext" v-if="currentQuestion.Order < Questionnarie.Questions.length">
            {{ NextButtonText}}
@@ -82,8 +86,11 @@ export default {
      
       return this.currentModel.valid!=false&& Object.keys(this.currentModel.answerModel).length > 0
     },
+    PrevButtonText() {
+     return  this.currentQuestion.PrevButtonText?this.currentQuestion.PrevButtonText:"Prev"
+   },
     NextButtonText() {
-      return  this.currentQuestion.NextButtonText?this.currentQuestion.NextButtonText:"NEXT"
+      return  this.currentQuestion.NextButtonText?this.currentQuestion.NextButtonText:"Next"
     },
 
     currentQuestionCssStyle(){

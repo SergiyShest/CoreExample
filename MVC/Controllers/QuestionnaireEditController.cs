@@ -66,10 +66,13 @@ namespace MVC.Controllers
         public ActionResult SaveQuestionnaire(int? questionnaireId)
         {
             var model = new QuestionnaireModel(questionnaireId);
-            var bodyStream = new StreamReader(HttpContext.Request.Body);
-            bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
-            var bodyText = bodyStream.ReadToEnd();
-            var errors = model.SaveQuestionnaire(uow ,bodyText, GetCurrentUser());
+
+ 
+            var qmodel= new QuestionnairesModel(base.uow);
+            var bodyText = base.Body();
+            qmodel.Upload(questionnaireId,bodyText);
+
+            //var errors = model.SaveQuestionnaire(uow ,bodyText, GetCurrentUser());
 
             var json = JsonConvert.SerializeObject(new { Errors = "errors" });
             return Content(json, "application/json");
