@@ -1,25 +1,22 @@
 <template>
-  <v-app id="app" style="width: 100%; padding: 3px" 
-  @keydown.ctrl.83.prevent.stop="Save"
-  @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" 
-  @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
+  <v-app id="app" style="width: 100%; padding: 3px" @keydown.ctrl.83.prevent.stop="Save"
+    @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
     <div class="modal" v-if="loadingData">
-      <img class="loader-icon" 
-      :src="require('../../../wwwroot/Content/Images/loading.gif')" />
+      <img class="loader-icon" :src="require('../../../wwwroot/Content/Images/loading.gif')" />
     </div>
-    <vue-simple-context-menu
+    <!-- <vue-simple-context-menu
       :options="[]"
       :elementId="contentMenuId"
       :ref="'contextMenu'"
       @option-clicked="contextMenuClicked"
-    ></vue-simple-context-menu>
+    ></vue-simple-context-menu> -->
     <v-main>
-            <v-container fluid>
+      <v-container fluid>
 
-   
-      <v-row>
-        <v-col cols="2" style="height: 70vh; overflow: scroll"><!--v-if="mode == 'edit'"-->
-          <v-row style="height: 50px" >
+
+        <v-row>
+          <v-col cols="2" style="height: 70vh; overflow: scroll"><!--v-if="mode == 'edit'"-->
+            <v-row style="height: 50px">
               <v-menu class="center" offset-y="40">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn height="25" v-bind="attrs" v-on="on">
@@ -27,11 +24,7 @@
                   </v-btn>
                 </template>
                 <v-list>
-                  <v-list-item
-                    v-for="(item, index) in questionTemplates"
-                    :key="index"
-                    link
-                  >
+                  <v-list-item v-for="(item, index) in questionTemplates" :key="index" link>
                     <v-list-item-title @click="AddQuestion(item)">{{
                       item.Name
                     }}</v-list-item-title>
@@ -39,160 +32,199 @@
                 </v-list>
               </v-menu>
             </v-row>
-            <div
-              style="
+            <div style="
                 display: inline-flex;
                 flex-direction: row;
                 justify-content: flex-start;
                 width: 100%;
-              "
-              v-for="(q, i) in orderedQuestions"
-              :key="q.Id"
-              no-gutters
-            >
+              " v-for="(q, i) in orderedQuestions" :key="q.Id" no-gutters>
               {{ i }})
-              <button
-                class="button"
-                :style="SetSelectedStyle(q)"
-                title="Ask Question"
-                @click="SelectQuestion(q)"
-                @contextmenu.prevent.stop="handleContextMenu($event, q)"
-              >
+              <button class="button" :style="SetSelectedStyle(q)" title="Ask Question" @click="SelectQuestion(q)"
+                @contextmenu.prevent.stop="handleContextMenu($event, q)">
                 <div style="display: inline-flex">
-                  <img
-                    v-if="IsQueryValid(q)"
-                    :src="require('../../../wwwroot/Content/Icons/checked.png')"
-                    width="20"
-                    height="20"
-                  />
-                  <img
-                    v-else
-                    :src="require('../../../wwwroot/Content/Icons/unChecked.png')"
-                    width="20"
-                    height="20"
-                  />
-                  <input
-                    type="text"
-                    :readonly="mode == 'work'"
-                    v-model="q.Name"
-                    style="width: 100%; overflow: hidden"
-                  />
+                  <img v-if="IsQueryValid(q)" :src="require('../../../wwwroot/Content/Icons/checked.png')" width="20"
+                    height="20" />
+                  <img v-else :src="require('../../../wwwroot/Content/Icons/unChecked.png')" width="20" height="20" />
+                  <input type="text" :readonly="mode == 'work'" v-model="q.Name" style="width: 100%; overflow: hidden" />
                 </div>
               </button>
               <div></div>
-            </div> 
-        </v-col>
-        <v-col col="10">
-          <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine;" :style="headerCssStyle" >
-            <h2> {{ Questionnarie.Text }} </h2>
-          </v-row> 
-           <!-- <div>{{currentModel.answerModel}}  </div>        <div>{{ enableNext }}  </div>     -->
-      <div style="min-height:600px ;display: flex;flex-direction: column; justify-content: space-between;" class="panel" >
+            </div>
+          </v-col>
+          <v-col col="10">
+            <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine;"
+              :style="headerCssStyle">
+              <h2 style="width: 100%;">                   <textarea v-model="Questionnarie.Text"
+              style="width: 100%;"></textarea> </h2>
+            </v-row>
+            <!-- <div>{{currentModel.answerModel}}  </div>        <div>{{ enableNext }}  </div>     -->
+            <div style="min-height:600px ;display: flex;flex-direction: column; justify-content: space-between;" :style="currentQuestionCssStyle"  class="panel">
+             
 
-       <div style="display:flex; justify-content: space-between;">
-          
-          <h3 v-if="currentQuestion != null">
-            {{ currentQuestion.Text }}
-          </h3>
-          <div
-            class='questionInfo'
-            v-if="this.Questionnarie.Questions != null">
-            {{ currentQuestion.Order }} of {{ this.Questionnarie.Questions.length }}
-          </div>
-        </div>
-        <v-form ref="form" v-model="currentModel.valid" >
-          <v-jsf v-if="currentQuestion != null" 
-          v-model="currentModel.answerModel" 
-          :schema="currentQuestion.Schema"
-          :options="currentQuestion.Options" />
-        </v-form>
-        <div style="text-align: left" v-if="currentQuestion != null">
-            {{ currentQuestion.Description }}
-        </div> 
-        <v-spacer></v-spacer>               
-        <div style=" display: flex; width: 100% ;height:50px; padding: 3px;margin: 3px;">
-          
-          <v-btn class="buttion" @click="SelectPrevQuestion()" v-if="currentQuestion.Order > 1">
-            {{ PrevButtonText}}</v-btn>
-         <v-spacer></v-spacer> 
-          <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext" v-if="currentQuestion.Order < Questionnarie.Questions.length">
-           {{ NextButtonText}}
-         </v-btn>
-        </div>
-      </div>
-    </v-col>
-    </v-row>
-  </v-container>
-    <v-footer fixed class="d-flex justify-end">
-        <v-btn
-          height="25"
-          @click="SaveAnsver()"
-          :disabled="!(patient.id > 0)"
-          v-if="mode == 'work'"
-        >
-          Save Ansvers
-        </v-btn>
-        <v-btn
-          height="25"
-          @click="SaveQuestionnaire()"
-          style="min-width: 130px"
-          v-else
-          >Save Questionnaire</v-btn
-        >
-        <v-btn @click="CloseThis()" height="25" style="min-width: 130px"
-          >Cancel</v-btn
-        >
+              <div style="display:flex; justify-content: space-between;">
+
+                <h3 v-if="currentQuestion != null" style="width: 100%;" >
+                  <textarea v-model="currentQuestion.Text"
+              style="width: 100%;"></textarea>
+                </h3>
+                <div class='questionInfo' v-if="this.Questionnarie.Questions != null">
+                  {{ currentQuestion.Order }} of {{ this.Questionnarie.Questions.length }}
+                </div>
+              </div>
+              <v-form ref="form" v-model="currentModel.valid">
+                <v-jsf v-if="currentQuestion != null" v-model="currentModel.answerModel" :schema="currentQuestion.Schema"
+                  :options="currentQuestion.Options" />
+              </v-form>
+              <div style="text-align: left" v-if="currentQuestion != null">
+                <textarea v-model="currentQuestion.Description"
+              style="width: 100%;"></textarea>
+              </div>
+              <v-spacer></v-spacer>
+              <div style=" display: flex; width: 100% ;height:50px; padding: 3px;margin: 3px;">
+
+                <v-btn class="buttion" @click="SelectPrevQuestion()" v-if="currentQuestion.Order > 1">
+                  {{ PrevButtonText }}</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext"
+                  v-if="currentQuestion.Order < Questionnarie.Questions.length">
+                  {{ NextButtonText }}
+                </v-btn>
+              </div>
+            </div>
+          </v-col>
+        </v-row>
+        <!-- <v-row>
+          <fieldset style="border: inset;width:100%;">
+            <legend style="width: 100px; padding-top: 2px; padding-left: 2px">
+              Description
+              </legend>
+            <textarea v-model="currentQuestion.Description"
+              style="width: 100%;"></textarea>
+            </fieldset>
+        </v-row> -->
+        <v-row>
+          <v-col cols="6">
+            <div style="border: inset;width:100%;display: inline-flex; ">
+              <div style="width:100%;">
+                Previous question button text:
+              </div>
+              <input style="width:100%;" v-model="currentQuestion.PrevButtonText"  />
+            </div>
+          </v-col>
+          <v-col cols="6">
+            <div style="border: inset;width:100%;display: inline-flex; ">
+              <div style="width:100%;">
+                Next question button text:
+              </div>
+              <input style="width:100%;" v-model="currentQuestion.NextButtonText"  />
+            </div>
+          </v-col>
+
+        </v-row>
+        <v-row>
+          <v-col cols="6">
+            <fieldset style="border: inset;width:100%; height: 300px;">
+              <legend style="width: 100px; padding-top: 2px; padding-left: 2px">
+                schema
+              </legend>
+              <prism-editor v-model="schemaStr" :highlight="highlighter" />
+
+              <div class="errorV">
+                {{ notValidSchemaError }}
+              </div>
+            </fieldset>
+          </v-col>
+          <v-col cols="6">
+            <fieldset style="border: inset;width:100%; height: 300px;">
+              <legend style="width: 100px; padding-top: 2px; padding-left: 2px">
+                options
+              </legend>
+
+              <prism-editor v-model="optionsStr" :highlight="highlighter" />
+              <div class="errorV">
+                {{ notValidOptionsError }}
+              </div>
+            </fieldset>
+          </v-col>
+
+        </v-row>
+        <v-row>
+        
+             <fieldset style="border: inset;width:100%; height: 300px;">
+              <legend style="width: 100px; padding-top: 2px; padding-left: 2px">
+                 currentQuestion.CssStyle
+              </legend>
+              <prism-editor v-model="styleStr" :highlight="highlighter" />
+
+              <div class="errorV">
+                {{ notValidCssError }}
+              </div>
+            </fieldset> 
+         
+        </v-row>        
+      </v-container>
+      <v-footer fixed class="d-flex justify-end">
+        <v-btn height="25" @click="SaveQuestionnaire()" style="min-width: 130px">Save Questionnaire</v-btn>
+        <v-btn @click="CloseThis()" height="25" style="min-width: 130px">Cancel</v-btn>
         <div style="width: 30px" />
       </v-footer>
-  </v-main>
+    </v-main>
   </v-app>
 </template>
 
 <script>
 if (Id == undefined) {
-  var Id = 1
-  var SessionId= 'xxx'
+  var Id = 48
+  var SessionId = 'xxx'
 }
 
 
-import { data,radioOptions,radioShema,emptyOptions,stringShema,dateShema,numShema,radioItem,stringItem,dateItem,numItem } from "./data.js";
+import { data, radioOptions, radioShema, emptyOptions, stringShema, dateShema, numShema, radioItem, stringItem, dateItem, numItem } from "./data.js";
 import { baseMixin } from "./BaseMixin.js";
 //import VueSimpleContextMenu from "vue-simple-context-menu";
 import VJsf from '@koumoul/vjsf/lib/VJsf.js'
 import '@koumoul/vjsf/lib/VJsf.css'
 import '@koumoul/vjsf/lib/deps/third-party.js'
-import { PrismEditor } from "vue-prism-editor";
-import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
-import { highlight, languages } from "prismjs/components/prism-core";
-import "prismjs/components/prism-clike";
-import "prismjs/components/prism-javascript";
-import "prismjs/themes/prism.css"; // import syntax highlighting styles
+import { PrismEditor } from 'vue-prism-editor';
+import 'vue-prism-editor/dist/prismeditor.min.css'; // import the styles somewhere
 
+// import highlighting library (you can use any library you want just return html string)
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/themes/prism-tomorrow.css'; //
 
 export default {
   name: 'App',
   mixins: [baseMixin],
   components: {
     VJsf,
-     PrismEditor,
-   // VueSimpleContextMenu,
+    PrismEditor,
+    // VueSimpleContextMenu,
   },
   data: () => ({
+    H: null,
     valid: false,
     contentMenuId: 1,
     currentModel: { answerModel: {}, valid: false },
-    mode :"edit",
+    mode: "edit",
     models: [],
     Questionnarie: { Questions: [] },
-
+    notValidCss: "",
+    notValidCssError: "",    
+    notValidSchemaError: "",
+    notValidSchema: "",
+    notValidSchemaError: "",
+    notValidOptions: "",
+    notValidOptionsError: "",
     currentQuestion: {
       Id: 0,
-      ParentId: 1,
       Name: null,
       Options: radioOptions,
       Schema: radioShema,
+      CssStyle:{'background-color': '#EE0'}
     },
-    session:SessionId,
+    session: SessionId,
     questionTemplates: [
       { Id: 0, Name: "radio", Options: radioOptions, Schema: radioShema },
       { Id: 0, Name: "string", Options: emptyOptions, Schema: stringShema },
@@ -205,35 +237,92 @@ export default {
       { Name: "date", Item: dateItem },
       { Name: "number", Item: numItem },
     ],
+    newItemName: "",
+    newItemText: "",
   }),
   computed: {
     orderedQuestions() {
+      if(this.Questionnarie)
       return this.Questionnarie.Questions.sort((a, b) => a.Order - b.Order);
     },
+    optionsStr: {
+      get() {
+        if (this.notValidOptions) {
+          return this.notValidOptions;
+        }
+        return JSON.stringify(this.currentQuestion.Options, null, "\t");
+      },
+      set(value) {
+        try {
+          console.log(value);
+          this.currentQuestion.Options = JSON.parse(value);
+          this.notValidOptions = null;
+          this.notValidOptionsError = null;
+        } catch (ex) {
+          this.notValidOptions = value;
+          this.notValidOptionsError = ex;
+        }
+      },
+    },
+    schemaStr: {
+      get() {
+        //    if (this.notValidSchema) return this.notValidSchema;
+        return JSON.stringify(this.currentQuestion.Schema, null, "\t");
+      },
+      set(value) {
+        try {
+          this.currentQuestion.Schema = JSON.parse(value);
+          this.notValidSchema = null;
+          this.notValidSchemaError = null;
+        } catch (ex) {
+          this.notValidSchema = value;
+          this.notValidSchemaError = ex;
+        }
+      },
+    },
+    styleStr: {
+      get() {
+           if (this.notValidCss) return this.notValidCss;
+        return JSON.stringify(this.currentQuestion.CssStyle, null, "\t");
+      },
+      set(value) {
+        try {
+          console.log(value)
+          this.currentQuestion.CssStyle = JSON.parse(value);
+          this.notValidCss = null;
+          this.notValidCssError = null;
+        } catch (ex) {
+          this.notValidCss = value;
+          this.notValidCssError = ex;
+        }
+      },
+    },
+
     enableNext() {
-     
-     return this.currentModel.valid!=false&& Object.keys(this.currentModel.answerModel).length > 0
-   },
-   PrevButtonText() {
-     return  this.currentQuestion.PrevButtonText?this.currentQuestion.PrevButtonText:"Prev"
-   },
-   NextButtonText() {
-     return  this.currentQuestion.NextButtonText?this.currentQuestion.NextButtonText:"NEXT"
-   },
 
-   currentQuestionCssStyle(){
-     if(this.currentQuestion.CssStyle){
-       return this.currentQuestion.CssStyle;
-     }
-     },
-     headerCssStyle(){
+      return this.currentModel.valid != false && Object.keys(this.currentModel.answerModel).length > 0
+    },
+    PrevButtonText() {
+      return this.currentQuestion.PrevButtonText ? this.currentQuestion.PrevButtonText : "Prev"
+    },
+    NextButtonText() {
+      return this.currentQuestion.NextButtonText ? this.currentQuestion.NextButtonText : "NEXT"
+    },
 
-     if(this.Questionnarie.CssStyle){
-       return this.Questionnarie.CssStyle;
-     }
-     }
-     
- },
+    currentQuestionCssStyle() {
+      if (this.currentQuestion.CssStyle) {
+        console.log(this.currentQuestion.CssStyle)
+        return this.currentQuestion.CssStyle;
+      }
+    },
+    headerCssStyle() {
+
+      if (this.Questionnarie.CssStyle) {
+        return this.Questionnarie.CssStyle;
+      }
+    }
+
+  },
 
   methods: {
     validateForm() {
@@ -302,12 +391,12 @@ export default {
       }
     },
     IsQueryValid(question) {
- 
+
       if (this.patient && this.patient.id > 0) {
         let model = this.models.find((x) => x.QuestionId == question.Id);
 
         return model && model.valid;
-       
+
       }
 
       return false;
@@ -344,7 +433,7 @@ export default {
     },
 
 
- 
+
 
 
 
@@ -369,7 +458,7 @@ export default {
       this.notValidOptions = null;
       this.notValidSchema = null;
       this.SetModel();
-this.PlayOk()
+      this.PlayOk()
     },
     SelectNextQuestion() {
       const nextQuestion = this.Questionnarie.Questions.find(
@@ -378,7 +467,7 @@ this.PlayOk()
       if (nextQuestion) {
         this.SelectQuestion(nextQuestion);
       }
-      console.log(nextQuestion) 
+      console.log(nextQuestion)
       this.SaveAnsver()
     },
     SelectPrevQuestion() {
@@ -405,25 +494,22 @@ this.PlayOk()
       }
       this.currentModel = model;
     },
-    Save()
-    {
-      if(mode=='edit'){
-        this.SaveQuestionnaire()
-      }else{
-        this.SaveAnsver()
-      }
+    Save() {
+      this.SaveQuestionnaire()
+
     },
     SaveQuestion() {
       this.fetch(
         this.ok,
-        "/Questions/Questionnaire/SaveQuestion?questionnaireId=" + Id,
+        "QuestionnaireEdit/SaveQuestion?questionnaireId=" + Id,
         this.currentQuestion
       );
     },
     SaveQuestionnaire() {
+      console.log('save')
       this.fetch(
         this.CloseThis,
-        "/Questions/Questionnaire/SaveQuestionnaire?questionnaireId=" + Id,
+        "QuestionnaireEdit/SaveQuestionnaire?questionnaireId=" + Id,
         this.Questionnarie
       );
     },
@@ -439,9 +525,9 @@ this.PlayOk()
         this.fetch(
           this.GetQuestions,
           "/Questions/Questionnaire/DeleteQuestion?questionnaireId=" +
-            Id +
-            "&questionId=" +
-            question.Id
+          Id +
+          "&questionId=" +
+          question.Id
         );
       }
     },
@@ -454,12 +540,12 @@ this.PlayOk()
       }
     },
     GetQuestions() {
-       console.log('SetQuestions(val)')
-        this.fetch(
-          this.SetQuestions,
-       "Questionnaire/GetQuestions?id=" + Id
-        );
-   
+      console.log('SetQuestions(val)')
+      this.fetch(
+        this.SetQuestions,
+        "Questionnaire/GetQuestions?id=" + Id
+      );
+
     },
     SetQuestions(val) {
       console.log(val)
@@ -475,19 +561,22 @@ this.PlayOk()
     },
 
     SaveAnsver() {
+      return ;
       this.fetch(
         this.ok,
         `Questionnaire/SaveAnsvers?questionnaireId={Id} +'&sessionId= + {this.session}`,
         this.models
       );
     },
-
+    highlighter(code) {
+      return highlight(code, languages.js); // languages.<insert language> to return html with markup
+    },
   },
   mounted: function () {
-   // if (Id) {
-   //   this.GetQuestions();
-   this.SetQuestions(data);
-   // }
+    // if (Id) {
+    //   this.GetQuestions();
+    this.SetQuestions(data);
+    // }
   },
 };
 </script>
@@ -495,34 +584,35 @@ this.PlayOk()
 html,
 body {
   height: 100%;
- 
+
 }
 
 .questionInfo {
-        width: 60px;
-        min-width: 60px;
-        height: 35px;
-        background-color: green;
-        border-radius: 25px;
-        padding: 5px;
-        margin: 5px;
+  width: 60px;
+  min-width: 60px;
+  height: 35px;
+  background-color: green;
+  border-radius: 25px;
+  padding: 5px;
+  margin: 5px;
 }
 
 .buttion {
   width: 60px;
   border-radius: 25px;
-  background-color: green !important; 
+  background-color: green !important;
   margin: 3px
 }
 
 .panel {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
- border: outset; 
- border-radius: 15px;
- padding: 15px;
- margin: 5px;
- background-color: rgb(247, 247, 247)
+  border: outset;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 5px;
+  background-color: rgb(247, 247, 247)
 }
+
 .vue-simple-context-menu {
   top: 0;
   left: 0;
@@ -532,7 +622,7 @@ body {
   list-style: none;
   position: absolute;
   z-index: 1000000;
-  background-color: rgb(202, 210, 212);
+  background-color: rgb(202, 210, 21);
   border-bottom-width: 0px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -559,6 +649,7 @@ body {
 .vue-simple-context-menu__item:hover {
   background-color: #ecf0f1;
 }
+
 /*	color: white;*/
 
 .vue-simple-context-menu__divider {
@@ -569,16 +660,36 @@ body {
   background-clip: content-box;
   pointer-events: none;
 }
+
 input {
   border-color: gray;
   border-style: solid;
   border-width: 1px;
 }
+
 .inputStyle {
   height: 20px;
   border-color: gray;
   border-style: solid;
   border-width: 1px;
   width: 80%;
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.code {
+  margin: 20px;
 }
 </style>

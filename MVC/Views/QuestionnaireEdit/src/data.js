@@ -98,7 +98,7 @@ export const numItem = {
 };
 export const data = {
   Item:{
-    "Name": "Questionniare right",
+    "Name": "Questionniare right new",
     "Text": "Answer a few questions and see if you or someone you are looking after may be eligible",
     "Main": true,
     "CssStyle": {
@@ -112,7 +112,7 @@ export const data = {
         "Order": 1,
         "NextButtonText": null,
         "PrevButtonText": null,
-        "CssStyle": {},
+        "CssStyle":{'background-color': 'red'},
         "Schema": {
           "type": "object",
           "requred": [
@@ -150,7 +150,8 @@ export const data = {
         },
         "QuestionnaireId": 22,
         "Description": "Atopic Dermatitis, also known as Atopic Eczema, is a type of inflammation of the skin, resulting in itchy, red, swollen, and cracked skin.",
-        "Id": 195
+        "Id": 195,
+
       },
       {
         "Text": "How old are you",
@@ -459,6 +460,6 @@ export const data = {
         "Id": 203
       }
     ],
-    "Id": 22
+    "Id": 48
   }
 };
