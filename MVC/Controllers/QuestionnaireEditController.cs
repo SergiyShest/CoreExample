@@ -16,19 +16,11 @@ namespace MVC.Controllers
 
     public class QuestionnaireEditController : BaseController
     {
-        public ActionResult Index(int? id, int? patientId, string mode)
+        public ActionResult Index(int? id)
         {
-            ViewBag.PatientId = patientId;
+            ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
             ViewBag.Id = id;
-            if (string.IsNullOrWhiteSpace(mode))
-            {
-                mode = "work";
-            }
-            ViewBag.Mode = mode;
-            //if (id == null)
-            //{
-            //    ViewBag.Mode = "edit";
-            //}
+
             return View("Index");
         }
 

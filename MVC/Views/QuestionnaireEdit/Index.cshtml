@@ -3,9 +3,7 @@
 <head>
 	@{
 		ViewBag.Title = "Questionnaire";
-	//	Layout = "~/Views/Shared/_LayoutEmpty.cshtml";
 
-		//Layout = "~/Views/Shared/_SamplesLayout.cshtml";
 	}
 	<meta charset="utf-8" />
 	<title></title>
@@ -22,13 +20,11 @@
 	<div id="app"></div>
 	<script>
 		const Id = '@ViewBag.Id'
-		const PatientId = '@ViewBag.PatientId'
-		let Mode = '@ViewBag.Mode';
-
+		const SessionId = '@ViewBag.sessionId'
 	</script>
 
-	<script src="~/Scripts/vue-apps/questionnaire/js/chunk-vendors.js"></script>
-	<script src="~/Scripts/vue-apps/questionnaire/js/app.js"></script>
+	<script src="~/Scripts/vue-apps/questionnairåEdit/js/chunk-vendors.js"></script>
+	<script src="~/Scripts/vue-apps/questionnairåEdit/js/app.js"></script>
 
 
 </body>

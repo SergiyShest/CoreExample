@@ -11,6 +11,7 @@
     <script src="../../../lib/jquery/dist/jquery.min.js"></script>
     <script src="../../../Scripts/dx.all.js"></script>
     <script src="../../../Scripts/dx.aspnet.data.js"></script>
+  @*   <script src="../../../Scripts/codePopup.js"></script>  *@
     <script src="../../../js/questionniaireJournal.js"></script>
     <link rel="stylesheet" type="text/css" href="../../../Content/dx.common.css" />
     <link rel="stylesheet" type="text/css" href="../../../Content/grey.css" />
@@ -33,8 +34,8 @@
          
             <input id="file" type="file" v-on:change="addFiles()" class="inputfile" accept=".json" />
            
-            <label v-if="filesList.length==0" for="file" class="openFileDialogButton">Select file for current </label>
-            <button v-if="filesList.length>0" class="openFileDialogButton" @@click="loadFile()">Load current</button>
+            <label v-if="filesList.length==0" for="file" class="openFileDialogButton">Upload current </label>
+            <button  class="openFileDialogButton" onclick="edit()">Edit</button>
             <div style="color:red">{{uploadError}}</div>
         </div>
         <a class="nav-link text-lite" href="/Home/DownloadCss">Download main css</a>
@@ -47,18 +48,25 @@
 
             <input id="fileCss" type="file" v-on:change="addFilesCss()" class="inputfile" accept=".css" />
 
-            <label v-if="filesListCss.length==0" for="fileCss" class="openFileDialogButton">Select Css file </label>
-            <button v-if="filesListCss.length>0" class="openFileDialogButton" @@click="loadCss()">Load Css</button>
+            <label v-if="filesListCss.length==0" for="fileCss" class="openFileDialogButton">Upload main Css </label>
             <div style="color:red">{{uploadCssError}}</div>
 
         </div>
 
+        <div id="popup">
+ 
+        </div>
+       
 </div>
 </div>
 <script src="/Content/vue.js"></script>
+
+
 <script>
-
-
+    function GetId() {
+        const elem = document.getElementById('selectedId');
+        return elem.innerText;
+    }
     function GetFormatedFileSize(fileSize) {
         var fileSizeStr = '';
         if (fileSize < 1024)
@@ -98,14 +106,14 @@
     const App = {
         data() {
             return {
-                addNew:true,
-                id:null,
-                filesList:[],
-                uploadError:null,
-                filesListCss:[],
-                uploadCssError:null,
+                addNew: true,
+                id: null,
+                filesList: [],
+                uploadError: null,
+                filesListCss: [],
+                uploadCssError: null,
             }
-            
+
         }
         ,
         methods: {
@@ -136,7 +144,7 @@
                     if (ff.status != 0) continue;
                     ff.status = 2;
                     uploadFile(ff, this.id, this.fileProgress);
-                console.log('done');
+                    console.log('done');
                 }
             },
             fileProgress: function (fileInf, state, respText, messageId) {
@@ -165,8 +173,8 @@
                 }
 
             },
-            remove: function () { 
-                this.filesList=[]
+            remove: function () {
+                this.filesList = []
             },
             addFilesCss: function () {
                 if (!event) { event = window.event; }
@@ -196,20 +204,56 @@
                     console.log('done');
                 }
             },
-
+            edit() {
+                
+                console.log(popup)
+                popup.show();
+            }
 
 
         },
         mounted() {
                 setInterval(() => {
-                    const elem = document.getElementById('selectedId');
-                this.id = elem.innerText;
+                this.id = GetId();
                 }, 500)
             }
         
     }
 
     Vue.createApp(App).mount('#app')
+
+</script>
+<script>
+   
+
+    function edit() {
+
+ 
+        var content=`<H1> no content </H1>`
+        var popupContentTemplate = function () {
+       //     return $('<div>').append($(content),);
+            return content;
+    };
+        const height = window.screen.height - 150;
+
+     var   popup = $('#popup')
+            .dxPopup({
+                width: '95vw',
+                height: '95vh',
+                visible: false,
+                title: 'EditItem',
+                hideOnOutsideClick: true,
+                showCloseButton: true,
+                contentTemplate:popupContentTemplate
+            }).dxPopup('instance');
+
+
+        content = '<iframe src="http://localhost:5056/QuestionnaireEdit?id=' + GetId() + '" style= "width:100%; height:100%">'
+
+        popup.show()
+        console.log(popup)
+    }
+
 
 </script>
 <style>
@@ -264,4 +308,47 @@
     .custom-file-input:active::before {
         background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
     }
+
+    .label {
+        color: rgba(51, 51, 51, 0.6);
+        font-size: 12px;
+    }
+
+    .demo-container {
+        height: 450px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        gap: 40px;
+    }
+
+    .button-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        gap: 15px;
+    }
+
+/*     .dx-popup-content {
+        font-size: 12px;
+    }
+
+    .caption {
+        padding-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .content {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .popup-content {
+        height: 100%;
+        width: 100%;
+    }
+ */
+
 </style>

@@ -173,10 +173,10 @@
 </template>
 
 <script>
-if (Id == undefined) {
-  var Id = 48
-  var SessionId = 'xxx'
-}
+// if (Id == undefined) {
+//   var Id = 48
+//   var SessionId = 'xxx'
+// }
 
 
 import { data, radioOptions, radioShema, emptyOptions, stringShema, dateShema, numShema, radioItem, stringItem, dateItem, numItem } from "./data.js";
@@ -443,7 +443,8 @@ export default {
       }
     },
     SelectQuestion(question) {
-      if (this.currentQuestion.Id == question.Id) return; //если это повторный вызов
+    try{
+      if (this.currentQuestion && this.currentQuestion.Id == question.Id) return; //если это повторный вызов
       if (question.Id == 0) return; //если это фейк  currentQuestion нужный для инициализации Vue
 
       let prmodel = this.models.find(
@@ -459,6 +460,10 @@ export default {
       this.notValidSchema = null;
       this.SetModel();
       this.PlayOk()
+    }
+    catch(ex){
+     console.error(ex)
+    }
     },
     SelectNextQuestion() {
       const nextQuestion = this.Questionnarie.Questions.find(
@@ -543,9 +548,8 @@ export default {
       console.log('SetQuestions(val)')
       this.fetch(
         this.SetQuestions,
-        "Questionnaire/GetQuestions?id=" + Id
+        "Questionnaire/Get?id=" + Id
       );
-
     },
     SetQuestions(val) {
       console.log(val)
@@ -573,10 +577,11 @@ export default {
     },
   },
   mounted: function () {
-    // if (Id) {
-    //   this.GetQuestions();
-    this.SetQuestions(data);
-    // }
+    console.log(Id);
+     if (Id) {
+      this.GetQuestions();
+    // this.SetQuestions(data);
+     }
   },
 };
 </script>

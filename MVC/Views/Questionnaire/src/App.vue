@@ -74,7 +74,6 @@ export default {
 
     currentQuestion: {
       Id: 0,
-      ParentId: 1,
       Name: null,
       Options: {},
       Schema: {},
