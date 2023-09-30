@@ -1,20 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ConsoleDB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 using DAL;
 
 using Core;
 using DAL.Core;
 //using NUnit.Framework;
 
-namespace ConsoleDB.Tests
+namespace Tests
 {
     [TestClass()]
-  
+ 
     public class mainPrTests
     {
         NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

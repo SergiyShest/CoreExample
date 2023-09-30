@@ -84,6 +84,9 @@ function getColumnFieldName(dataGridInstance, getter) {
         paging: {
             pageSize: 30,
         },
+        export: {
+            enabled: true
+        },
         pager: {
             visible: true,
             allowedPageSizes: [30, 50, 100],
@@ -95,7 +98,9 @@ function getColumnFieldName(dataGridInstance, getter) {
             contextMenuEnabled: true
         },
         groupPanel: {
-            visible: true   // or "auto"
+            visible: true,   // or "auto"
+            allowColumnDragging: true
+           
         },
         onContextMenuPreparing: contextMenuPreparing,
         focusedRowEnabled: true,
@@ -115,7 +120,7 @@ function getColumnFieldName(dataGridInstance, getter) {
         stateStoring: {
             enabled: true,
             type: 'localStorage',
-            storageKey: 'AnswerGrid',
+            storageKey: 'answer_Grid',
         },
         headerFilter: { visible: true },
         filterPanel: { visible: true },
@@ -135,7 +140,7 @@ function getColumnFieldName(dataGridInstance, getter) {
             { caption: "Code ",dataField: "name"  },    
             { caption: "Ansver ",dataField: "value" },           
             { caption: "Date", dataField: "cdate", dataType: "date" },
-            { caption: "SessionId", dataField: "sessionId"}
+            { caption: "SessionId", dataField: "sessionId", groupIndex: 1 }
    
         ]
     });

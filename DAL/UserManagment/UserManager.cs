@@ -10,13 +10,13 @@ namespace CookieReaders.Providers
 {
     public interface IUserManager
     {
-        Task SignIn(HttpContext httpContext, CookieUserItem user, bool isPersistent = false);
+        Task SignIn(HttpContext httpContext, UserItem user, bool isPersistent = false);
         Task SignOut(HttpContext httpContext);
     }
 
     public class UserManager : IUserManager
     {
-        public async Task SignIn(HttpContext httpContext, CookieUserItem user, bool isPersistent = false)
+        public async Task SignIn(HttpContext httpContext, UserItem user, bool isPersistent = false)
         {
             string authenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
@@ -59,7 +59,7 @@ namespace CookieReaders.Providers
             await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
-        private List<Claim> GetUserClaims(CookieUserItem user)
+        private List<Claim> GetUserClaims(UserItem user)
         {
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));

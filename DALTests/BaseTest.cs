@@ -14,10 +14,10 @@ namespace Sasha.Lims.Tests.TestCore
 {
 	public class BaseTest
     {
+       protected NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
 
-
-		[SetUp]
-		public static void TestSetUp()
+        [SetUp]
+		public static void TestsetUp()
 		{        
 			AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);

@@ -2,7 +2,7 @@ using System;
 
 namespace CookieReaders.Models
 {
-    public class CookieUserItem
+    public class UserItem
     {
         public int? UserId { get; set; }
         public string EmailAddress { get; set; }

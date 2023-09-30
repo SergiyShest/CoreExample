@@ -9,13 +9,15 @@ namespace CookieReaders.Providers.Repositories
 {
     public interface IUserRepository
     {
-        CookieUserItem Register(RegisterVm model);
-        CookieUserItem Validate(LoginVm model);
+        UserItem Register(RegisterVm model);
+        UserItem Validate(LoginVm model);
     }
 
     public class UserRepository : IUserRepository
     {
         private readonly UnitOfWork _db;
+
+        public IRepos<AvaiableUser> AvaiableUsers { get { return _db.GetRepository<AvaiableUser>(); } }
 
         public IRepos<User> UsersRep { get { return _db.GetRepository<User>(); } }
 
@@ -24,13 +26,13 @@ namespace CookieReaders.Providers.Repositories
             _db = new UnitOfWork();
         }
 
-        public CookieUserItem Validate(LoginVm model)
+        public UserItem Validate(LoginVm model)
         {
             var emailRecords = UsersRep.Where(x => x.Email == model.EmailAddress);
 
             var results = emailRecords.AsEnumerable()
             .Where(m => m.PasswordHash == Hasher.GenerateHash(model.Password, m.Salt))
-            .Select(m => new CookieUserItem
+            .Select(m => new UserItem
             {
                 UserId = m.Id,
                 EmailAddress = m.Email,
@@ -41,8 +43,18 @@ namespace CookieReaders.Providers.Repositories
             return results.FirstOrDefault();
         }
 
-        public CookieUserItem Register(RegisterVm model)
+        public UserItem Register(RegisterVm model)
         {
+           var avaiable = AvaiableUsers.FirstOrDefault(x => x.Email == model.EmailAddress);
+            if (avaiable == null) {
+                throw new ApplicationException("User with email "+model.EmailAddress+ " Not in the list of allowed users!");
+            }
+
+            var emailRecords = UsersRep.FirstOrDefault(x => x.Email == model.EmailAddress);
+            if (emailRecords != null) {
+                throw new ApplicationException("User with email "+model.EmailAddress+" already exists!");
+            }
+
             var salt = Hasher.GenerateSalt();
             var hashedPassword = Hasher.GenerateHash(model.Password, salt);
 
@@ -59,7 +71,7 @@ namespace CookieReaders.Providers.Repositories
             UsersRep.Create(user);
             UsersRep.Save();
 
-            return new CookieUserItem
+            return new UserItem
             {
                 UserId = user.Id,
                 EmailAddress = user.Email,

@@ -59,11 +59,15 @@ public partial class QContext : DbContext
         modelBuilder
             .HasPostgresExtension("pgcrypto");
 
+        modelBuilder.Entity<AvaiableUser>(entity =>
+        {
+            entity.Property(p => p.Id).ValueGeneratedOnAdd();
+        });
 
         modelBuilder.Entity<User>(entity =>
       {
           entity.ToTable("Users");
-          entity.HasIndex(e => e.Email, "IX_user_email");
+          entity.HasIndex(e => e.Email, "IX_user_email").IsUnique();
           entity.Property(e => e.Id).HasColumnName("id");
 
       });
@@ -75,16 +79,20 @@ public partial class QContext : DbContext
             entity.Property(e => e.Options).HasColumnType("jsonb");
             entity.Property(e => e.Schema).HasColumnType("jsonb");
         });
+
         modelBuilder.Entity<Questionnaire>(entity =>
         {
             entity.Property(p => p.Id).ValueGeneratedOnAdd();
             entity.HasIndex(e => e.Name, "IX_Questionnaire_Name").IsUnique();
 
         });
+       
         modelBuilder.Entity<Answer>(entity =>
         {
             entity.Property(p => p.Id).ValueGeneratedOnAdd();
         });
+
+
 
         OnModelCreatingPartial(modelBuilder);
     }

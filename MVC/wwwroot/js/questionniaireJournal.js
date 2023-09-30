@@ -98,8 +98,7 @@ function getColumnFieldName(dataGridInstance, getter) {
             insertUrl: "../Home/Insert",
             updateUrl: "../Home/Update",
             deleteUrl: "../Home/Delete",
-            //loadParams: { id: this.getFirmaId() },
-            onBeforeSend: function (method, ajaxOptions) {
+               onBeforeSend: function (method, ajaxOptions) {
                 ajaxOptions.xhrFields = { withCredentials: true };
             }  
 

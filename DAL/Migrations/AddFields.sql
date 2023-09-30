@@ -26,3 +26,16 @@ ALTER TABLE IF EXISTS public."Questionnaire"
 
 ALTER TABLE IF EXISTS public."Questionnaire"
     RENAME "Code" TO "Name";
+
+
+
+START TRANSACTION;
+
+DROP INDEX "IX_user_email";
+
+CREATE UNIQUE INDEX "IX_user_email" ON "Users" ("Email");
+
+INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+VALUES ('20230930034715_AddUserIndex', '7.0.11');
+
+COMMIT;
