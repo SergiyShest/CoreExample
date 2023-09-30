@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Questionnaire\" />
+    <Folder Include="wwwroot\Content\FileManager\" />
   </ItemGroup>
 
   <ItemGroup>
