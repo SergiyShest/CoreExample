@@ -4,6 +4,9 @@ namespace CookieReaders.Models
 {
     public class RegisterVm : LoginVm
     {
+        [Required]
+        public string Name { get; set; }
+
         [Required, Compare("Password")]
         public string ConfirmPassword { get; set; }
 

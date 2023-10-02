@@ -45,7 +45,7 @@ namespace CookieReaders.Providers.Repositories
 
         public UserItem Register(RegisterVm model)
         {
-           var avaiable = AvaiableUsers.FirstOrDefault(x => x.Email == model.EmailAddress);
+           var avaiable = AvaiableUsers.FirstOrDefault(x => x.Email.ToLower() == model.EmailAddress.ToLower());
             if (avaiable == null) {
                 throw new ApplicationException("User with email "+model.EmailAddress+ " Not in the list of allowed users!");
             }
@@ -60,11 +60,10 @@ namespace CookieReaders.Providers.Repositories
 
             var user = new User
             {
-//                Id = Guid.NewGuid(),
                 Email = model.EmailAddress,
                 PasswordHash = hashedPassword,
                 Salt = salt,
-                Name = "Some User",
+                Name = model.Name,
                 CDate = DateTime.UtcNow
             };
 

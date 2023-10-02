@@ -13,7 +13,7 @@ namespace MVC.Controllers
 {
 
 
-
+    [Authorize]
     public class QuestionnaireEditController : BaseController
     {
         public ActionResult Index(int? id)

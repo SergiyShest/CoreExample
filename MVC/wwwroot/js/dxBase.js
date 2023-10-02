@@ -1,4 +1,7 @@
-﻿function copyToClipboard (str ) {
+﻿
+
+//
+function copyToClipboard(str) {
     const el = document.createElement('textarea');
     el.value = str;
     document.body.appendChild(el);
@@ -7,9 +10,23 @@
     document.body.removeChild(el);
 };
 
+//
+function CreateFilter(str) {
+    const el = document.createElement('textarea');
+    el.value = str;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+};
+
+function contentReady() {
+    console.timeEnd("x");
+}
+
 //добавление пункта меню копировать
 function contextMenuPreparing(e) {
-
+    console.log(e)
     if (e.target == 'header') {
         var dataGrid = $('#grid').dxDataGrid('instance');
         var selectedRows = dataGrid.getSelectedRowsData();
@@ -27,8 +44,6 @@ function contextMenuPreparing(e) {
     }
 }
 
-$(function () {
-
 //получение строки фильтров
 function processFilter(dataGridInstance, filter) {
     if ($.isArray(filter)) {
@@ -43,15 +58,6 @@ function processFilter(dataGridInstance, filter) {
     }
 }
 
-$("#buttonContainer").dxButton({
-    text: "проверка фильтра",
-    onClick: function (e) {
-        var grid = $("#grid").dxDataGrid("instance"),
-        filter = grid.getCombinedFilter();
-        processFilter(grid, filter);
-        alert(filter);
-    }
-}).dxButton("instance");
 //поиск имени конолки по фильтру
 function getColumnFieldName(dataGridInstance, getter) {
     var column,
@@ -70,32 +76,45 @@ function getColumnFieldName(dataGridInstance, getter) {
     }
 }
 
+const defaultDxOptions = {
+    scrolling: {
+        rowRenderingMode: 'virtual',
+    },
+    paging: {
+        pageSize: 30,
+    },
+    export: {
+        enabled: true
+    },
+    pager: {
+        visible: true,
+        allowedPageSizes: [30, 50, 100],
+        showPageSizeSelector: true,
+        showInfo: true,
+        showNavigationButtons: true,
+    },
 
-    $("#grid").dxDataGrid({
-        dataSource: DevExpress.data.AspNet.createStore({
-            key: "id",
-            loadUrl: "../AnswerJournal/Get",
-        }),
+    focusedRowEnabled: true,
+    rowAlternationEnabled: true,
 
-        stateStoring: {
-            storageKey: 'answer_Grid',
-        },
+    columnAutoWidth: true,
+    filterRow: {
+        visible: true,
+        applyFilter: "auto"
+    },
+    stateStoring: {
+        enabled: true,
+        type: 'localStorage',
+    },
+    headerFilter: { visible: true },
+    filterPanel: { visible: true },
+    selection: {
+        mode: "multiple",
+        allowSelectAll: true
+    },
+}
 
-        columns: [
-            {
-                dataField: "id",
-                dataType: "number",
-                formItem: {
-                    visible: true
-                },
-                headerCellTemplate: $('<i style="color: black">ID</i>')
-            },
-            { caption: "Code ",dataField: "name"  },    
-            { caption: "Ansver ",dataField: "value" },           
-            { caption: "Date", dataField: "cdate", dataType: "date" },
-            { caption: "SessionId", dataField: "sessionId", groupIndex: 1 }
-   
-        ]
-    });
-
+DevExpress.ui.dxDataGrid.defaultOptions({
+    device: { deviceType: "desktop" },
+    options: defaultDxOptions
 });

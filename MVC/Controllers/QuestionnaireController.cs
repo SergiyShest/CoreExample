@@ -1,19 +1,13 @@
 
+using BLL;
+using Core;
+using DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-
-
-using DAL;
-using System.Collections.Generic;
-using BLL;
-using System.Text;
-using DAL.Core;
-using Core;
-using DevExtreme.AspNet.Data;
 
 namespace MVC.Controllers
 {
+    [Authorize]
     public class QuestionnaireController : BaseController
     {
         public ActionResult Index( string mode)

@@ -1,33 +1,22 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using CookieReaders.Models;
-using Microsoft.AspNetCore.Authorization;
-using MVC.Models;
-using Microsoft.AspNetCore.Hosting.Server;
-using BLL;
+﻿using BLL;
 using Core;
+using DAL.Core;
+using DevExtreme.AspNet.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MVC.Controllers;
 using Newtonsoft.Json;
 using System.Text;
-using MVC.Controllers;
-using Microsoft.EntityFrameworkCore;
-using System.IO;
-using DAL.Core;
-using DAL;
-using DevExtreme.AspNet.Data;
-using System.Net.Http.Formatting;
-using System.Net;
-using NPOI.XWPF.UserModel;
 
 namespace CookieReaders.Controllers
 {
     [Authorize]
     public class HomeController : BaseController
     {
-QuestionnairesModel Model { get; set; }
-        public HomeController() 
-        { 
-           Model = new QuestionnairesModel(uow);
+        QuestionnairesModel Model { get; set; }
+        public HomeController()
+        {
+            Model = new QuestionnairesModel(uow);
         }
 
         public IActionResult Index()
@@ -137,8 +126,6 @@ QuestionnairesModel Model { get; set; }
 
         }
 
-
-
         public FileResult Download(int id)
         {
             var questionnaire = uow.GetRepository<Questionnaire>().FirstOrDefault(x => x.Id == id);
@@ -150,7 +137,6 @@ QuestionnairesModel Model { get; set; }
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
-
         public FileResult DownloadCss(int id)
         {
             var fileContent = System.IO.File.ReadAllText("wwwroot\\Scripts\\vue-apps\\css_questionnaire\\app.css");
@@ -158,9 +144,6 @@ QuestionnairesModel Model { get; set; }
             string fileName = "qustionniareMain.css";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
-
-
-
 
     }
 }

@@ -8,14 +8,8 @@
 
 @section Scripts {
     <title>Questionniaires List</title> 
-    <script src="/lib/zip.js"></script>
-    <script src="/lib/jquery/dist/jquery.min.js"></script>
-    <script src="/lib/dx/dx.all.js"></script>
-    <script src="/lib/dx/dx.aspnet.data.js"></script>
 
     <script src="/js/questionniaireJournal.js"></script>
-    <link rel="stylesheet" type="text/css" href="/lib/dx/dx.common.css" />
-    <link rel="stylesheet" type="text/css" href="/lib/dx/grey.css" />
 }
 <script src="/lib/vue.js"></script>
 <h1>Questionniaires List</h1>
@@ -24,7 +18,7 @@
 <div id="app">
 <div class="text-left">
        
-        <a v-if="id!=null" class="nav-link text-lite" v-bind:href="'/Home/Download/'+ id">Download current</a>
+        <a v-if="id!=null" class="nav-link text-lite" v-bind:href="'/Home/Download/'+ id">Download focused</a>
         <div style="display:none" id="selectedId"></div>
         <div style="display:flex;flex-direction:row">
         <div v-for="(fileInf,num) in filesList" :v-key="fileInf">
@@ -35,7 +29,7 @@
          
             <input id="file" type="file" v-on:change="addFiles()" class="inputfile" accept=".json" />
            
-            <label v-if="filesList.length==0" for="file" class="openFileDialogButton">Upload current </label>
+            <label v-if="filesList.length==0" for="file" class="openFileDialogButton">Upload</label>
             <button  class="openFileDialogButton" onclick="edit()">Edit</button>
             <div style="color:red">{{uploadError}}</div>
         </div>

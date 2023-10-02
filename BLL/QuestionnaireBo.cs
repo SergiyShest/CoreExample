@@ -152,7 +152,7 @@ namespace BLL
                 question.Delete(uow,user, withSave);
             }
             base.Delete(uow,user, withSave);
-
+            base.Uow.Save();
         }
 
         #endregion

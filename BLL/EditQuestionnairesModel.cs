@@ -140,6 +140,4 @@ namespace BLL
         #endregion
 
     }
-
-
 }
