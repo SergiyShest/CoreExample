@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Controllers;
 using Newtonsoft.Json;
+using System.Security.Claims;
 using System.Text;
 
 namespace CookieReaders.Controllers
@@ -14,9 +15,10 @@ namespace CookieReaders.Controllers
     public class HomeController : BaseController
     {
         QuestionnairesModel Model { get; set; }
-        public HomeController()
+        public HomeController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) 
         {
             Model = new QuestionnairesModel(uow);
+            Model.UserName = base.UserName;
         }
 
         public IActionResult Index()
@@ -100,7 +102,27 @@ namespace CookieReaders.Controllers
             }
         }
 
-        [HttpPost]
+ 
+
+        public FileResult Download(int id)
+        {
+            var questionnaire = uow.GetRepository<Questionnaire>().FirstOrDefault(x => x.Id == id);
+
+            var qustionniare = new QuestionnaireBo(questionnaire);
+            var json = JsonConvert.SerializeObject(qustionniare, Formatting.Indented);
+            byte[] fileBytes = Encoding.ASCII.GetBytes(json);
+            string fileName = qustionniare.Name + id + ".json";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public FileResult DownloadCss()
+        {
+            var fileContent = System.IO.File.ReadAllText("wwwroot\\Scripts\\vue-apps\\css_questionnaire\\app.css");
+            byte[] fileBytes = Encoding.ASCII.GetBytes(fileContent);
+            string fileName = "qustionniareMain.css";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+       [HttpPost]
         public async Task<IActionResult> UploadCss()
         {
             var file_ = base.Request.Form.Files[0];
@@ -125,25 +147,5 @@ namespace CookieReaders.Controllers
             }
 
         }
-
-        public FileResult Download(int id)
-        {
-            var questionnaire = uow.GetRepository<Questionnaire>().FirstOrDefault(x => x.Id == id);
-
-            var qustionniare = new QuestionnaireBo(questionnaire);
-            var json = JsonConvert.SerializeObject(qustionniare, Formatting.Indented);
-            byte[] fileBytes = Encoding.ASCII.GetBytes(json);
-            string fileName = qustionniare.Name + id + ".json";
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
-        }
-
-        public FileResult DownloadCss(int id)
-        {
-            var fileContent = System.IO.File.ReadAllText("wwwroot\\Scripts\\vue-apps\\css_questionnaire\\app.css");
-            byte[] fileBytes = Encoding.ASCII.GetBytes(fileContent);
-            string fileName = "qustionniareMain.css";
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
-        }
-
     }
 }

@@ -10,6 +10,8 @@ namespace MVC.Controllers
     [Authorize]
     public class QuestionnaireController : BaseController
     {
+        public QuestionnaireController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) { }
+
         public ActionResult Index( string mode)
         {
             ViewBag.sessionId = base.Request.HttpContext.Connection.Id;

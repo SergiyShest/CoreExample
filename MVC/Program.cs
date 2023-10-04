@@ -31,12 +31,14 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-//builder.WebHost.UseIISIntegration();
+builder.Services.AddHttpContextAccessor();
+
 ////builder.WebHost.UseIISIntegration(); options =>
 ////{
 ////    options.AllowSynchronousIO = true;
 ////});
-
+///
+//builder.WebHost.UseIISIntegration();
 builder.WebHost.UseKestrel(options =>
  {
      options.AllowSynchronousIO = true;

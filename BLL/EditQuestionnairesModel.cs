@@ -11,7 +11,7 @@ namespace BLL
 {
     public class QuestionnairesModel
     {
-
+        public string UserName { get; set; }
         protected Logger log = LogManager.GetCurrentClassLogger();
         public int? Id { get; set; }
 

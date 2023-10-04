@@ -37,12 +37,14 @@ $(function () {
             key: "id",
             loadUrl: "../UserJournal/Get",
             deleteUrl: "../UserJournal/Delete",
+            updateUrl: "../UserJournal/Update",
             onBeforeSend: function (method, ajaxOptions) {
                 ajaxOptions.xhrFields = { withCredentials: true };
             }
         }),
         editing: {
             mode: 'row',
+            allowUpdating: true,
             allowDeleting: true,
         },
         stateStoring: { storageKey: 'user_Grid'},
@@ -53,6 +55,7 @@ $(function () {
                 allowEditing: false,
                 width: "70px",
             },
+            { caption: "Name ", dataField: "name" }, 
             { caption: "Email ", dataField: "email"  },    
             { caption: "Regictration date ", dataField: "cDate", dataType: "date" },    
         ]

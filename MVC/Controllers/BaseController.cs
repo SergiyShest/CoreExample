@@ -10,6 +10,15 @@ namespace MVC.Controllers
 {
     public class BaseController : Controller
     {
+        public string UserName{get;}
+
+        public BaseController(IHttpContextAccessor httpContextAccessor)
+        {
+            UserName = httpContextAccessor?.HttpContext?.User?.Identity?.Name;
+            ViewBag.UserName = UserName;
+            log.Debug("Current user =" + UserName);
+        }
+
         protected Logger log = LogManager.GetCurrentClassLogger();
 
         protected UnitOfWork uow= new UnitOfWork();

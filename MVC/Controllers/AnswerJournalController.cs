@@ -12,6 +12,7 @@ namespace MVC.Controllers
     public class AnswerJournalController : BaseController
     {
 
+     public  AnswerJournalController(IHttpContextAccessor httpContextAccessor):base(httpContextAccessor) { }
 
         public IActionResult Index()
         {

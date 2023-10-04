@@ -10,15 +10,15 @@ namespace CookieReaders.Models
         [Required, Compare("Password")]
         public string ConfirmPassword { get; set; }
 
-        protected override string GetError()
-        {
-            string error = base.GetError();
-            if (!string.IsNullOrWhiteSpace(Password) &&  Password != ConfirmPassword)
-            {
-                error += "Password and ConfirmPassword not Equal" + Environment.NewLine;
-            }
+        //protected override string GetError()
+        //{
+        //    string error = base.GetError();
+        //    if (!string.IsNullOrWhiteSpace(Password) &&  Password != ConfirmPassword)
+        //    {
+        //        error += "Password and ConfirmPassword not Equal" + Environment.NewLine;
+        //    }
             
-            return error;
-        }
+        //    return error;
+        //}
     }
 }

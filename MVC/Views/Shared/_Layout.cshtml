@@ -1,4 +1,8 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IHttpContextAccessor httpContextAccessor
+@{
+    string UserName = httpContextAccessor?.HttpContext?.User?.Identity?.Name;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +18,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
- 
+                 <img src="/Content/Images/logos/logo_1.svg" style="height:30px;margin-right:20px" />
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -32,6 +36,7 @@
                         </li>
                     </ul>
                 </div>
+                <div>User:@UserName</div>
             </div>
         </nav>
     </header>@* style="width:100%" class="pb-3"*@

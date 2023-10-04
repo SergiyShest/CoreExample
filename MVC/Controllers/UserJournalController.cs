@@ -16,7 +16,7 @@ namespace MVC.Controllers
         UserModel UserModel { get;  }
         AvaiableUserModel AvUserModel { get;  }
 
-        public UserJournalController()
+        public UserJournalController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) 
         {
             AvUserModel = new AvaiableUserModel(uow);
             UserModel = new UserModel(uow);
@@ -35,7 +35,20 @@ namespace MVC.Controllers
             loadOptions.PaginateViaPrimaryKey = true;
             return Json(await DataSourceLoader.LoadAsync(answers, loadOptions));
         }
- 
+
+        public async Task<IActionResult> Update()
+        {
+            try
+            {
+                UserModel.Update(base.Body());
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.GetAllMessages() });
+            }
+        }
+
         public async Task<IActionResult> Delete()
         {
             try

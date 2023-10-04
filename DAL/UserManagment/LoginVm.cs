@@ -9,22 +9,20 @@ namespace CookieReaders.Models
         [Required]
         public string Password { get; set; }
 
-        
-        public string Error { get {
-                return GetError();
-            
-            }  }
 
-        protected virtual string GetError() {
-            string error = string.Empty;
-                if(string.IsNullOrWhiteSpace(EmailAddress)) {
-                error += "EmailAddress can not be empty"+Environment.NewLine;
-            }
-            if (string.IsNullOrWhiteSpace(Password))
-            {
-                error += "Password can not be empty" + Environment.NewLine; ;
-            }
-            return error;
-        }
+        public string Error { get; set; } = string.Empty;
+
+
+        //protected virtual string GetError() {
+        //    string error = string.Empty;
+        //        if(string.IsNullOrWhiteSpace(EmailAddress)) {
+        //        error += "EmailAddress can not be empty"+Environment.NewLine;
+        //    }
+        //    if (string.IsNullOrWhiteSpace(Password))
+        //    {
+        //        error += "Password can not be empty" + Environment.NewLine; ;
+        //    }
+        //    return error;
+        //}
     }
 }

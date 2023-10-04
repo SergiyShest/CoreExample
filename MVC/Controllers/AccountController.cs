@@ -15,8 +15,8 @@ namespace CookieReaders.Controllers
 
         public AccountController()
         {
-            _userManager =  new UserManager();
-            _userRepository = new  UserRepository();
+            _userManager = new UserManager();
+            _userRepository = new UserRepository();
         }
 
         public IActionResult Login()
@@ -51,17 +51,24 @@ namespace CookieReaders.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterAsync(RegisterVm model)
+        public IActionResult Register(RegisterVm model)
         {
-       
+
             if (!ModelState.IsValid)
-                return View(model);
-
-            var user = _userRepository.Register(model);
-
-            await _userManager.SignIn(this.HttpContext, user, false);
-
-            return LocalRedirect("~/AnswerJournal/Index");
+            {   
+                return View("Register", model);
+            }
+            try
+            {
+                var user = _userRepository.Register(model);
+                 _userManager.SignIn(this.HttpContext, user, false);
+            }
+            catch(Exception ex) 
+            {
+                model.Error = ex.GetBaseException().Message;
+                return View("Register", model);
+            }
+            return LocalRedirect("~/Home/Index");
         }
 
         public async Task<IActionResult> LogoutAsync()
