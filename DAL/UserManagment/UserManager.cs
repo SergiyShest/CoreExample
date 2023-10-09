@@ -25,7 +25,7 @@ namespace CookieReaders.Providers
 
             // Add Additional Claims from the Context
             // which might be useful
-            // claims.Add(httpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name));
+             claims.Add(httpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name));
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, authenticationScheme);
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);

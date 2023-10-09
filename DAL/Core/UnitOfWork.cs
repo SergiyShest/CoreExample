@@ -149,15 +149,11 @@ namespace DAL.Core
             _db.Entry(item).State = EntityState.Added;
             //_db.Database.EnsureDeleted();
             _db.Database.EnsureCreated();
+if (withSave) Save();
 #if DEBUG
 
-            if (withSave) Save();
-
             if (RemembeNewEntity)
-
                 UnitOfWork.AddCreatedEntity(item, this);
-#else
-			if (withSave) Save();
 #endif
 
         }

@@ -11,7 +11,7 @@ using System.Text;
 
 namespace CookieReaders.Controllers
 {
-    [Authorize]
+   [Authorize]
     public class HomeController : BaseController
     {
         QuestionnairesModel Model { get; set; }
@@ -93,7 +93,7 @@ namespace CookieReaders.Controllers
             }
             try
             {
-                Model.Upload(id, content);
+                Model.Upload(id, content,true);
                 return Ok();
             }
             catch (Exception ex)

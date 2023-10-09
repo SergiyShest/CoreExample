@@ -23,13 +23,18 @@ namespace Core
         public int? Order { get; set; }
 
 		public string? Description { get; set; }
+
+        public string? NextQuestionCondition { get; set; }
+
+        public bool ShowNexButton { get; set; } = true;
         
         public string? NextButtonText { get; set; }
-        
+
+        public bool ShowPrevButton { get; set;} = true;
+
         public string? PrevButtonText { get; set; }
         
         public string? CssStyle  { get; set; }
-        
 
     }
 

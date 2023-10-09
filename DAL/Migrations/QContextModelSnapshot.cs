@@ -23,6 +23,35 @@ namespace DAL.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "pgcrypto");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Core.QuestionImage", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+
+                    b.Property<string>("CssStyle")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("QuestionId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Name" }, "ix_question_image")
+                        .IsUnique();
+
+                    b.ToTable("QuestionImage", (string)null);
+                });
+
             modelBuilder.Entity("Core.Questionnaire", b =>
                 {
                     b.Property<int?>("Id")
@@ -33,6 +62,9 @@ namespace DAL.Migrations
 
                     b.Property<string>("CssStyle")
                         .HasColumnType("text");
+
+                    b.Property<bool?>("Enabled")
+                        .HasColumnType("boolean");
 
                     b.Property<bool?>("Main")
                         .HasColumnType("boolean");
@@ -74,6 +106,9 @@ namespace DAL.Migrations
                     b.Property<string>("NextButtonText")
                         .HasColumnType("text");
 
+                    b.Property<string>("NextQuestionCondition")
+                        .HasColumnType("text");
+
                     b.Property<string>("Options")
                         .HasColumnType("jsonb");
 
@@ -88,6 +123,12 @@ namespace DAL.Migrations
 
                     b.Property<string>("Schema")
                         .HasColumnType("jsonb");
+
+                    b.Property<bool>("ShowNexButton")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("ShowPrevButton")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 

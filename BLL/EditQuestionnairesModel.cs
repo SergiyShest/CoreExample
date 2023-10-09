@@ -41,6 +41,7 @@ namespace BLL
             var id = Convert.ToInt32(form.Get("key"));
 
             var quest = UOW.GetRepository<Questionnaire>().FirstOrDefault(x => x.Id == id, false);
+            if (id == null) { throw new Exception($"Questionnaire with id ={id} dont exists"); }
             var prMain = quest.Main == true;
             JsonConvert.PopulateObject(values, quest);
             if (quest.Main == true && !prMain)
@@ -65,7 +66,7 @@ namespace BLL
 
         }
 
-        public void Upload(int? id,string content)
+        public void Upload(int? id,string content,bool deleteQuestions)
         {
             var questionniare = JsonConvert.DeserializeObject<QuestionnaireBo>(content);
             if (questionniare == null) { throw new ApplicationException("now file"); }
@@ -77,7 +78,11 @@ namespace BLL
                 if (row != null)
                 {
                     var q = new QuestionnaireBo(row);
-                    q.Delete(UOW, null, false);
+                    if(deleteQuestions)
+                        foreach (var question in q.Questions)
+                        {
+                            question.Delete(UOW, null, false);
+                        }
                 }
             }
             questionniare.Id = id;

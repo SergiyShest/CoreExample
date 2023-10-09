@@ -93,7 +93,9 @@ const defaultDxOptions = {
         showInfo: true,
         showNavigationButtons: true,
     },
-
+    allowColumnResizing: true,
+    columnResizingMode: 'widget',
+    allowColumnReordering: true,
     focusedRowEnabled: true,
     rowAlternationEnabled: true,
 

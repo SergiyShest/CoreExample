@@ -13,7 +13,7 @@ namespace MVC.Controllers
 {
 
 
-    [Authorize]
+   [Authorize]
     public class QuestionnaireEditController : BaseController
     {
 
@@ -65,7 +65,7 @@ namespace MVC.Controllers
  
             var qmodel= new QuestionnairesModel(base.uow);
             var bodyText = base.Body();
-            qmodel.Upload(questionnaireId,bodyText);
+            qmodel.Upload(questionnaireId,bodyText,true);
 
             //var errors = model.SaveQuestionnaire(uow ,bodyText, GetCurrentUser());
 

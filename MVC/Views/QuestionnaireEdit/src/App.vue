@@ -1,8 +1,16 @@
 <template>
-  <v-app id="app" style="width: 100%; padding: 3px" @keydown.ctrl.83.prevent.stop="Save"
-    @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
+  <v-app
+    id="app"
+    style="width: 100%; padding: 3px"
+    @keydown.ctrl.83.prevent.stop="Save"
+    @keydown.ctrl.37.prevent.stop="SelectPrevQuestion"
+    @keydown.ctrl.39.prevent.stop="SelectNextQuestion"
+  >
     <div class="modal" v-if="loadingData">
-      <img class="loader-icon" :src="require('../../../wwwroot/Content/Images/loading.gif')" />
+      <img
+        class="loader-icon"
+        :src="require('../../../wwwroot/Content/Images/loading.gif')"
+      />
     </div>
     <!-- <vue-simple-context-menu
       :options="[]"
@@ -12,10 +20,9 @@
     ></vue-simple-context-menu> -->
     <v-main>
       <v-container fluid>
-
-
         <v-row>
-          <v-col cols="2" style="height: 70vh; overflow: scroll"><!--v-if="mode == 'edit'"-->
+          <v-col cols="2" style="height: 70vh; overflow: scroll"
+            ><!--v-if="mode == 'edit'"-->
             <v-row style="height: 50px">
               <v-menu class="center" offset-y="40">
                 <template v-slot:activator="{ on, attrs }">
@@ -24,7 +31,11 @@
                   </v-btn>
                 </template>
                 <v-list>
-                  <v-list-item v-for="(item, index) in questionTemplates" :key="index" link>
+                  <v-list-item
+                    v-for="(item, index) in questionTemplates"
+                    :key="index"
+                    link
+                  >
                     <v-list-item-title @click="AddQuestion(item)">{{
                       item.Name
                     }}</v-list-item-title>
@@ -32,98 +43,190 @@
                 </v-list>
               </v-menu>
             </v-row>
-            <div style="
+            <div
+              style="
                 display: inline-flex;
                 flex-direction: row;
                 justify-content: flex-start;
                 width: 100%;
-              " v-for="(q, i) in orderedQuestions" :key="q.Id" no-gutters>
+              "
+              v-for="(q, i) in orderedQuestions"
+              :key="q.Id"
+              no-gutters
+            >
               {{ i }})
-              <button class="button" :style="SetSelectedStyle(q)" title="Ask Question" @click="SelectQuestion(q)"
-                @contextmenu.prevent.stop="handleContextMenu($event, q)">
+              <button
+                class="button"
+                :style="SetSelectedStyle(q)"
+                title="Ask Question"
+                @click="SelectQuestion(q)"
+                @contextmenu.prevent.stop="handleContextMenu($event, q)"
+              >
                 <div style="display: inline-flex">
-                  <img v-if="IsQueryValid(q)" :src="require('../../../wwwroot/Content/Icons/checked.png')" width="20"
-                    height="20" />
-                  <img v-else :src="require('../../../wwwroot/Content/Icons/unChecked.png')" width="20" height="20" />
-                  <input type="text" :readonly="mode == 'work'" v-model="q.Name" style="width: 100%; overflow: hidden" />
+                  <img
+                    v-if="IsQueryValid(q)"
+                    :src="require('../../../wwwroot/Content/Icons/checked.png')"
+                    width="20"
+                    height="20"
+                  />
+                  <img
+                    v-else
+                    :src="
+                      require('../../../wwwroot/Content/Icons/unChecked.png')
+                    "
+                    width="20"
+                    height="20"
+                  />
+                  <input
+                    type="text"
+                    :readonly="mode == 'work'"
+                    v-model="q.Name"
+                    style="width: 100%; overflow: hidden"
+                  />
                 </div>
               </button>
               <div></div>
             </div>
           </v-col>
           <v-col col="10">
-            <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine;"
-              :style="headerCssStyle">
-              <h2 style="width: 100%;">                   <textarea v-model="Questionnarie.Text"
-              style="width: 100%;"></textarea> </h2>
+            <v-row
+              v-if="Questionnarie != null"
+              class="panel"
+              style="background-color: aquamarine"
+              :style="headerCssStyle"
+            >
+              <h2 style="width: 100%">
+                <textarea
+                  v-model="Questionnarie.Text"
+                  style="width: 100%"
+                ></textarea>
+              </h2>
             </v-row>
             <!-- <div>{{currentModel.answerModel}}  </div>        <div>{{ enableNext }}  </div>     -->
-            <div style="min-height:600px ;display: flex;flex-direction: column; justify-content: space-between;" :style="currentQuestionCssStyle"  class="panel">
-             
-
-              <div style="display:flex; justify-content: space-between;">
-
-                <h3 v-if="currentQuestion != null" style="width: 100%;" >
-                  <textarea v-model="currentQuestion.Text"
-              style="width: 100%;"></textarea>
+            <div
+              style="
+                min-height: 600px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+              "
+              :style="currentQuestionCssStyle"
+              class="panel"
+            >
+              <div style="display: flex; justify-content: space-between">
+                <h3 v-if="currentQuestion != null" style="width: 100%">
+                  <textarea
+                    v-model="currentQuestion.Text"
+                    style="width: 100%"
+                  ></textarea>
                 </h3>
-                <div class='questionInfo' v-if="this.Questionnarie.Questions != null">
-                  {{ currentQuestion.Order }} of {{ this.Questionnarie.Questions.length }}
+                <div
+                  class="questionInfo"
+                  v-if="this.Questionnarie.Questions != null"
+                >
+                  {{ currentQuestion.Order }} of
+                  {{ this.Questionnarie.Questions.length }}
                 </div>
               </div>
               <v-form ref="form" v-model="currentModel.valid">
-                <v-jsf v-if="currentQuestion != null" v-model="currentModel.answerModel" :schema="currentQuestion.Schema"
-                  :options="currentQuestion.Options" />
+                <v-jsf
+                  v-if="currentQuestion != null"
+                  v-model="currentModel.answerModel"
+                  :schema="currentQuestion.Schema"
+                  :options="currentQuestion.Options"
+                />
               </v-form>
-              <div style="text-align: left" v-if="currentQuestion != null">
-                <textarea v-model="currentQuestion.Description"
-              style="width: 100%;"></textarea>
+              <div style="text-align: left" v-if="currentQuestion.Images&&currentQuestion.Images.length>0" >
+                <img v-for= "im in currentQuestion.Images"  v-bind:key="im"  :src="im" style="margin:1px;width:300px;height:200px"  />
               </div>
-              <v-spacer></v-spacer>
-              <div style=" display: flex; width: 100% ;height:50px; padding: 3px;margin: 3px;">
+              <div style="text-align: left" v-if="currentQuestion != null">
+                <textarea
+                  v-model="currentQuestion.Description"
+                  style="width: 100%"
+                ></textarea>
+              </div>
 
-                <v-btn class="buttion" @click="SelectPrevQuestion()" v-if="currentQuestion.Order > 1">
-                  {{ PrevButtonText }}</v-btn>
+
+              <v-spacer></v-spacer>
+              <div
+                style="
+                  display: flex;
+                  width: 100%;
+                  height: 50px;
+                  padding: 3px;
+                  margin: 3px;
+                "
+              >
+                <v-btn
+                  class="buttion"
+                  @click="SelectPrevQuestion()"
+                  v-if="currentQuestion.ShowPrevButton &&currentQuestion.Order > 1"
+                >
+                  {{PrevButtonText}}</v-btn
+                >
                 <v-spacer></v-spacer>
-                <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext"
-                  v-if="currentQuestion.Order < Questionnarie.Questions.length">
-                  {{ NextButtonText }}
+                <v-btn 
+                  class="buttion"
+                  @click="SelectNextQuestion()"
+                  :disabled="!enableNext"
+                  v-if="currentQuestion.ShowNextButton && currentQuestion.Order < Questionnarie.Questions.length"
+                >
+                  {{NextButtonText}}
                 </v-btn>
               </div>
             </div>
           </v-col>
         </v-row>
-        <!-- <v-row>
+        <v-row>
           <fieldset style="border: inset;width:100%;">
             <legend style="width: 100px; padding-top: 2px; padding-left: 2px">
-              Description
+              Next Question Condition
               </legend>
-            <textarea v-model="currentQuestion.Description"
+            <textarea v-model="currentQuestion.NextQuestionCondition"
               style="width: 100%;"></textarea>
             </fieldset>
-        </v-row> -->
+        </v-row> 
         <v-row>
-          <v-col cols="6">
-            <div style="border: inset;width:100%;display: inline-flex; ">
-              <div style="width:100%;">
-                Previous question button text:
-              </div>
-              <input style="width:100%;" v-model="currentQuestion.PrevButtonText"  />
+          <v-col cols="2">
+            <div style="border: inset; width: 100%; display: inline-flex">
+              <div style="width: 100%">Show Prev Button</div>
+              <input type="checkbox"
+                style="height: 20px"
+                v-model="currentQuestion.ShowPrevButton"
+              />
             </div>
           </v-col>
-          <v-col cols="6">
-            <div style="border: inset;width:100%;display: inline-flex; ">
-              <div style="width:100%;">
-                Next question button text:
-              </div>
-              <input style="width:100%;" v-model="currentQuestion.NextButtonText"  />
+          <v-col cols="4">
+            <div style="border: inset; width: 100%; display: inline-flex">
+              <div style="width: 100%">Previous question button text:</div>
+              <input
+                style="width: 100%"
+                v-model="currentQuestion.PrevButtonText"
+              />
             </div>
           </v-col>
-
+          <v-col cols="2">
+            <div style="border: inset; width: 100%; display: inline-flex">
+              <div style="width: 100%">Show Next Button</div>
+              <input type="checkbox"
+                style="height: 20px"
+                v-model="currentQuestion.ShowNextButton"
+              />
+            </div>
+     </v-col>     
+          <v-col cols="4">
+            <div style="border: inset; width: 100%; display: inline-flex">
+              <div style="width: 100%">Next question button text:</div>
+              <input
+                style="width: 100%"
+                v-model="currentQuestion.NextButtonText"
+              />
+            </div>
+          </v-col>
         </v-row>
         <v-row>
           <v-col cols="6">
-            <fieldset style="border: inset;width:100%; height: 300px;">
+            <fieldset style="border: inset; width: 100%; height: 300px">
               <legend style="width: 100px; padding-top: 2px; padding-left: 2px">
                 schema
               </legend>
@@ -135,7 +238,7 @@
             </fieldset>
           </v-col>
           <v-col cols="6">
-            <fieldset style="border: inset;width:100%; height: 300px;">
+            <fieldset style="border: inset; width: 100%; height: 300px">
               <legend style="width: 100px; padding-top: 2px; padding-left: 2px">
                 options
               </legend>
@@ -146,26 +249,27 @@
               </div>
             </fieldset>
           </v-col>
-
         </v-row>
         <v-row>
-        
-             <fieldset style="border: inset;width:100%; height: 300px;">
-              <legend style="width: 100px; padding-top: 2px; padding-left: 2px">
-                 currentQuestion.CssStyle
-              </legend>
-              <prism-editor v-model="styleStr" :highlight="highlighter" />
+          <fieldset style="border: inset; width: 100%; height: 300px">
+            <legend style="width: 100px; padding-top: 2px; padding-left: 2px">
+              currentQuestion.CssStyle
+            </legend>
+            <prism-editor v-model="styleStr" :highlight="highlighter" />
 
-              <div class="errorV">
-                {{ notValidCssError }}
-              </div>
-            </fieldset> 
-         
-        </v-row>        
+            <div class="errorV">
+              {{ notValidCssError }}
+            </div>
+          </fieldset>
+        </v-row>
       </v-container>
       <v-footer fixed class="d-flex justify-end">
-        <v-btn height="25" @click="SaveQuestionnaire()" style="min-width: 130px">Save Questionnaire</v-btn>
-        <v-btn @click="CloseThis()" height="25" style="min-width: 130px">Cancel</v-btn>
+        <v-btn height="25" @click="SaveQuestionnaire()" style="min-width: 130px"
+          >Save Questionnaire</v-btn
+        >
+        <v-btn @click="CloseThis()" height="25" style="min-width: 130px"
+          >Cancel</v-btn
+        >
         <div style="width: 30px" />
       </v-footer>
     </v-main>
@@ -173,29 +277,40 @@
 </template>
 
 <script>
-// if (Id == undefined) {
-//   var Id = 48
-//   var SessionId = 'xxx'
-// }
+ if (Id == undefined) {
+  // var Id = null
+ // var SessionId = 'xxx-aaaa'
+ }
 
-
-import { data, radioOptions, radioShema, emptyOptions, stringShema, dateShema, numShema, radioItem, stringItem, dateItem, numItem } from "./data.js";
+import {
+  data,
+  radioOptions,
+  radioShema,
+  emptyOptions,
+  stringShema,
+  dateShema,
+  numShema,
+  radioItem,
+  stringItem,
+  dateItem,
+  numItem,
+} from "./data.js";
 import { baseMixin } from "./BaseMixin.js";
 //import VueSimpleContextMenu from "vue-simple-context-menu";
-import VJsf from '@koumoul/vjsf/lib/VJsf.js'
-import '@koumoul/vjsf/lib/VJsf.css'
-import '@koumoul/vjsf/lib/deps/third-party.js'
-import { PrismEditor } from 'vue-prism-editor';
-import 'vue-prism-editor/dist/prismeditor.min.css'; // import the styles somewhere
+import VJsf from "@koumoul/vjsf/lib/VJsf.js";
+import "@koumoul/vjsf/lib/VJsf.css";
+import "@koumoul/vjsf/lib/deps/third-party.js";
+import { PrismEditor } from "vue-prism-editor";
+import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
 
 // import highlighting library (you can use any library you want just return html string)
-import { highlight, languages } from 'prismjs/components/prism-core';
-import 'prismjs/components/prism-clike';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/themes/prism-tomorrow.css'; //
+import { highlight, languages } from "prismjs/components/prism-core";
+import "prismjs/components/prism-clike";
+import "prismjs/components/prism-javascript";
+import "prismjs/themes/prism-tomorrow.css"; //
 
 export default {
-  name: 'App',
+  name: "App",
   mixins: [baseMixin],
   components: {
     VJsf,
@@ -211,7 +326,7 @@ export default {
     models: [],
     Questionnarie: { Questions: [] },
     notValidCss: "",
-    notValidCssError: "",    
+    notValidCssError: "",
     notValidSchemaError: "",
     notValidSchema: "",
     notValidSchemaError: "",
@@ -222,7 +337,7 @@ export default {
       Name: null,
       Options: radioOptions,
       Schema: radioShema,
-      CssStyle:{'background-color': '#EE0'}
+      CssStyle: { "background-color": "#EE0" },
     },
     session: SessionId,
     questionTemplates: [
@@ -242,8 +357,8 @@ export default {
   }),
   computed: {
     orderedQuestions() {
-      if(this.Questionnarie)
-      return this.Questionnarie.Questions.sort((a, b) => a.Order - b.Order);
+      if (this.Questionnarie)
+        return this.Questionnarie.Questions.sort((a, b) => a.Order - b.Order);
     },
     optionsStr: {
       get() {
@@ -282,12 +397,12 @@ export default {
     },
     styleStr: {
       get() {
-           if (this.notValidCss) return this.notValidCss;
+        if (this.notValidCss) return this.notValidCss;
         return JSON.stringify(this.currentQuestion.CssStyle, null, "\t");
       },
       set(value) {
         try {
-          console.log(value)
+          console.log(value);
           this.currentQuestion.CssStyle = JSON.parse(value);
           this.notValidCss = null;
           this.notValidCssError = null;
@@ -299,29 +414,33 @@ export default {
     },
 
     enableNext() {
-
-      return this.currentModel.valid != false && Object.keys(this.currentModel.answerModel).length > 0
+      return (
+        this.currentModel.valid != false &&
+        Object.keys(this.currentModel.answerModel).length > 0
+      );
     },
     PrevButtonText() {
-      return this.currentQuestion.PrevButtonText ? this.currentQuestion.PrevButtonText : "Prev"
+      return this.currentQuestion.PrevButtonText
+        ? this.currentQuestion.PrevButtonText
+        : "Prev";
     },
     NextButtonText() {
-      return this.currentQuestion.NextButtonText ? this.currentQuestion.NextButtonText : "NEXT"
+      return this.currentQuestion.NextButtonText
+        ? this.currentQuestion.NextButtonText
+        : "NEXT";
     },
 
     currentQuestionCssStyle() {
       if (this.currentQuestion.CssStyle) {
-        console.log(this.currentQuestion.CssStyle)
+        //console.log(this.currentQuestion.CssStyle);
         return this.currentQuestion.CssStyle;
       }
     },
     headerCssStyle() {
-
       if (this.Questionnarie.CssStyle) {
         return this.Questionnarie.CssStyle;
       }
-    }
-
+    },
   },
 
   methods: {
@@ -391,12 +510,10 @@ export default {
       }
     },
     IsQueryValid(question) {
-
       if (this.patient && this.patient.id > 0) {
         let model = this.models.find((x) => x.QuestionId == question.Id);
 
         return model && model.valid;
-
       }
 
       return false;
@@ -432,48 +549,50 @@ export default {
       this.schemaStr = schStr;
     },
 
-
-
-
-
-
     SetSelectedStyle(question) {
       if (this.currentQuestion.Id == question.Id) {
         return { background: "#ccc" };
       }
     },
     SelectQuestion(question) {
-    try{
-      if (this.currentQuestion && this.currentQuestion.Id == question.Id) return; //если это повторный вызов
-      if (question.Id == 0) return; //если это фейк  currentQuestion нужный для инициализации Vue
+      try {
+        if (this.currentQuestion && this.currentQuestion.Id == question.Id)
+          return; //если это повторный вызов
+        if (question.Id == 0) return; //если это фейк  currentQuestion нужный для инициализации Vue
 
-      let prmodel = this.models.find(
-        (x) => x.QuestionId == this.currentQuestion.Id
-      );
-      if (prmodel) {
-        // prmodel.answerModel=this.currentModel;
-        prmodel = this.currentModel;
+        let prmodel = this.models.find(
+          (x) => x.QuestionId == this.currentQuestion.Id
+        );
+        if (prmodel) {
+          // prmodel.answerModel=this.currentModel;
+          prmodel = this.currentModel;
+        }
+
+        this.currentQuestion = question;
+        this.notValidOptions = null;
+        this.notValidSchema = null;
+        this.SetModel();
+        this.PlayOk();
+      } catch (ex) {
+        console.error(ex);
       }
-
-      this.currentQuestion = question;
-      this.notValidOptions = null;
-      this.notValidSchema = null;
-      this.SetModel();
-      this.PlayOk()
-    }
-    catch(ex){
-     console.error(ex)
-    }
     },
     SelectNextQuestion() {
-      const nextQuestion = this.Questionnarie.Questions.find(
-        (x) => x.Order == this.currentQuestion.Order + 1
-      );
+      let nextQuestion;
+      if(this.currentQuestion.NextQuestionCondition){
+        var nextQuestionCondition = this.currentQuestion.NextQuestionCondition.replace('$Answer',this.currentModel.answerModel.Answer);
+          var F=new Function (nextQuestionCondition);
+          var nextQuestionName = F() ;
+          nextQuestion = this.Questionnarie.Questions.find((x) => x.Name == nextQuestionName);
+         }else{
+           nextQuestion = this.Questionnarie.Questions.find((x) => x.Order == this.currentQuestion.Order + 1);
+         }
+      
       if (nextQuestion) {
         this.SelectQuestion(nextQuestion);
       }
-      console.log(nextQuestion)
-      this.SaveAnsver()
+      console.log(nextQuestion.Order);
+      this.SaveAnsver();
     },
     SelectPrevQuestion() {
 
@@ -483,7 +602,7 @@ export default {
       if (prevQuestion) {
         this.SelectQuestion(prevQuestion);
       }
-      console.log(prevQuestion)
+      console.log(prevQuestion);
     },
     SetModel() {
       let model = this.models.find(
@@ -500,8 +619,7 @@ export default {
       this.currentModel = model;
     },
     Save() {
-      this.SaveQuestionnaire()
-
+      this.SaveQuestionnaire();
     },
     SaveQuestion() {
       this.fetch(
@@ -511,7 +629,7 @@ export default {
       );
     },
     SaveQuestionnaire() {
-      console.log('save')
+      console.log("save"+Id);
       this.fetch(
         this.CloseThis,
         "QuestionnaireEdit/SaveQuestionnaire?questionnaireId=" + Id,
@@ -530,14 +648,12 @@ export default {
         this.fetch(
           this.GetQuestions,
           "/Questions/Questionnaire/DeleteQuestion?questionnaireId=" +
-          Id +
-          "&questionId=" +
-          question.Id
+            Id +
+            "&questionId=" +
+            question.Id
         );
       }
     },
-
-
 
     ok(item) {
       if (item.Errors && item.Errors.length > 0) {
@@ -545,14 +661,11 @@ export default {
       }
     },
     GetQuestions() {
-      console.log('SetQuestions(val)')
-      this.fetch(
-        this.SetQuestions,
-        "Questionnaire/Get?id=" + Id
-      );
+
+      this.fetch(this.SetQuestions, "Questionnaire/Get?id=" + Id);
     },
     SetQuestions(val) {
-      console.log(val)
+
       if (val.Errors) {
         this.ShowErrors(val);
       }
@@ -565,10 +678,10 @@ export default {
     },
 
     SaveAnsver() {
-      return ;
+      return;
       this.fetch(
         this.ok,
-        `Questionnaire/SaveAnsvers?questionnaireId={Id} +'&sessionId= + {this.session}`,
+        'Questionnaire/SaveAnsvers?questionnaireId=' + Id + '&sessionId=' + this.session,
         this.models
       );
     },
@@ -577,11 +690,14 @@ export default {
     },
   },
   mounted: function () {
-    console.log(Id);
-     if (Id) {
-      this.GetQuestions();
-    // this.SetQuestions(data);
-     }
+   console.log(Id);
+    if (Id) {
+     this.GetQuestions();
+    } 
+    else 
+    {
+      this.SetQuestions(data);
+    }
   },
 };
 </script>
@@ -589,7 +705,6 @@ export default {
 html,
 body {
   height: 100%;
-
 }
 
 .questionInfo {
@@ -606,16 +721,16 @@ body {
   width: 60px;
   border-radius: 25px;
   background-color: green !important;
-  margin: 3px
+  margin: 3px;
 }
 
 .panel {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   border: outset;
   border-radius: 15px;
   padding: 15px;
   margin: 5px;
-  background-color: rgb(247, 247, 247)
+  background-color: rgb(247, 247, 247);
 }
 
 .vue-simple-context-menu {

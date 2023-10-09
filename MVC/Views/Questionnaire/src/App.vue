@@ -27,17 +27,30 @@
           :schema="currentQuestion.Schema"
             :options="currentQuestion.Options" />
         </v-form>
+              <div style="text-align: left" v-if="currentQuestion.Images&&currentQuestion.Images.length>0" >
+                <img v-for= "im in currentQuestion.Images"  v-bind:key="im"  :src="im" style="margin:1px;width:300px;height:200px"  />
+              </div>
         <div style="text-align: left" v-if="currentQuestion != null">
           {{ currentQuestion.Description }}
         </div>
         <v-spacer></v-spacer>
         <div style=" display: flex; width: 100% ;height:50px; padding: 3px;margin: 3px;">
 
-          <v-btn class="buttion" @click="SelectPrevQuestion()" v-if="currentQuestion.Order > 1">
-            {{ PrevButtonText}}</v-btn>
+          <v-btn 
+          class="buttion"
+          @click="SelectPrevQuestion()"
+          v-if="currentQuestion.ShowPrevButton &&currentQuestion.Order > 1"
+                >
+                  {{PrevButtonText}}</v-btn
+                >
           <v-spacer></v-spacer>
-          <v-btn class="buttion" @click="SelectNextQuestion()" :disabled="!enableNext" v-if="currentQuestion.Order < Questionnarie.Questions.length">
-           {{ NextButtonText}}
+          <v-btn 
+          class="buttion" 
+          @click="SelectNextQuestion()"
+           :disabled="!enableNext" 
+           v-if="currentQuestion.ShowNextButton && currentQuestion.Order < Questionnarie.Questions.length"
+                >
+           {{NextButtonText}}
           </v-btn> 
         </div>
       </div>
@@ -128,18 +141,21 @@ export default {
         this.PlayOk()
     },
     SelectNextQuestion() {
-      const nextQuestion = this.Questionnarie.Questions.find(
-        (x) => x.Order == this.currentQuestion.Order + 1
-      );
+      let nextQuestion;
+      if(this.currentQuestion.NextQuestionCondition){
+        var nextQuestionCondition = this.currentQuestion.NextQuestionCondition.replace('$Answer',this.currentModel.answerModel.Answer);
+          var F=new Function (nextQuestionCondition);
+          var nextQuestionName = F() ;
+          nextQuestion = this.Questionnarie.Questions.find((x) => x.Name == nextQuestionName);
+         }else{
+           nextQuestion = this.Questionnarie.Questions.find((x) => x.Order == this.currentQuestion.Order + 1);
+         }
+      
       if (nextQuestion) {
         this.SelectQuestion(nextQuestion);
-
       }
-      //if(this.currentQuestion.Order > this.Questionnarie.Questions.length-1) //save on the end of Questionnarie
-      {
-         this.SaveAnsver()
-      }
-
+      console.log(nextQuestion.Order);
+      this.SaveAnsver();
     },
     SelectPrevQuestion() {
 
@@ -149,7 +165,7 @@ export default {
       if (prevQuestion) {
         this.SelectQuestion(prevQuestion);
       }
-      console.log(prevQuestion)
+      console.log(prevQuestion);
     },
     SetModel() {
       let model = this.models.find(
@@ -174,14 +190,13 @@ export default {
       }
     },
     GetQuestions() {
-      console.log('SetQuestions(val)')
       this.fetch(
         this.SetQuestions,
         "Questionnaire/Get?id=" + Id
       );
     },
     SetQuestions(val) {
-      console.log(val)
+
       if (val.Errors) {
         this.ShowErrors(val);
       }

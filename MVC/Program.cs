@@ -31,6 +31,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
 builder.Services.AddHttpContextAccessor();
 
 ////builder.WebHost.UseIISIntegration(); options =>
@@ -56,15 +57,16 @@ if (!app.Environment.IsDevelopment())
 
 AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCookiePolicy();
 
-app.UseAuthentication();
+
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

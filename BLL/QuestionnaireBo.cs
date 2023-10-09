@@ -85,7 +85,7 @@ namespace BLL
                                 record.Order = i;
                                 prRep.Update(record);
                             }
-                            _questions.Add(new QuestionBo(record));
+                            _questions.Add(new QuestionBo(record, base.Uow));
                         }
                     }
                 }

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace MVC.Controllers
-{        [Authorize]
+{   [Authorize]
     public class AnswerJournalController : BaseController
     {
 

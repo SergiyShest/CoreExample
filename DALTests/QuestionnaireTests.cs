@@ -35,7 +35,6 @@ namespace Tests
 
         }
 
-
         [Test]
         public void GetQuestionnaires()
         {
@@ -99,7 +98,6 @@ namespace Tests
 
         }
 
-
         [Test]
         public void DeleteAddQuestionnaire()
         {
@@ -110,8 +108,6 @@ namespace Tests
             }
 
         }
-
-
 
         [Test]
         public void LoadFromFileQuestionnaireNew()
@@ -136,9 +132,7 @@ namespace Tests
             // var  questionnaire  = new QuestionnaireBo();
 
         }
-
-
-
+        
         private QuestionnaireBo createQuestionnaire(bool withQuestion = true,bool cteateNew=false)
         {
 			var questionnaire = new QuestionnaireBo() { Name = Guid.NewGuid().ToString()};
@@ -157,8 +151,6 @@ namespace Tests
         }
 
     }
-
-
 
 
 }

@@ -11,6 +11,7 @@ namespace BLL
     [JsonObject]
     public class QuestionBo : BaseObj<Vjsf>
     {
+        IUnitOfWorkEx _uow;
         #region Properties
         #region Name
         public string Name
@@ -37,6 +38,14 @@ namespace BLL
         }
         #endregion
 
+        #region NextQuestionCondition
+        public string? NextQuestionCondition
+        {
+            get { return Record?.NextQuestionCondition; }
+            set { Record.NextQuestionCondition = value; }
+        }
+        #endregion
+
         #region NextButtonText
         public string? NextButtonText
         {
@@ -54,14 +63,70 @@ namespace BLL
         }
 
         #endregion
-        
+
+        #region ShowNextButton
+        public bool ShowNextButton
+        {
+            get { return Record.ShowNexButton; }
+            set { Record.ShowNexButton = value; }
+        }
+
+        #endregion
+
+        #region ShowPrevButton
+        public bool ShowPrevButton
+        {
+            get { return Record.ShowPrevButton; }
+            set { Record.ShowPrevButton = value; }
+        }
+
+        #endregion
+
+        List<string?> _images;
+        public List<string?> Images
+        {
+            get
+            {
+                if (_images == null)
+                    _images = new List<string?>();
+                if (QuestionImages != null)
+                {
+                   _images=QuestionImages.Select(x=> x.Path).ToList();
+                }
+                return _images;
+            }
+            set { 
+                _images = value;
+            }
+        }
+
+
+        List<QuestionImage> _questionImage;
+     public List<QuestionImage> QuestionImages
+        {
+            get
+            {
+                if (_questionImage == null)
+                if (_uow != null)
+                {
+                    var images = _uow.GetRepository<QuestionImage>().Where(x => x.QuestionId == Id).ToList();
+                    if (images.Any())
+                        _questionImage = images;
+                }
+                return _questionImage;
+            }
+        }
+
+
+
+
         #region CssStyle
         public dynamic CssStyle
         {
             get
             {
                 if (Record.CssStyle == null)
-                    return   null;
+                    return null;
                 return JsonConvert.DeserializeObject(Record.CssStyle);
             }
             set
@@ -91,8 +156,8 @@ namespace BLL
             set
             {
                 if (value != null && value.GetType() == typeof(JObject))
-                { 
-                    Record.Schema = value.ToString(); 
+                {
+                    Record.Schema = value.ToString();
                 }
                 else
                 {
@@ -183,17 +248,15 @@ namespace BLL
         internal string Error { get; private set; }
 
         #endregion
-       
+
         #region Constructors
         public QuestionBo(int? id)
-
         {
             this.Id = id;
-
         }
-        public QuestionBo(Vjsf record) : base(record)
+        public QuestionBo(Vjsf record, IUnitOfWorkEx uow) : base(record)
         {
-
+            _uow = uow;
         }
         public QuestionBo() : base()
         {
@@ -201,17 +264,37 @@ namespace BLL
         }
         #endregion
 
-        public override void Save(IUnitOfWorkEx uow, UserDTO user, bool withSave=true)
+        public override void Save(IUnitOfWorkEx uow, UserDTO user, bool withSave = true)
         {
 
             if (Id <= 0)
             {
                 SetId(0);
             }
-            base.Save(uow, user,withSave);
+            base.Save(uow, user, withSave);
+            if(_images!=null && _images.Count>0)
+            {
+                if(QuestionImages!=null)
+                foreach (var image in QuestionImages)
+                {
+                    uow.Remove(image);
+                }
+                foreach (var image in _images)
+                {
+                    uow.Save(new QuestionImage {Path = image,QuestionId=this.Id});
+                }
+            }
         }
 
-
+        public override void Delete(IUnitOfWorkEx uow, UserDTO user, bool withSave = true)
+        {
+            if(QuestionImages!=null)
+            foreach (var image in QuestionImages)
+            {
+                uow.Remove(image);
+            }
+            base.Delete(uow, user, withSave);
+        }
     }
 }
 

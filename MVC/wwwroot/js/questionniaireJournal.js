@@ -43,6 +43,7 @@ const columns_ = [
     },
     { caption: "Name ", dataField: "name" },
     { caption: "Text ", dataField: "text" },
+    { caption: "Enabled ", dataField: "enabled", dataType: "boolean" },
     { caption: "Main ", dataField: "main", dataType: "boolean" },
 
 ];

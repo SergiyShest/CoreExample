@@ -21,12 +21,14 @@ namespace CookieReaders.Controllers
 
         public IActionResult Login()
         {
+            var user = this.User; 
             return View();
         }
 
         [Authorize]
         public IActionResult Profile()
         {
+            var user = this.User; 
             return View(this.User.Claims.ToDictionary(x => x.Type, x => x.Value));
         }
 

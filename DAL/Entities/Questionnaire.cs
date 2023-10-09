@@ -6,11 +6,13 @@ namespace Core
     {
         public int? Id { get; set; }
         
-        public string?  Text { get;  set; }
+        public string? Text { get;  set; }
     
-        public string?  Name { get;  set; }
+        public string? Name { get;  set; }
 
-        public bool?   Main { get;  set; }
+        public bool? Enabled { get; set; } = false;
+
+        public bool? Main { get;  set; }
 
         public string? CssStyle { get; set; }
 

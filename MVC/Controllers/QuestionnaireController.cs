@@ -7,24 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MVC.Controllers
 {
-    [Authorize]
+    
     public class QuestionnaireController : BaseController
     {
         public QuestionnaireController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) { }
 
-        public ActionResult Index( string mode)
+        public ActionResult Index(int? id)
         {
             ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
-            ViewBag.Id = uow.GetRepository<Questionnaire>().FirstOrDefault(x => x.Main == true)?.Id;
-            if (string.IsNullOrWhiteSpace(mode))
-            {
-                mode = "work";
+            var qs = uow.GetRepository<Questionnaire>().GetAll();
+
+            if (id != null) {
+                   ViewBag.Id = qs.FirstOrDefault(x => x.Id == id && x.Enabled==true)?.Id;
+                if (ViewBag.Id == null)
+                {
+                    //var error = "Not ";
+                }
             }
-            ViewBag.Mode = mode;
-            //if (id == null)
-            //{
-            //    ViewBag.Mode = "edit";
-            //}
+            else { 
+                  ViewBag.Id = qs.FirstOrDefault(x => x.Main == true)?.Id;
+           }
             return View("Index");
         }
 

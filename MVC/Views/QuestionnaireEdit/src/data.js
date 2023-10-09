@@ -98,8 +98,8 @@ export const numItem = {
 };
 export const data = {
   Item:{
-    "Name": "Questionniare right new",
-    "Text": "Answer a few questions and see if you or someone you are looking after may be eligible",
+    "Name": "Spanich",
+    "Text": "Responda algunas preguntas y vea si usted o alguien a quien cuida puede ser elegible",
     "Main": true,
     "CssStyle": {
       "font-size": "large;",
@@ -108,20 +108,22 @@ export const data = {
     "Questions": [
       {
         "Name": "QUESTION 1",
-        "Text": "Do you have a current diagnosis of Atopic Dermatitis (Atopic Eczema)?",
+        "Text": "?Tienes picaz?n en la piel?",
         "Order": 1,
+        "ShowNexButton":true,
+        "NextQuestionCondition":"if($Answer == 1) return 'Images'; else return 'END1';",
         "NextButtonText": null,
         "PrevButtonText": null,
-        "CssStyle":{'background-color': 'red'},
+        "CssStyle": null,
         "Schema": {
           "type": "object",
           "requred": [
-            "ListProp"
+            "Answer"
           ],
           "properties": {
-            "ListProp": {
+            "Answer": {
               "type": "number",
-              "title": "Choose the right answer",
+              "title": "Elegir la respuesta correcta",
               "x-display": "radio",
               "x-itemKey": "Id",
               "x-fromData": "context.Items",
@@ -134,154 +136,38 @@ export const data = {
             "Items": [
               {
                 "Id": 1,
-                "Name": "Yes"
+                "Name": "Si"
               },
               {
                 "Id": 2,
-                "Name": "No, but currently undergoing medical examinations"
-              },
-              {
-                "Id": 3,
                 "Name": "No"
               }
             ]
           },
           "selectAll": true
         },
-        "QuestionnaireId": 22,
-        "Description": "Atopic Dermatitis, also known as Atopic Eczema, is a type of inflammation of the skin, resulting in itchy, red, swollen, and cracked skin.",
-        "Id": 195,
-
+        "QuestionnaireId": 57,
+        "Description": "",
+        "Id": 416
       },
       {
-        "Text": "How old are you",
-        "Name": "QUESTION",
+        "Name": "Images",
+        "Text": "¿De las siguientes imágenes, puede identificar alguna que se parezca a la condición actual de su piel?",
         "Order": 2,
+        "NextQuestionCondition":"if($Answer == 1) return 'InputUserData'; else return 'END1';",
+        "ShowNexButton":true,
         "NextButtonText": null,
         "PrevButtonText": null,
         "CssStyle": null,
         "Schema": {
           "type": "object",
           "requred": [
-            "age"
+            "Answer"
           ],
           "properties": {
-            "age": {
+            "Answer": {
               "type": "number",
-              "title": "Input your age please",
-              "format": "number",
-              "maximum": 120,
-              "minimum": 0,
-              "description": "Age must be between 0 and 120"
-            }
-          }
-        },
-        "Options": {},
-        "QuestionnaireId": 22,
-        "Description": "",
-        "Id": 196
-      },
-      {
-        "Text": "When where you diagnosed Atopic Dermatitis (Atopic Eczema)?",
-        "Name": "QUESTION",
-        "Order": 3,
-        "NextButtonText": null,
-        "PrevButtonText": null,
-        "CssStyle": null,
-        "Schema": {
-          "type": "object",
-          "properties": {
-            "ListProp": {
-              "type": "number",
-              "title": "Choose the right answer",
-              "x-display": "radio",
-              "x-itemKey": "Id",
-              "x-fromData": "context.Items",
-              "description": "",
-              "x-itemTitle": "Name"
-            }
-          }
-        },
-        "Options": {
-          "context": {
-            "Items": [
-              {
-                "Id": 1,
-                "Name": "Less then 6 Months ago"
-              },
-              {
-                "Id": 2,
-                "Name": "Over 6 Months ago"
-              }
-            ]
-          },
-          "selectAll": true
-        },
-        "QuestionnaireId": 22,
-        "Description": "",
-        "Id": 197
-      },
-      {
-        "Text": "How would you describe your current Atopic Dermatitis (Atopic Eczema)?",
-        "Name": "QUESTION",
-        "Order": 4,
-        "NextButtonText": null,
-        "PrevButtonText": null,
-        "CssStyle": null,
-        "Schema": {
-          "type": "object",
-          "properties": {
-            "disease": {
-              "type": "number",
-              "title": "Choose the right answer",
-              "x-display": "radio",
-              "x-itemKey": "Id",
-              "x-fromData": "context.Items",
-              "description": "",
-              "x-itemTitle": "Name"
-            }
-          }
-        },
-        "Options": {
-          "context": {
-            "Items": [
-              {
-                "Id": 1,
-                "Name": "No active disease: I currently have no symptoms"
-              },
-              {
-                "Id": 2,
-                "Name": "Mild disease: Areas of dry, rough and red skin. The skin itches occasionally. There may be some cracking, flaking of the skin, weeping or oozing of fluid, or bleeding. It has little  impact on everyday activities, such as sleeping, getting dressed, showering and  exercising."
-              },
-              {
-                "Id": 3,
-                "Name": "Moderate disease: More extensive areas of dry, rough   and red skin. There is also cracking, flaking of the skin, weeping or oozing of fluid, or bleeding. The skin itches atextensive areas of dry, rough and red skin. There is also cracking, flaking of the skin, weeping or oozing of fluid, or bleeding. The skin itches at least 3-4 days a week. It has moderate impact on everyday activities, such as sleeping, getting dressed, showering and exercising."
-              },
-              {
-                "Id": 4,
-                "Name": "Severe disease: Widespread areas of dry, rough and red skin. There is a lot of cracking, flaking of the skin, weeping or oozing of fluid, or bleeding. The skin itches all the time. It has severe impact on everyday activities, such as sleeping, getting dressed, showering and exercising."
-              }
-            ]
-          },
-          "selectAll": true
-        },
-        "QuestionnaireId": 22,
-        "Description": "",
-        "Id": 198
-      },
-      {
-        "Text": "Have you applied corticosteroids (also called 'steroids') for your Atopic Dermatitis (Atopic Eczema) within the last 6 months?",
-        "Name": "QUESTION",
-        "Order": 5,
-        "NextButtonText": null,
-        "PrevButtonText": null,
-        "CssStyle": null,
-        "Schema": {
-          "type": "object",
-          "properties": {
-            "using": {
-              "type": "number",
-              "title": "Choose the right answer",
+              "title": "Elegir la respuesta correcta",
               "x-display": "radio",
               "x-itemKey": "Id",
               "x-fromData": "context.Items",
@@ -294,132 +180,26 @@ export const data = {
             "Items": [
               {
                 "Id": 1,
-                "Name": "Yes, currently using these"
-              },
-              {
-                "Id": 2,
-                "Name": "Yes, but stopped in the last 6 months"
-              },
-              {
-                "Id": 3,
-                "Name": "Yes, but stopped more than 6 months ago"
-              },
-              {
-                "Id": 4,
-                "Name": "No, never"
-              },
-              {
-                "Id": 5,
-                "Name": "Unsure"
-              }
-            ]
-          },
-          "selectAll": true
-        },
-        "QuestionnaireId": 22,
-        "Description": "There are many different types of these medications available that differ in strength. Some require a prescription from a doctor, but others do not. They can be either ointments, creams, lotions, or sprays. Common types of topical corticosteroids (steroids) are for example: Alclometasone (brand name example: Aclovate), Betamethasone (brand name examples: Diprolene, Beta-Val), Clobetasol (brand name example: Temovate)",
-        "Id": 199
-      },
-      {
-        "Text": "Do or did these topical corticosteroids (also called 'steroids') help with your Atopic Dermatitis (Atopic Eczema) symptoms (like dry skin, itching, redness, or skin thickening/cracking?",
-        "NameText": "QUESTION",
-        "Order": 6,
-        "NextButtonText": null,
-        "PrevButtonText": null,
-        "CssStyle": null,
-        "Schema": {
-          "type": "object",
-          "properties": {
-            "Helping": {
-              "type": "number",
-              "title": "Choose the right answer",
-              "x-display": "radio",
-              "x-itemKey": "Id",
-              "x-fromData": "context.Items",
-              "description": "",
-              "x-itemTitle": "Name"
-            }
-          }
-        },
-        "Options": {
-          "context": {
-            "Items": [
-              {
-                "Id": 1,
-                "Name": "They are/were helping very well"
-              },
-              {
-                "Id": 2,
-                "Name": "They are/were helping, but there are still symptoms"
-              },
-              {
-                "Id": 3,
-                "Name": "They are/were helping, but there are side effects"
-              },
-              {
-                "Id": 4,
-                "Name": "They are/were helping, but there are still symptoms and side effects"
-              },
-              {
-                "Id": 5,
-                "Name": "They are hardly helping or not helping at all"
-              }
-            ]
-          },
-          "selectAll": true
-        },
-        "QuestionnaireId": 22,
-        "Description": "",
-        "Id": 200
-      },
-      {
-        "Text": "Are you currently pregnant, breastfeeding or planning to become pregnant in the next 6 months?",
-        "Name": "QUESTION",
-        "Order": 7,
-        "NextButtonText": "NEXT",
-        "PrevButtonText": null,
-        "CssStyle": null,
-        "Schema": {
-          "type": "object",
-          "properties": {
-            "ListProp": {
-              "type": "number",
-              "title": "Choose the right answer",
-              "x-display": "radio",
-              "x-itemKey": "Id",
-              "x-fromData": "context.Items",
-              "description": "",
-              "x-itemTitle": "Name"
-            }
-          }
-        },
-        "Options": {
-          "context": {
-            "Items": [
-              {
-                "Id": 1,
-                "Name": "Yes"
+                "Name": "Si"
               },
               {
                 "Id": 2,
                 "Name": "No"
-              },
-              {
-                "Id": 3,
-                "Name": "Unsure"
               }
             ]
           },
           "selectAll": true
         },
-        "QuestionnaireId": 22,
+        "Images":["/Content/Images/item1.PNG","/Content/Images/item2.PNG","/Content/Images/item3.PNG","/Content/Images/item4.PNG"],
+        "QuestionnaireId": 57,
         "Description": "",
-        "Id": 201
+        "Id": 417
       },
+
       {
-        "Text": "If you need to consult a doctor, please leave your phone number and we will call you back.",
-        "Name": "QUESTION",
-        "Order": 8,
+        "Name": "InputUserData",
+        "Text": "Es posible que usted pueda ser elegido/a para ser parte de este estudio cl?nico y recibir una compensaci?n de hasta $400 d?lares. Por favor provea su nombre completo, n?mero telef?nico y correo electr?nico. Un representante de nuestro equipo le contactar? dentro de los pr?ximos 3 d?as h?biles.",
+        "Order": 3,
         "NextButtonText": "Finish",
         "PrevButtonText": null,
         "CssStyle": null,
@@ -442,24 +222,39 @@ export const data = {
           }
         },
         "Options": {},
-        "QuestionnaireId": 22,
+        "QuestionnaireId": 57,
         "Description": "",
-        "Id": 202
+        "Id": 419
       },
       {
-        "Text": "Thanks for contacting.",
-        "Name": "QUESTION 9",
-        "Order": 9,
+        "Name": "END",
+        "Text": "?Gracias por contactar!",
+        "Order": 4,
+        "ShowNexButton":false,
         "NextButtonText": null,
         "PrevButtonText": null,
         "CssStyle": null,
         "Schema": {},
         "Options": {},
-        "QuestionnaireId": 22,
+        "QuestionnaireId": 57,
         "Description": "",
-        "Id": 203
-      }
+        "Id": 420
+      },
+      {
+        "Name": "END1",
+        "Text": "!Lo sentimos! Apreciamos el tiempo que se ha tomado para responder a nuestro llamado; sin embargo, parece que por el momento no cumple con los requisitos para participar en este estudio cl?nico en particular.",
+        "Order": 5,
+        "NextButtonText": null,
+        "ShowNexButton":false,
+        "PrevButtonText": null,
+        "CssStyle": null,
+        "Schema": {},
+        "Options": {},
+        "QuestionnaireId": 57,
+        "Description": "",
+        "Id": 418
+      },
     ],
-    "Id": 48
+    "Id": 57
   }
 };

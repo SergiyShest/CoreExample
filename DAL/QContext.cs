@@ -21,6 +21,7 @@ public partial class QContext : DbContext
      .Build();
         Configuration = config;
 
+
     }
 
     public QContext(DbContextOptions<QContext> options)
@@ -56,6 +57,10 @@ public partial class QContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+    
+        
+
+
         modelBuilder
             .HasPostgresExtension("pgcrypto");
 
@@ -63,6 +68,15 @@ public partial class QContext : DbContext
         {
             entity.Property(p => p.Id).ValueGeneratedOnAdd();
         });
+
+        modelBuilder.Entity<QuestionImage>(entity =>
+        {
+            entity.ToTable("QuestionImage");
+            entity.HasIndex(e => e.Name, "ix_question_image").IsUnique();
+            entity.Property(e => e.Id).HasColumnName("id");
+
+        });
+
 
         modelBuilder.Entity<User>(entity =>
       {
