@@ -102,8 +102,6 @@ namespace CookieReaders.Controllers
             }
         }
 
- 
-
         public FileResult Download(int id)
         {
             var questionnaire = uow.GetRepository<Questionnaire>().FirstOrDefault(x => x.Id == id);

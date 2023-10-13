@@ -6,6 +6,11 @@ using Microsoft.Extensions.Logging;
 
 using Core;
 using NLog.Extensions.Logging;
+using Npgsql;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Reflection;
 
 namespace DAL;
 
@@ -13,9 +18,19 @@ public partial class QContext : DbContext
 {
     protected IConfiguration Configuration;
 
-    public QContext()
+	static QContext()
+	{
+		AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            NpgsqlConnection.GlobalTypeMapper.UseNodaTime();
+
+	}
+
+
+	public QContext()
     {
-        var config = new ConfigurationBuilder()
+
+		var config = new ConfigurationBuilder()
      .SetBasePath(Directory.GetCurrentDirectory())
      .AddJsonFile("appsettings.json")
      .Build();
@@ -27,9 +42,14 @@ public partial class QContext : DbContext
     public QContext(DbContextOptions<QContext> options)
         : base(options)
     {
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
-    }
+		// AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+		//  AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+		NpgsqlConnection.GlobalTypeMapper.UseNodaTime();
+		var dataSourceBuilder = new NpgsqlDataSourceBuilder();
+		dataSourceBuilder.UseNodaTime();
+		var dataSource = dataSourceBuilder.Build();
+
+	}
 
 
 
@@ -53,15 +73,24 @@ public partial class QContext : DbContext
 
         var connect = Configuration.GetConnectionString("WebApiDatabase");
         options.UseNpgsql(connect);
-    }
-    
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+		var dataSourceBuilder = new NpgsqlDataSourceBuilder(connect);
+		dataSourceBuilder
+			.UseLoggerFactory(loggerFactory) // Configure logging
+//			.UsePeriodicPasswordProvider() // Automatically rotate the password periodically
+			.UseNodaTime(); // Use NodaTime for date/time types
+		await using var dataSource = dataSourceBuilder.Build();
+
+
+	}
+
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-    
-        
+
+	
 
 
-        modelBuilder
+		modelBuilder
             .HasPostgresExtension("pgcrypto");
 
         modelBuilder.Entity<AvaiableUser>(entity =>
@@ -106,10 +135,61 @@ public partial class QContext : DbContext
             entity.Property(p => p.Id).ValueGeneratedOnAdd();
         });
 
+		//modelBuilder.ApplyUtcDateTimeConverter();
 
-
-        OnModelCreatingPartial(modelBuilder);
+		OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}
+
+public static class UtcDateAnnotation
+{
+	private const string IsUtcAnnotation = "IsUtc";
+	private static readonly ValueConverter<DateTime, DateTime> UtcConverter = new ValueConverter<DateTime, DateTime>(convertTo => DateTime.SpecifyKind(convertTo, DateTimeKind.Utc), convertFrom => convertFrom);
+
+	public static PropertyBuilder<TProperty> IsUtc<TProperty>(this PropertyBuilder<TProperty> builder, bool isUtc = true) => builder.HasAnnotation(IsUtcAnnotation, isUtc);
+
+	public static bool IsUtc(this IMutableProperty property)
+	{
+		if (property != null && property.PropertyInfo != null)
+		{
+			var attribute = property.PropertyInfo.GetCustomAttribute<IsUtcAttribute>();
+			if (attribute is not null && attribute.IsUtc)
+			{
+				return true;
+			}
+
+			return ((bool?)property.FindAnnotation(IsUtcAnnotation)?.Value) ?? true;
+		}
+		return true;
+	}
+
+	/// <summary>
+	/// Make sure this is called after configuring all your entities.
+	/// </summary>
+	public static void ApplyUtcDateTimeConverter(this ModelBuilder builder)
+	{
+		foreach (var entityType in builder.Model.GetEntityTypes())
+		{
+			foreach (var property in entityType.GetProperties())
+			{
+				if (!property.IsUtc())
+				{
+					continue;
+				}
+
+				if (property.ClrType == typeof(DateTime) ||
+					property.ClrType == typeof(DateTime?))
+				{
+					property.SetValueConverter(UtcConverter);
+				}
+			}
+		}
+	}
+}
+public class IsUtcAttribute : Attribute
+{
+	public IsUtcAttribute(bool isUtc = true) => this.IsUtc = isUtc;
+	public bool IsUtc { get; }
 }

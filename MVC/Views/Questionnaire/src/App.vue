@@ -1,57 +1,89 @@
 <template>
-  <v-app id="app" style="width: 100%; padding: 3px" 
-  @keydown.ctrl.83.prevent.stop="Save"
-  @keydown.ctrl.37.prevent.stop="SelectPrevQuestion" 
-  @keydown.ctrl.39.prevent.stop="SelectNextQuestion">
-
+  <v-app
+    id="app"
+    style="width: 100%; padding: 3px"
+    @keydown.ctrl.83.prevent.stop="Save"
+    @keydown.ctrl.37.prevent.stop="SelectPrevQuestion"
+    @keydown.ctrl.39.prevent.stop="SelectNextQuestion"
+  >
     <v-main>
-      <v-row v-if="Questionnarie != null" class="panel" style="background-color: aquamarine;" :style="headerCssStyle" >
-        <h2> {{ Questionnarie.Text }} </h2>
+      <v-row
+        v-if="Questionnarie != null"
+        class="panel"
+        style="background-color: aquamarine"
+        :style="headerCssStyle"
+      >
+        <h2>{{ Questionnarie.Text }}</h2>
       </v-row>
-      <div style="min-height:600px ;display: flex;flex-direction: column; justify-content: space-between;" :style="currentQuestionCssStyle"  class="panel" >
-
-        <div style="display:flex; justify-content: space-between;">
-
+      <div
+        style="
+          min-height: 600px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        "
+        :style="currentQuestionCssStyle"
+        class="panel"
+      >
+        <div style="display: flex; justify-content: space-between">
           <h3 v-if="currentQuestion != null">
             {{ currentQuestion.Text }}
           </h3>
-          <div
-            class='questionInfo'
-            v-if="this.Questionnarie.Questions != null">
-            {{ currentQuestion.Order }} of {{ this.Questionnarie.Questions.length }}
+          <div class="questionInfo" v-if="this.Questionnarie.Questions != null">
+            {{ currentQuestion.Order }} of
+            {{ this.Questionnarie.Questions.length }}
           </div>
         </div>
-        <v-form ref="form" v-model="currentModel.valid"   >
-          <v-jsf v-if="currentQuestion != null" 
-          v-model="currentModel.answerModel"
-          :schema="currentQuestion.Schema"
-            :options="currentQuestion.Options" />
+        <v-form ref="form" v-model="currentModel.valid">
+          <v-jsf
+            v-if="currentQuestion != null"
+            v-model="currentModel.answerModel"
+            :schema="currentQuestion.Schema"
+            :options="currentQuestion.Options"
+          />
         </v-form>
-              <div style="text-align: left" v-if="currentQuestion.Images&&currentQuestion.Images.length>0" >
-                <img v-for= "im in currentQuestion.Images"  v-bind:key="im"  :src="im" style="margin:1px;width:300px;height:200px"  />
-              </div>
+        <div
+          style="text-align: left"
+          v-if="currentQuestion.Images && currentQuestion.Images.length > 0"
+        >
+          <img
+            v-for="im in currentQuestion.Images"
+            v-bind:key="im"
+            :src="im"
+            style="margin: 1px; width: 300px; height: 200px"
+          />
+        </div>
         <div style="text-align: left" v-if="currentQuestion != null">
           {{ currentQuestion.Description }}
         </div>
         <v-spacer></v-spacer>
-        <div style=" display: flex; width: 100% ;height:50px; padding: 3px;margin: 3px;">
-
-          <v-btn 
-          class="buttion"
-          @click="SelectPrevQuestion()"
-          v-if="currentQuestion.ShowPrevButton &&currentQuestion.Order > 1"
-                >
-                  {{PrevButtonText}}</v-btn
-                >
+        <div
+          style="
+            display: flex;
+            width: 100%;
+            padding: 3px;
+            margin: 3px;
+          "
+        >
+          <button
+            class="buttion"
+            @click="SelectPrevQuestion()"
+            v-if="currentQuestion.ShowPrevButton && currentQuestion.Order > 1"
+          >
+            {{ PrevButtonText }}
+          </button>
           <v-spacer></v-spacer>
-          <v-btn 
-          class="buttion" 
-          @click="SelectNextQuestion()"
-           :disabled="!enableNext" 
-           v-if="currentQuestion.ShowNextButton && currentQuestion.Order < Questionnarie.Questions.length"
-                >
-           {{NextButtonText}}
-          </v-btn> 
+          <button
+            class="buttion"
+            @click="SelectNextQuestion()"
+            :disabled="!enableNext"
+            v-if="
+              currentQuestion.ShowNextButton &&
+              currentQuestion.Order < Questionnarie.Questions.length
+            "
+          >
+            {{ NextButtonText }}
+          </button><v-spacer></v-spacer>
         </div>
       </div>
     </v-main>
@@ -60,27 +92,28 @@
 
 <script>
 if (Id == undefined) {
-  //var Id = 39
+ // var Id = null;
+ // var SessionId = "baseMixin.GenerateGuid()";
 }
-console.log(Id)
-if (SessionId == undefined) {
-    //var SessionId = 'baseMixin.GenerateGuid()'
-}
-
+// console.log(Id)
+// if (SessionId == undefined) {
+//   //
+// }
 
 import { data } from "./data.js";
 import { baseMixin } from "./BaseMixin.js";
-import VJsf from '@koumoul/vjsf/lib/VJsf.js'
-import '@koumoul/vjsf/lib/VJsf.css'
-import '@koumoul/vjsf/lib/deps/third-party.js'
+import VJsf from "@koumoul/vjsf/lib/VJsf.js";
+import "@koumoul/vjsf/lib/VJsf.css";
+import "@koumoul/vjsf/lib/deps/third-party.js";
 
 export default {
-  name: 'App',
+  name: "App",
   mixins: [baseMixin],
   components: {
-    VJsf
+    VJsf,
   },
   data: () => ({
+    userAnsverCounter: 0,
     currentModel: { answerModel: {}, valid: null },
     models: [],
     Questionnarie: { Questions: [] },
@@ -91,34 +124,54 @@ export default {
       Options: {},
       Schema: {},
     },
-    session: SessionId
+    session: SessionId,
   }),
   computed: {
     enableNext() {
-     
-      return this.currentModel.valid!=false&& Object.keys(this.currentModel.answerModel).length > 0
+      return (
+        this.currentModel.valid != false &&
+        Object.keys(this.currentModel.answerModel).length > 0
+      );
     },
     PrevButtonText() {
-     return  this.currentQuestion.PrevButtonText?this.currentQuestion.PrevButtonText:"Prev"
-   },
+      return this.currentQuestion.PrevButtonText
+        ? this.currentQuestion.PrevButtonText
+        : "Prev";
+    },
     NextButtonText() {
-      return  this.currentQuestion.NextButtonText?this.currentQuestion.NextButtonText:"Next"
+      return this.currentQuestion.NextButtonText
+        ? this.currentQuestion.NextButtonText
+        : "Next";
     },
 
-    currentQuestionCssStyle(){
-      if(this.currentQuestion.CssStyle){
+    currentQuestionCssStyle() {
+      if (this.currentQuestion.CssStyle) {
         return this.currentQuestion.CssStyle;
       }
-      },
-      headerCssStyle(){
-
-      if(this.Questionnarie.CssStyle){
+    },
+    headerCssStyle() {
+      if (this.Questionnarie.CssStyle) {
         return this.Questionnarie.CssStyle;
       }
-      }
+    },
+  },
+  watch: {
+    enableNext(val) {
       
+      if (val) {
+        setTimeout(()=>{this.tryNext();}, 500);
+      }
+    },
   },
   methods: {
+    tryNext() {
+      if (this.enableNext) {
+        console.log(this.currentQuestion.Name);
+        if (this.currentQuestion.Name == "QUESTION 1")
+        {this.SelectNextQuestion(); return;}
+        if (this.currentQuestion.Name == "Images") {this.SelectNextQuestion();return;}
+      }
+    },
     validateForm() {
       this.$refs.form.validate();
     },
@@ -137,28 +190,34 @@ export default {
       this.currentQuestion = question;
       this.notValidOptions = null;
       this.notValidSchema = null;
-        this.SetModel();
-        this.PlayOk()
+      this.SetModel();
+      //this.PlayOk()
     },
     SelectNextQuestion() {
       let nextQuestion;
-      if(this.currentQuestion.NextQuestionCondition){
-        var nextQuestionCondition = this.currentQuestion.NextQuestionCondition.replace('$Answer',this.currentModel.answerModel.Answer);
-          var F=new Function (nextQuestionCondition);
-          var nextQuestionName = F() ;
-          nextQuestion = this.Questionnarie.Questions.find((x) => x.Name == nextQuestionName);
-         }else{
-           nextQuestion = this.Questionnarie.Questions.find((x) => x.Order == this.currentQuestion.Order + 1);
-         }
-      
+      if (this.currentQuestion.NextQuestionCondition) {
+        var nextQuestionCondition =
+          this.currentQuestion.NextQuestionCondition.replace(
+            "$Answer",
+            this.currentModel.answerModel.Answer
+          );
+        var F = new Function(nextQuestionCondition);
+        var nextQuestionName = F();
+        nextQuestion = this.Questionnarie.Questions.find(
+          (x) => x.Name == nextQuestionName
+        );
+      } else {
+        nextQuestion = this.Questionnarie.Questions.find(
+          (x) => x.Order == this.currentQuestion.Order + 1
+        );
+      }
+
       if (nextQuestion) {
         this.SelectQuestion(nextQuestion);
       }
-      console.log(nextQuestion.Order);
       this.SaveAnsver();
     },
     SelectPrevQuestion() {
-
       const prevQuestion = this.Questionnarie.Questions.find(
         (x) => x.Order == this.currentQuestion.Order - 1
       );
@@ -182,21 +241,15 @@ export default {
       this.currentModel = model;
     },
 
-
-
     ok(item) {
       if (item.Errors && item.Errors.length > 0) {
         this.ShowErrors(item);
       }
     },
     GetQuestions() {
-      this.fetch(
-        this.SetQuestions,
-        "Questionnaire/Get?id=" + Id
-      );
+      this.fetch(this.SetQuestions, "Questionnaire/Get?id=" + Id);
     },
     SetQuestions(val) {
-
       if (val.Errors) {
         this.ShowErrors(val);
       }
@@ -209,20 +262,25 @@ export default {
     },
 
     SaveAnsver() {
+      if (this.models.length == 4) this.userAnsverCounter++;
       this.fetch(
         this.ok,
-        'Questionnaire/SaveAnsvers?questionnaireId=' + Id + '&sessionId=' + this.session,
+        "Questionnaire/SaveAnsvers?questionnaireId=" +
+          Id +
+          "&sessionId=" +
+          this.session +
+          "_" +
+          this.userAnsverCounter,
         this.models
       );
     },
-
   },
   mounted: function () {
     console.log(Id);
-     if (Id) {
-    this.GetQuestions();
-    //   this.SetQuestions(data);
-   }
+    // if (Id) {
+    // this.GetQuestions();
+    this.SetQuestions(data);
+    //}
   },
 };
 </script>
@@ -230,32 +288,41 @@ export default {
 html,
 body {
   height: 100%;
-
 }
 
 .questionInfo {
-        width: 60px;
-        min-width: 60px;
-        height: 35px;
-        background-color: green;
-        border-radius: 25px;
-        padding: 5px;
-        margin: 5px;
+  width: 100px;
+  min-width: 100px;
+  height: 55px;
+  background-color: green;
+  border-radius: 25px;
+  padding: 5px;
+  margin: 5px;
 }
 
 .buttion {
-  width: 60px;
+  width: 130px;
+  height: 80px;
   border-radius: 25px;
+  border: outset;
+  padding: 3px;
+  margin: 3px;
   background-color: green !important;
-  margin: 3px
+  margin: 3px;
 }
-
+.v-label {
+  font-size: 25px;
+}
+.v-input--selection-controls__input {
+  height: 50px;
+}
 .panel {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  font-size: 30px;
   border: outset;
   border-radius: 15px;
   padding: 15px;
   margin: 5px;
-  background-color: rgb(247, 247, 247)
+  background-color: rgb(247, 247, 247);
 }
 </style>

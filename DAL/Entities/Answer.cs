@@ -18,7 +18,13 @@ namespace DAL
         public string? Value { get;  set; }
 
         public DateTime? Cdate { get;  set; }
-    }
+		//DateTime? _dateTime;
+		//public DateTime? dateTime {
+  //          get { return _dateTime; } 
+  //          set { 
+  //              _dateTime = value; }
+  //      }
+	}
 
 }
 

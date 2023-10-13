@@ -19,7 +19,8 @@ namespace MVC.Controllers
             return View();
         }
 
-        public ActionResult GetAll(DataSourceLoadOptions loadOptions)
+
+		public ActionResult GetAll(DataSourceLoadOptions loadOptions)
 		{
 
 		  var ansvers=	uow.GetRepository<Answer>().GetAll();
@@ -32,7 +33,7 @@ namespace MVC.Controllers
 		public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
 		{
 			var answers = uow.GetRepository<Answer>().GetAll();
-
+            var all = answers.ToList();
 			loadOptions.PrimaryKey = new[] { "Id" };
 			loadOptions.PaginateViaPrimaryKey = true;
 			return Json(await DataSourceLoader.LoadAsync(answers, loadOptions));

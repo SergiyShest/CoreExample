@@ -25,7 +25,7 @@ namespace BLL
 			string json;
 			try
 			{
-				expOb.Item =function();
+				expOb.Item = function();
 				json = JsonConvert.SerializeObject(expOb);
 			}
 			catch (Exception ex)

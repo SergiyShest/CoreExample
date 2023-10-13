@@ -1,6 +1,7 @@
 ﻿using Core;
 using DAL;
 using DAL.Core;
+using DAL.Migrations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -62,17 +63,12 @@ namespace BLL
 
         #region Questions
 
-        List<QuestionBo> _questions;
-        public List<QuestionBo> Questions
+
+List<QuestionBo> SavedQuestions
         {
-            get
-            {
-                if (_questions == null)
-                {
-                    _questions = new List<QuestionBo>();
-                    if (!IsNew)
-                    {
-                        var prRep = base.Uow.GetRepository<Vjsf>();
+            get {
+				var questions = new List<QuestionBo>();
+				var prRep = base.Uow.GetRepository<Vjsf>();
                         var questionRecords = prRep.Where(x => x.QuestionnaireId == Id).OrderBy(x => x.Order).ToList();
                         int i = 0;
                         bool nullable = false;
@@ -85,12 +81,31 @@ namespace BLL
                                 record.Order = i;
                                 prRep.Update(record);
                             }
-                            _questions.Add(new QuestionBo(record, base.Uow));
+                            questions.Add(new QuestionBo(record, base.Uow));
                         }
-                    }
+                        return questions;
+            }
+        }
+
+
+
+		List<QuestionBo> _questions;
+        public List<QuestionBo> Questions
+        {
+            get
+            {
+                if (_questions == null)
+                {
+                    _questions = new List<QuestionBo>();
+                    if (!IsNew)
+                    {
+                        _questions = SavedQuestions;
+					}
                 }
                 return _questions;
             }
+
+            set { _questions = value; }
         }
 
         #endregion
@@ -135,8 +150,26 @@ namespace BLL
                 }
             }
             base.Save(uow, user, false);
-            foreach (var question in Questions)
-            {
+
+			var forDelete = new List<QuestionBo>();
+			foreach (var image in SavedQuestions)
+			{
+				if (!Questions.Any(x => x.Id == image.Id))
+				{
+					forDelete.Add(image);
+				}
+			}
+
+			foreach (var bo in forDelete)
+			{
+				if (bo.Id != null)
+					bo.Delete(uow, user, withSave);
+			}
+
+
+
+			foreach (var question in Questions)
+            {  if (!SavedQuestions.Any(x => x.Id == question.Id)){ question.Id = null; }
                 question.QuestionnaireId = Id;
                 question.Save(uow, user, false);
             }
