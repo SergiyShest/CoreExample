@@ -2,6 +2,7 @@
 using Core;
 using DAL;
 using DAL.Core;
+using Entity;
 using Newtonsoft.Json;
 
 

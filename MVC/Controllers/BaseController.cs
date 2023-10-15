@@ -6,7 +6,7 @@ using BLL;
 using DAL.Core;
 using System.Text;
 
-namespace MVC.Controllers
+namespace Entity.Controllers
 {
     public class BaseController : Controller
     {

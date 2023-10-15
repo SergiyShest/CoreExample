@@ -8,6 +8,7 @@ using DAL.Core;
 using Sasha.Lims.Tests.TestCore;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
+using Entity;
 
 namespace Tests
 {
@@ -102,8 +103,8 @@ namespace Tests
         public void DeleteAddQuestionnaire()
         {
             var questionnaires = UOW.GetRepository<Questionnaire>().GetAll();
-            foreach (var x in questionnaires) {
-                var q = new QuestionnaireBo(x);
+            foreach (var question in questionnaires) {
+                var q = new QuestionnaireBo(question);
                 q.Delete(base.UOW, _user);
             }
 

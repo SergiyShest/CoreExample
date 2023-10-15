@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using BLL;
 using DAL.Core;
 
-namespace MVC.Controllers
+namespace Entity.Controllers
 {
 
 

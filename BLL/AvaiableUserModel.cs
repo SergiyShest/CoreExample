@@ -1,7 +1,7 @@
 ﻿
 using Newtonsoft.Json;
 using NLog;
-using DAL;
+using Entity;
 using DAL.Core;
 using System.Net.Http.Formatting;
 using Core;

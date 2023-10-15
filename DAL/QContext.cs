@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Reflection;
+using Entity;
 
 namespace DAL;
 
@@ -21,8 +22,8 @@ public partial class QContext : DbContext
 	static QContext()
 	{
 		AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-            NpgsqlConnection.GlobalTypeMapper.UseNodaTime();
+       AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 
 	}
 
@@ -42,12 +43,7 @@ public partial class QContext : DbContext
     public QContext(DbContextOptions<QContext> options)
         : base(options)
     {
-		// AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-		//  AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
-		NpgsqlConnection.GlobalTypeMapper.UseNodaTime();
-		var dataSourceBuilder = new NpgsqlDataSourceBuilder();
-		dataSourceBuilder.UseNodaTime();
-		var dataSource = dataSourceBuilder.Build();
+
 
 	}
 
@@ -71,15 +67,10 @@ public partial class QContext : DbContext
         options.UseLoggerFactory(loggerFactory) //tie-up DbContext with LoggerFactory object
             .EnableSensitiveDataLogging();
 
-        var connect = Configuration.GetConnectionString("WebApiDatabase");
-        options.UseNpgsql(connect);
+        var connectString = Configuration.GetConnectionString("WebApiDatabase");
+        options.UseNpgsql(connectString);
 
-		var dataSourceBuilder = new NpgsqlDataSourceBuilder(connect);
-		dataSourceBuilder
-			.UseLoggerFactory(loggerFactory) // Configure logging
-//			.UsePeriodicPasswordProvider() // Automatically rotate the password periodically
-			.UseNodaTime(); // Use NodaTime for date/time types
-		await using var dataSource = dataSourceBuilder.Build();
+
 
 
 	}
@@ -87,58 +78,93 @@ public partial class QContext : DbContext
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-	
+
 
 
 		modelBuilder
             .HasPostgresExtension("pgcrypto");
 
-        modelBuilder.Entity<AvaiableUser>(entity =>
-        {
-            entity.Property(p => p.Id).ValueGeneratedOnAdd();
+
+		modelBuilder.Entity<HitCounter>(entity =>
+		{	
+			entity.Property(e => e.Id).HasColumnName("Id");
+//			entity.ToTable("AnsverHeader");
+               entity.Property(e => e.Cdate)
+              .HasColumnType("timestamp with time zone")
+              .HasColumnName("Cdate");
         });
 
-        modelBuilder.Entity<QuestionImage>(entity =>
-        {
-            entity.ToTable("QuestionImage");
-            entity.HasIndex(e => e.Name, "ix_question_image").IsUnique();
-            entity.Property(e => e.Id).HasColumnName("id");
+		modelBuilder.Entity<Answer>(entity =>
+		{
+			entity.ToTable("Answer");
+			entity.Property(e => e.DateTime)
+              .HasColumnType("timestamp with time zone")
+              .HasColumnName("dateTime");
 
-        });
+		});
+
+		modelBuilder.Entity<AvaiableUser>(entity =>
+		{
+			entity.ToTable("AvaiableUser");
 
 
-        modelBuilder.Entity<User>(entity =>
-      {
-          entity.ToTable("Users");
-          entity.HasIndex(e => e.Email, "IX_user_email").IsUnique();
-          entity.Property(e => e.Id).HasColumnName("id");
+			entity.Property(e => e.Cdate).HasColumnName("CDate");
+			entity.Property(e => e.Cuser).HasColumnName("CUser");
+			entity.Property(e => e.Ldate).HasColumnName("LDate");
+			entity.Property(e => e.Luser).HasColumnName("LUser");
+		});
 
-      });
+		modelBuilder.Entity<QuestionImage>(entity =>
+		{
+			entity.ToTable("QuestionImage");
 
-        modelBuilder.Entity<Vjsf>(entity =>
-        {
-            entity.Property(p => p.Id).ValueGeneratedOnAdd();
-            entity.HasIndex(e => e.Name, "IX_Vjsf_Name").IsUnique();
-            entity.Property(e => e.Options).HasColumnType("jsonb");
-            entity.Property(e => e.Schema).HasColumnType("jsonb");
-        });
+			entity.HasIndex(e => e.Name, "ix_question_image").IsUnique();
 
-        modelBuilder.Entity<Questionnaire>(entity =>
-        {
-            entity.Property(p => p.Id).ValueGeneratedOnAdd();
-            entity.HasIndex(e => e.Name, "IX_Questionnaire_Name").IsUnique();
+			entity.Property(e => e.Id).HasColumnName("id");
+		});
 
-        });
-       
-        modelBuilder.Entity<Answer>(entity =>
-        {
-            entity.Property(p => p.Id).ValueGeneratedOnAdd();
-        });
+		modelBuilder.Entity<Questionnaire>(entity =>
+		{
+			entity.ToTable("Questionnaire");
+
+			entity.HasIndex(e => e.Name, "IX_Questionnaire_Name").IsUnique();
+		});
+
+		modelBuilder.Entity<User>(entity =>
+{            entity.ToTable("Users");       
+			entity.HasIndex(e => e.Email, "IX_user_email").IsUnique();
+
+			entity.Property(e => e.Id).HasColumnName("id");
+			entity.Property(e => e.Cdate).HasColumnName("CDate");
+			entity.Property(e => e.Cuser).HasColumnName("CUser");
+			entity.Property(e => e.Ldate).HasColumnName("LDate");
+			entity.Property(e => e.Luser).HasColumnName("LUser");
+			entity.Property(e => e.PasswordHash).HasDefaultValueSql("''::text");
+			entity.Property(e => e.Salt).HasDefaultValueSql("''::text");
+		});
+
+		modelBuilder.Entity<Vjsf>(entity =>
+		{
+			entity.ToTable("Vjsf");
+
+			entity.HasIndex(e => e.Name, "IX_Vjsf_Name");
+
+			entity.Property(e => e.Options).HasColumnType("jsonb");
+			entity.Property(e => e.Schema).HasColumnType("jsonb");
+			entity.Property(e => e.ShowNexButton)
+				.IsRequired()
+				.HasDefaultValueSql("true");
+			entity.Property(e => e.ShowPrevButton)
+				.IsRequired()
+				.HasDefaultValueSql("true");
+		});
 
 		//modelBuilder.ApplyUtcDateTimeConverter();
 
 		OnModelCreatingPartial(modelBuilder);
-    }
+
+
+	}
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

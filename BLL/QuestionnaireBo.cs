@@ -2,6 +2,7 @@
 using DAL;
 using DAL.Core;
 using DAL.Migrations;
+using Entity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

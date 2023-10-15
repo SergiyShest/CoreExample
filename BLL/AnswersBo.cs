@@ -1,6 +1,7 @@
 ﻿using Core;
 using DAL;
 using DAL.Core;
+using Entity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -59,7 +60,7 @@ namespace BLL
 
 						};
 					ansv.Value = item.Value.ToString();
-					ansv.Cdate = DateTime.Now;
+					ansv.Cdate = DateOnly.FromDateTime(DateTime.Today);
 					Answers.Add(ansv);
 				}
 			}

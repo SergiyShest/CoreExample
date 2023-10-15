@@ -76,10 +76,10 @@ export const baseMixin = {
 		//универсальная функция получения/отправки данных
 		fetch: function (execFunction, pathEnd, data = null) {
 			this.loadingData = true;
-			var fetchRef = execFunction;
-			var path = document.location.origin  +'/'+ pathEnd
-			//var path ='http://localhost:5056/'+ pathEnd
-			var json = JSON.stringify(data);
+			const fetchRef = execFunction;
+			const path = document.location.origin  +'/'+ pathEnd
+			//const path ='http://localhost:5056/'+ pathEnd
+			const json = JSON.stringify(data);
 			fetch(path,
 				{
 					method: 'POST', // *GET, POST, PUT, DELETE, etc.

@@ -6,6 +6,7 @@ using System.Dynamic;
 using Core;
 using DAL.Core;
 using System.Net.Http.Formatting;
+using Entity;
 
 namespace BLL
 {

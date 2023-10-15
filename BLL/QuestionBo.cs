@@ -1,6 +1,7 @@
 ﻿using Core;
 using DAL;
 using DAL.Core;
+using Entity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Dynamic;
@@ -67,7 +68,7 @@ namespace BLL
 		#region ShowNextButton
 		public bool ShowNextButton
 		{
-			get { return Record.ShowNexButton; }
+			get { return Record.ShowNexButton==true; }
 			set { Record.ShowNexButton = value; }
 		}
 
@@ -76,7 +77,7 @@ namespace BLL
 		#region ShowPrevButton
 		public bool ShowPrevButton
 		{
-			get { return Record.ShowPrevButton; }
+			get { return Record.ShowPrevButton==true; }
 			set { Record.ShowPrevButton = value; }
 		}
 

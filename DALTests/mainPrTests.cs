@@ -5,6 +5,7 @@ using DAL;
 
 using Core;
 using DAL.Core;
+using Entity;
 //using NUnit.Framework;
 
 namespace Tests

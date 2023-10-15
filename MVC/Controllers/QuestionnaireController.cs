@@ -4,8 +4,9 @@ using Core;
 using DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
-namespace MVC.Controllers
+namespace Entity.Controllers
 {
     
     public class QuestionnaireController : BaseController
@@ -16,7 +17,7 @@ namespace MVC.Controllers
         {
             ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
             var qs = uow.GetRepository<Questionnaire>().GetAll();
-
+  
             if (id != null) {
                    ViewBag.Id = qs.FirstOrDefault(x => x.Id == id && x.Enabled==true)?.Id;
                 if (ViewBag.Id == null)
@@ -39,15 +40,38 @@ namespace MVC.Controllers
             return Content(json, "application/json");
         }
 
-
-
-
-        public ActionResult SaveAnsvers(int? questionnaireId, string? sessionId)
+         public ActionResult SaveAnsvers(int? questionnaireId, string? sessionId)
         {
             var model = new QuestionnaireModel(questionnaireId);
 
 
 			string json = base.GetJsonSafe(() => model.SaveAnsvers(base.Body(), GetCurrentUser(), sessionId));
+            return Content("{}", "application/json");
+        }
+
+
+
+        public ActionResult SaveUserCounter( string? sessionId)
+        {
+            var rep = uow.GetRepository<HitCounter>();
+
+			var exists = rep.FirstOrDefault(x => x.SessionId == sessionId);
+            if(exists == null)
+            {
+           
+			string json = base.GetJsonSafe( () =>
+                {
+                    var answer= JsonConvert.DeserializeObject<HitCounter>(base.Body());
+                    answer.Cdate = DateTime.Now;
+                    rep.Create(answer); 
+                }
+                );
+
+            }
+
+
+
+
             return Content("{}", "application/json");
         }
 

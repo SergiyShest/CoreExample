@@ -23,7 +23,138 @@ namespace DAL.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "pgcrypto");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.QuestionImage", b =>
+            modelBuilder.Entity("Entity.AnsverHeader", b =>
+                {
+                    b.Property<string>("Area")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Browser")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("BrowserVersion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateOnly?>("Cdate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Cookies")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FlashVersion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Mobile")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Os")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OsVersion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("QuestionnaireId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ScreenSize")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SessionId")
+                        .HasColumnType("text");
+
+                    b.Property<TimeOnly?>("Time")
+                        .HasColumnType("time without time zone");
+
+                    b.ToTable("AnsverHeader", (string)null);
+                });
+
+            modelBuilder.Entity("Entity.Answer", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+
+                    b.Property<DateOnly?>("Cdate")
+                        .HasColumnType("date");
+
+                    b.Property<DateTimeOffset?>("DateTime")
+                        .HasColumnType("time with time zone")
+                        .HasColumnName("dateTime");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("QuestionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("QuestionnarieId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SessionId")
+                        .HasMaxLength(100)
+                        .HasColumnType("character(100)")
+                        .IsFixedLength();
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Answer", (string)null);
+                });
+
+            modelBuilder.Entity("Entity.AvaiableUser", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+
+                    b.Property<DateTime?>("Cdate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("CDate");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Cuser")
+                        .HasColumnType("text")
+                        .HasColumnName("CUser");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Ldate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("LDate");
+
+                    b.Property<string>("Luser")
+                        .HasColumnType("text")
+                        .HasColumnName("LUser");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AvaiableUser", (string)null);
+                });
+
+            modelBuilder.Entity("Entity.QuestionImage", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +183,7 @@ namespace DAL.Migrations
                     b.ToTable("QuestionImage", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Questionnaire", b =>
+            modelBuilder.Entity("Entity.Questionnaire", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,10 +211,67 @@ namespace DAL.Migrations
                     b.HasIndex(new[] { "Name" }, "IX_Questionnaire_Name")
                         .IsUnique();
 
-                    b.ToTable("Questionnaire");
+                    b.ToTable("Questionnaire", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Vjsf", b =>
+            modelBuilder.Entity("Entity.User", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+
+                    b.Property<DateTime?>("Cdate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("CDate");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Cuser")
+                        .HasColumnType("text")
+                        .HasColumnName("CUser");
+
+                    b.Property<DateOnly?>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Ldate")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("LDate");
+
+                    b.Property<string>("Luser")
+                        .HasColumnType("text")
+                        .HasColumnName("LUser");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValueSql("''::text");
+
+                    b.Property<string>("Salt")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValueSql("''::text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Email" }, "IX_user_email")
+                        .IsUnique();
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Entity.Vjsf", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -124,127 +312,23 @@ namespace DAL.Migrations
                     b.Property<string>("Schema")
                         .HasColumnType("jsonb");
 
-                    b.Property<bool>("ShowNexButton")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("ShowPrevButton")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Name" }, "IX_Vjsf_Name")
-                        .IsUnique();
-
-                    b.ToTable("Vjsf");
-                });
-
-            modelBuilder.Entity("DAL.Answer", b =>
-                {
-                    b.Property<int?>("Id")
+                    b.Property<bool?>("ShowNexButton")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("boolean")
+                        .HasDefaultValueSql("true");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
-
-                    b.Property<DateTime?>("Cdate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("QuestionId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("QuestionnarieId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("SessionId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Answer");
-                });
-
-            modelBuilder.Entity("DAL.AvaiableUser", b =>
-                {
-                    b.Property<int?>("Id")
+                    b.Property<bool?>("ShowPrevButton")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
-
-                    b.Property<DateTime?>("CDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CUser")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("LUser")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("text");
+                        .HasColumnType("boolean")
+                        .HasDefaultValueSql("true");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AvaiableUser");
-                });
+                    b.HasIndex(new[] { "Name" }, "IX_Vjsf_Name");
 
-            modelBuilder.Entity("DAL.User", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
-
-                    b.Property<DateTime?>("CDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CUser")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("LUser")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Salt")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Email" }, "IX_user_email")
-                        .IsUnique();
-
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Vjsf", (string)null);
                 });
 #pragma warning restore 612, 618
         }

@@ -6,6 +6,7 @@ using DAL.Core;
 using NUnit.Framework;
 using Sasha.Lims.Tests.TestCore;
 using CookieReaders.Models;
+using Entity;
 
 namespace Tests
 {

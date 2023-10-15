@@ -1,6 +1,7 @@
 ﻿using BLL;
 using Core;
 using DAL.Core;
+using Entity;
 using Newtonsoft.Json;
 using NPOI.SS.Formula.Functions;
 using NUnit.Framework;

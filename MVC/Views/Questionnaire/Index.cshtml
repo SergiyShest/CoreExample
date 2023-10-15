@@ -1,3 +1,4 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,11 +7,11 @@
 	}
 	<meta charset="utf-8" />
 	<title></title>
-	<link href="~/Scripts/vue-apps/css_questionnaire/app.css" rel="preload" as="style">
-	<link href="~/Scripts/vue-apps/css_questionnaire/chunk-vendors.css" rel="preload" as="style">
+	<link href="~/Scripts/vue-apps/css_questionnaire/app.css" rel="preload" as="style" asp-append-version="true">
+	<link href="~/Scripts/vue-apps/css_questionnaire/chunk-vendors.css" rel="preload" as="style" asp-append-version="true">
 
-	<link href="~/Scripts/vue-apps/css_questionnaire/chunk-vendors.css" rel="stylesheet">
-	<link href="~/Scripts/vue-apps/css_questionnaire/app.css" rel="stylesheet">
+	<link href="~/Scripts/vue-apps/css_questionnaire/chunk-vendors.css" rel="stylesheet" asp-append-version="true">
+	<link href="~/Scripts/vue-apps/css_questionnaire/app.css" rel="stylesheet" asp-append-version="true">
 
 </head>
 <body>
@@ -23,8 +24,9 @@
 		console.log(SessionId)
 	</script>
 
-	<script src="~/Scripts/vue-apps/questionnaire/js/chunk-vendors.js"></script>
-	<script src="~/Scripts/vue-apps/questionnaire/js/app.js"></script>
+	<script src="~/Scripts/vue-apps/questionnaire/js/chunk-vendors.js" asp-append-version="true"></script>
+	<script src="~/Scripts/vue-apps/questionnaire/js/app.js" asp-append-version="true"></script>
+	<script src="/js/userCounter.js" asp-append-version="true"></script>
 
 
 </body>

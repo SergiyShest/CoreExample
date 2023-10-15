@@ -3,11 +3,11 @@ using DAL;
 using DevExtreme.AspNet.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MVC.Models;
+using Entity.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
-namespace MVC.Controllers
+namespace Entity.Controllers
 {   [Authorize]
     public class AnswerJournalController : BaseController
     {
@@ -20,20 +20,10 @@ namespace MVC.Controllers
         }
 
 
-		public ActionResult GetAll(DataSourceLoadOptions loadOptions)
-		{
-
-		  var ansvers=	uow.GetRepository<Answer>().GetAll();
-
-
-			//	var loadResult = DataSourceLoader.Load(ordersQuery, loadOptions);
-			return Content(JsonConvert.SerializeObject(ansvers), "application/json");
-		}
-
 		public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
 		{
 			var answers = uow.GetRepository<Answer>().GetAll();
-            var all = answers.ToList();
+
 			loadOptions.PrimaryKey = new[] { "Id" };
 			loadOptions.PaginateViaPrimaryKey = true;
 			return Json(await DataSourceLoader.LoadAsync(answers, loadOptions));

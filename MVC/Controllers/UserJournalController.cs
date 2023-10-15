@@ -1,14 +1,14 @@
 ﻿using BLL;
 using Core;
-using DAL;
+using Entity;
 using DevExtreme.AspNet.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MVC.Models;
+using Entity.Models;
 using DAL.Core;
 using System.Diagnostics;
 
-namespace MVC.Controllers
+namespace Entity.Controllers
 {
    [Authorize]
     public class UserJournalController : BaseController

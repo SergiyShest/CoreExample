@@ -1,4 +1,11 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+//using Npgsql;
+
+//var Configuration = new ConfigurationBuilder()
+//.SetBasePath(Directory.GetCurrentDirectory())
+//.AddJsonFile("appsettings.json")
+//.Build();
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +40,14 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
             });
 
 builder.Services.AddHttpContextAccessor();
+
+//var connectionString = Configuration.GetConnectionString("WebApiDatabase");
+//var ds = new NpgsqlDataSourceBuilder(connectionString).Build();
+//NpgsqlConnection GetConnection() => ds.CreateConnection();
+//builder.Services.AddSingleton(GetConnection());
+//builder.Services.AddAggregateStore<PostgresStore>();
+
+
 
 ////builder.WebHost.UseIISIntegration(); options =>
 ////{

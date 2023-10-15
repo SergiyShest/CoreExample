@@ -1,30 +1,24 @@
 ﻿using Core;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
 
-namespace DAL
+namespace Entity;
+
+public partial class Answer : IEntity
 {
-    public partial class Answer : IEntity
-    {
-        public int? Id { get; set; }
+    public int? Id { get; set; }
 
-        public int? QuestionnarieId {get;  set; }
+    public int? QuestionnarieId { get; set; }
 
-		public int? QuestionId { get; set; }
+    public string? Name { get; set; }
 
-		public string? SessionId { get;  set; }
+    public string? Value { get; set; }
 
-		public string? Name { get;  set; }
-    
-        public string? Value { get;  set; }
+    public int? QuestionId { get; set; }
 
-        public DateTime? Cdate { get;  set; }
-		//DateTime? _dateTime;
-		//public DateTime? dateTime {
-  //          get { return _dateTime; } 
-  //          set { 
-  //              _dateTime = value; }
-  //      }
-	}
+    public DateOnly? Cdate { get; set; }
 
+    public string? SessionId { get; set; }
+
+    public DateTimeOffset? DateTime { get; set; }
 }
-

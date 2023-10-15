@@ -4,6 +4,7 @@ using CookieReaders.Models;
 
 using DAL;
 using DAL.Core;
+using Entity;
 
 namespace CookieReaders.Providers.Repositories
 {
@@ -37,7 +38,7 @@ namespace CookieReaders.Providers.Repositories
                 UserId = m.Id,
                 EmailAddress = m.Email,
                 Name = m.Name,
-                CreatedUtc = m.CDate
+                CreatedUtc = m.Cdate
             });
 
             return results.FirstOrDefault();
@@ -64,7 +65,7 @@ namespace CookieReaders.Providers.Repositories
                 PasswordHash = hashedPassword,
                 Salt = salt,
                 Name = model.Name,
-                CDate = DateTime.UtcNow
+                Cdate = DateTime.UtcNow
             };
 
             UsersRep.Create(user);
@@ -75,7 +76,7 @@ namespace CookieReaders.Providers.Repositories
                 UserId = user.Id,
                 EmailAddress = user.Email,
                 Name = user.Name,
-                CreatedUtc = user.CDate
+                CreatedUtc = user.Cdate
             };
         }
     }

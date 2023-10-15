@@ -24,7 +24,10 @@ namespace DAL.Core
 
         public void Save()
         {
-            DbContext.SaveChanges();
+
+//			DbContext.Database.EnsureDeleted();
+//			DbContext.Database.EnsureCreated();
+			DbContext.SaveChanges();
         }
 
         public void Save<T>(T item, bool withSave = true) where T : class, IEntity
@@ -147,7 +150,7 @@ namespace DAL.Core
         {
 
             _db.Entry(item).State = EntityState.Added;
-            //_db.Database.EnsureDeleted();
+       //     _db.Database.EnsureDeleted();
             _db.Database.EnsureCreated();
 if (withSave) Save();
 #if DEBUG

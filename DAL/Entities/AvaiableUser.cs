@@ -1,11 +1,11 @@
 ﻿using Core;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
 
-namespace DAL;
+namespace Entity;
 
-public partial class AvaiableUser : IEntity
+public partial class AvaiableUser :IEntity
 {
-    [Key]
     public int? Id { get; set; }
 
     public string? Comment { get; set; }
@@ -14,14 +14,11 @@ public partial class AvaiableUser : IEntity
 
     public string? Role { get; set; }
 
-    public DateTime? LDate { get; set; }
+    public DateTime? Ldate { get; set; }
 
-    public DateTime? CDate { get; set; }
+    public DateTime? Cdate { get; set; }
 
-    public string? LUser { get; set; }
+    public string? Luser { get; set; }
 
-    public string? CUser { get; set; }
-
-
-
+    public string? Cuser { get; set; }
 }
