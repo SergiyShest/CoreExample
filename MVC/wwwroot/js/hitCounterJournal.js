@@ -96,7 +96,6 @@ function getColumnFieldName(dataGridInstance, getter) {
             { caption: "Mobile", dataField: "mobile" },
             { caption: "Os", dataField: "os" },
             { caption: "Time zone", dataField: "area" },
-
             { caption: "Date", dataField: "cdate", dataType: 'date' },
             { caption: "Time", dataField: "cdate", dataType:'datetime', format:'shortTime' },
  

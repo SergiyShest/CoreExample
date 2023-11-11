@@ -96,10 +96,24 @@ export const numItem = {
   title: "Input numper please",
   description: "Help",
 };
-export const data = {
+
+export const Languages=[
+  {
+    name: "English",
+    flag: "/Content/Images/englishFlag.png"
+  },
+  {
+    name: "Spanish",
+    flag: "/Content/Images/spanishFlag.png"
+  },
+]
+
+
+
+export const dataEn = {
   Item:{
-    "Name": "Spanich with images2",
-    "Text": "Responda algunas preguntas y vea si usted o alguien a quien cuida puede ser elegible",
+    "Name": "English with images2",
+    "Text": "Answer a few questions and see if you or someone you care for may be eligible",
     "Main": true,
     "CssStyle": {
       "font-family": "Arial",
@@ -109,11 +123,11 @@ export const data = {
     "Questions": [
       {
         "Name": "QUESTION 1",
-        "Text": "¿Tienes picazón en la piel?",
+        "Text": "Do you have itching on your skin?",
         "Order": 1,
         "NextQuestionCondition": "if($Answer == 1) return 'Images'; else return 'END1';",
-        "NextButtonText": "SIG",
-        "PrevButtonText": "ANT",
+        "NextButtonText": "NEXT",
+        "PrevButtonText": "PREV",
         "ShowNextButton": false,
         "ShowPrevButton": false,
         "Images": [],
@@ -126,7 +140,7 @@ export const data = {
           "properties": {
             "Answer": {
               "type": "number",
-              "title": "Marque la repuesta que le corresponde",
+              "title": "Check the answer that applies to you",
               "x-display": "radio",
               "x-itemKey": "Id",
               "x-fromData": "context.Items",
@@ -139,7 +153,7 @@ export const data = {
             "Items": [
               {
                 "Id": 1,
-                "Name": "Si"
+                "Name": "Yes"
               },
               {
                 "Id": 2,
@@ -155,11 +169,11 @@ export const data = {
       },
       {
         "Name": "Images",
-        "Text": "¿De las siguientes imágenes, puede identificar alguna que se parezca a la condición actual de su piel?",
+        "Text": "From the following images, can you identify any that resemble the current condition of your skin?",
         "Order": 2,
         "NextQuestionCondition": "if($Answer == 1) return 'InputUserData'; else return 'END1';",
-        "NextButtonText": "SIG",
-        "PrevButtonText": "ANT",
+        "NextButtonText": "NEXT",
+        "PrevButtonText": "PREV",
         "ShowNextButton": false,
         "ShowPrevButton": true,
         "Images": [
@@ -179,7 +193,7 @@ export const data = {
           "properties": {
             "Answer": {
               "type": "number",
-              "title": "Marque la repuesta que le corresponde",
+              "title": "Check the answer that applies to you",
               "x-display": "radio",
               "x-itemKey": "Id",
               "x-fromData": "context.Items",
@@ -192,7 +206,7 @@ export const data = {
             "Items": [
               {
                 "Id": 1,
-                "Name": "Si"
+                "Name": "Yes"
               },
               {
                 "Id": 2,
@@ -208,11 +222,11 @@ export const data = {
       },
       {
         "Name": "InputUserData",
-        "Text": "Es posible que usted pueda ser elegido/a para ser parte de este estudio clínico y recibir una compensación de hasta $400 dólares. Por favor provea su nombre completo, número telefónico y correo electrónico. Un representante de nuestro equipo le contactará dentro de los próximos 3 días hábiles.",
+        "Text": "It is possible that you may be chosen to be part of this clinical study and receive compensation of up to $400 dollars. Please provide your full name, phone number, and email. A representative from our team will contact you within the next 3 business days.",
         "Order": 3,
         "NextQuestionCondition": null,
-        "NextButtonText": "ENVIAR",
-        "PrevButtonText": "ANT",
+        "NextButtonText": "SEND",
+        "PrevButtonText": "PREV",
         "ShowNextButton": true,
         "ShowPrevButton": false,
         "Images": [],
@@ -226,25 +240,25 @@ export const data = {
           "properties": {
             "name": {
               "type": "string",
-              "title": "Nombre completo:"
+              "title": "Full name:"
             },
             "email": {
               "type": "string",
-              "title": "Correo electrónico (opcional)",
+              "title": "Email (optional):",
               "pattern": "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,5}",
               "x-options": {
                 "messages": {
-                  "pattern": "Debe tener una direccioon de correo electrónico valida"
+                  "pattern": "You must have a valid email address"
                 }
               }
             },
             "phone": {
               "type": "string",
-              "title": "Número telefónico:",
+              "title": "Phone number:",
               "pattern": "^\\s?[\\s(]?\\s?\\d[\\s-]?\\d[\\s-]?\\d[\\s\\-)]?\\s?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s]?$|^[\\+]?\\d\\s?[\\s(]?\\s?\\d[\\s-]?\\s?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?",
               "x-options": {
                 "messages": {
-                  "pattern": "El numero valido debe contener 10 numeros +34 (000) 000 00  or 8 numeros (000) 000 00 "
+                  "pattern": "The valid number must contain 10 numbers +34 (000) 000 00 or 8 numbers (000) 000 00 "
                 }
               }
             }
@@ -257,11 +271,11 @@ export const data = {
       },
       {
         "Name": "END",
-        "Text": "?Gracias por contactar!",
+        "Text": "Thank you for contacting!",
         "Order": 4,
         "NextQuestionCondition": null,
-        "NextButtonText": "SIG",
-        "PrevButtonText": "ANT",
+        "NextButtonText": "NEXT",
+        "PrevButtonText": "PREV",
         "ShowNextButton": false,
         "ShowPrevButton": false,
         "Images": [],
@@ -274,11 +288,11 @@ export const data = {
       },
       {
         "Name": "END1",
-        "Text": "¡Lo sentimos! Apreciamos el tiempo que se ha tomado para responder a nuestro llamado; sin embargo, parece que por el momento no cumple con los requisitos para participar en este estudio clinico en particular.",
+        "Text": "We apologize! We appreciate the time you took to answer our questions. However, it appears that you are not eligible for this particular clinical trial at this time.",
         "Order": 5,
         "NextQuestionCondition": null,
-        "NextButtonText": "SIG",
-        "PrevButtonText": "ANT",
+        "NextButtonText": "NEXT",
+        "PrevButtonText": "PREV",
         "ShowNextButton": false,
         "ShowPrevButton": false,
         "Images": [],

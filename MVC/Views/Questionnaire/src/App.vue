@@ -7,14 +7,28 @@
     @keydown.ctrl.39.prevent.stop="SelectNextQuestion"
   >
     <v-main>
-      <v-row
+      <div 
         v-if="Questionnarie != null"
         class="panel"
-        style="background-color: aquamarine"
+        style="background-color: aquamarine;display: flex;"
         :style="headerCssStyle"
       >
-        <h2>{{ Questionnarie.Text }}</h2>
-      </v-row>
+     
+          <h2 style="width: 100%">{{ Questionnarie.Text }}</h2>
+          
+          <div style="width: 100px; justify-self: end;">
+            <v-select :items="Languages" label="" v-model="Lang">
+              <template v-slot:selection="{ item }">
+                <img :src="item.flag" />
+              </template>
+              <template v-slot:item="{ item }">
+                <img :src="item.flag" style="margin:5px" />
+              </template>
+            </v-select>
+          </div>
+
+        </div>
+   
       <div
         style="
           min-height: 600px;
@@ -57,14 +71,7 @@
           {{ currentQuestion.Description }}
         </div>
         <v-spacer></v-spacer>
-        <div
-          style="
-            display: flex;
-            width: 100%;
-            padding: 3px;
-            margin: 3px;
-          "
-        >
+        <div style="display: flex; width: 100%; padding: 3px; margin: 3px">
           <button
             class="buttion"
             @click="SelectPrevQuestion()"
@@ -82,8 +89,8 @@
               currentQuestion.Order < Questionnarie.Questions.length
             "
           >
-            {{ NextButtonText }}
-          </button><v-spacer></v-spacer>
+            {{ NextButtonText }}</button
+          ><v-spacer></v-spacer>
         </div>
       </div>
     </v-main>
@@ -92,15 +99,12 @@
 
 <script>
 if (Id == undefined) {
- // var Id = null;
- // var SessionId = "baseMixin.GenerateGuid()";
+  var Id = null;
+  var SessionId = "XXXXXXXXXXXXXXXXX";
 }
-// console.log(Id)
-// if (SessionId == undefined) {
-//   //
-// }
 
-import { data } from "./data.js";
+import { Languages, dataEn } from "./data.js";
+import { dataEs } from "./data.es";
 import { baseMixin } from "./BaseMixin.js";
 import VJsf from "@koumoul/vjsf/lib/VJsf.js";
 import "@koumoul/vjsf/lib/VJsf.css";
@@ -113,6 +117,8 @@ export default {
     VJsf,
   },
   data: () => ({
+    Languages: Languages,
+    Lang: Languages[0],
     userAnsverCounter: 0,
     currentModel: { answerModel: {}, valid: null },
     models: [],
@@ -157,19 +163,35 @@ export default {
   },
   watch: {
     enableNext(val) {
-      
       if (val) {
-        setTimeout(()=>{this.tryNext();}, 500);
+        setTimeout(() => {
+          this.tryNext();
+        }, 500);
       }
+    },
+    Lang(lang) {
+      const curr_id=this.currentQuestion.Id;
+      if (lang.name == "English") {
+        this.SetQuestions(dataEn);
+      } else {
+        this.SetQuestions(dataEs);
+      }
+      let question = this.Questionnarie.Questions.find((x) => x.Id == curr_id);
+      this.SelectQuestion(question)
     },
   },
   methods: {
     tryNext() {
       if (this.enableNext) {
         console.log(this.currentQuestion.Name);
-        if (this.currentQuestion.Name == "QUESTION 1")
-        {this.SelectNextQuestion(); return;}
-        if (this.currentQuestion.Name == "Images") {this.SelectNextQuestion();return;}
+        if (this.currentQuestion.Name == "QUESTION 1") {
+          this.SelectNextQuestion();
+          return;
+        }
+        if (this.currentQuestion.Name == "Images") {
+          this.SelectNextQuestion();
+          return;
+        }
       }
     },
     validateForm() {
@@ -279,7 +301,7 @@ export default {
     console.log(Id);
     // if (Id) {
     // this.GetQuestions();
-    this.SetQuestions(data);
+    this.SetQuestions(dataEn);
     //}
   },
 };
@@ -325,4 +347,4 @@ body {
   margin: 5px;
   background-color: rgb(247, 247, 247);
 }
-</style>
+</style>./data.en.js
