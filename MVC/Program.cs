@@ -55,6 +55,16 @@ builder.Services.AddHttpContextAccessor();
 ////});
 ///
 //builder.WebHost.UseIISIntegration();
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(1000);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.WebHost.UseKestrel(options =>
  {
      options.AllowSynchronousIO = true;
@@ -83,7 +93,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
 //     pattern: "{controller=Home}/{action=Index}/{id?}");

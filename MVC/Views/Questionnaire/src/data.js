@@ -98,14 +98,15 @@ export const numItem = {
 };
 
 export const Languages=[
+   {
+    name: "Spanish",
+    flag: "/Content/Images/spanishFlag.png"
+  },
   {
     name: "English",
     flag: "/Content/Images/englishFlag.png"
   },
-  {
-    name: "Spanish",
-    flag: "/Content/Images/spanishFlag.png"
-  },
+ 
 ]
 
 
@@ -122,7 +123,7 @@ export const dataEn = {
     },
     "Questions": [
       {
-        "Name": "QUESTION 1",
+        "Name": "QUESTION 1 en",
         "Text": "Do you have itching on your skin?",
         "Order": 1,
         "NextQuestionCondition": "if($Answer == 1) return 'Images'; else return 'END1';",

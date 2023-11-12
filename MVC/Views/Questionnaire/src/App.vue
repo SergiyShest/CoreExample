@@ -6,94 +6,81 @@
     @keydown.ctrl.37.prevent.stop="SelectPrevQuestion"
     @keydown.ctrl.39.prevent.stop="SelectNextQuestion"
   >
-    <v-main>
-      <div 
-        v-if="Questionnarie != null"
-        class="panel"
-        style="background-color: aquamarine;display: flex;"
-        :style="headerCssStyle"
-      >
-     
-          <h2 style="width: 100%">{{ Questionnarie.Text }}</h2>
-          
-          <div style="width: 100px; justify-self: end;">
-            <v-select :items="Languages" label="" v-model="Lang">
-              <template v-slot:selection="{ item }">
-                <img :src="item.flag" />
-              </template>
-              <template v-slot:item="{ item }">
-                <img :src="item.flag" style="margin:5px" />
-              </template>
-            </v-select>
+      <v-main>
+          <div v-if="Questionnarie != null"
+               class="panel"
+               style="background-color: aquamarine;display: flex;"
+               :style="headerCssStyle">
+
+              <h2 style="width: 100%">{{ Questionnarie.Text }}</h2>
+
+              <div style="width: 100px; justify-self: end;">
+                  <v-select :items="Languages" label="" v-model="Lang">
+                      <template v-slot:selection="{ item }">
+                          <img :src="item.flag" />
+                      </template>
+                      <template v-slot:item="{ item }">
+                          <img :src="item.flag" style="margin:5px" />
+                      </template>
+                  </v-select>
+              </div>
+
           </div>
 
-        </div>
-   
-      <div
-        style="
+          <div style="
           min-height: 600px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
         "
-        :style="currentQuestionCssStyle"
-        class="panel"
-      >
-        <div style="display: flex; justify-content: space-between">
-          <h3 v-if="currentQuestion != null">
-            {{ currentQuestion.Text }}
-          </h3>
-          <div class="questionInfo" v-if="this.Questionnarie.Questions != null">
-            {{ currentQuestion.Order }} of
-            {{ this.Questionnarie.Questions.length }}
-          </div>
-        </div>
-        <v-form ref="form" v-model="currentModel.valid">
-          <v-jsf
-            v-if="currentQuestion != null"
-            v-model="currentModel.answerModel"
-            :schema="currentQuestion.Schema"
-            :options="currentQuestion.Options"
-          />
-        </v-form>
-        <div
-          style="text-align: left"
-          v-if="currentQuestion.Images && currentQuestion.Images.length > 0"
-        >
-          <img
-            v-for="im in currentQuestion.Images"
-            v-bind:key="im"
-            :src="im"
-            style="margin: 1px; width: 300px; height: 200px"
-          />
-        </div>
-        <div style="text-align: left" v-if="currentQuestion != null">
-          {{ currentQuestion.Description }}
-        </div>
-        <v-spacer></v-spacer>
-        <div style="display: flex; width: 100%; padding: 3px; margin: 3px">
-          <button
-            class="buttion"
-            @click="SelectPrevQuestion()"
-            v-if="currentQuestion.ShowPrevButton && currentQuestion.Order > 1"
-          >
-            {{ PrevButtonText }}
-          </button>
-          <v-spacer></v-spacer>
-          <button
-            class="buttion"
-            @click="SelectNextQuestion()"
-            :disabled="!enableNext"
-            v-if="
-              currentQuestion.ShowNextButton &&
-              currentQuestion.Order < Questionnarie.Questions.length
+               :style="currentQuestionCssStyle"
+               class="panel">
+              <div style="display: flex; justify-content: space-between">
+                  <h3 v-if="currentQuestion != null">
+                      {{ currentQuestion.Text }}
+                  </h3>
+                  <div class="questionInfo" v-if="this.Questionnarie.Questions != null">
+                      {{ currentQuestion.Order }} of
+                      {{ this.Questionnarie.Questions.length }}
+                  </div>
+              </div>
+              <v-form ref="form" v-model="currentModel.valid">
+                  <v-jsf v-if="currentQuestion != null"
+                         v-model="currentModel.answerModel"
+                         :schema="currentQuestion.Schema"
+                         :options="currentQuestion.Options" />
+              </v-form>
+              <div style="text-align: left"
+                   v-if="currentQuestion.Images && currentQuestion.Images.length > 0">
+                  <img v-for="im in currentQuestion.Images"
+                       v-bind:key="im"
+                       :src="im"
+                       style="margin: 1px; width: 300px; height: 200px" />
+              </div>
+              <div style="text-align: left" v-if="currentQuestion != null">
+                  {{ currentQuestion.Description }}
+              </div>
+              <v-spacer></v-spacer>
+              <div style="display: flex; width: 100%; padding: 3px; margin: 3px">
+                  <button class="buttion"
+                          @click="SelectPrevQuestion()"
+                          v-if="currentQuestion.ShowPrevButton && currentQuestion.Order > 1">
+                      {{ PrevButtonText }}
+                  </button>
+                  <v-spacer></v-spacer>
+                  <button class="buttion"
+                          @click="SelectNextQuestion()"
+                          :disabled="!enableNext"
+                          v-if="
+                          currentQuestion.ShowNextButton &&
+                          currentQuestion.Order < Questionnarie.Questions.length
             "
           >
             {{ NextButtonText }}</button
           ><v-spacer></v-spacer>
-        </div>
-      </div>
-    </v-main>
+              </div>
+          </div>
+      </v-main>
   </v-app>
 </template>
 
@@ -170,21 +157,21 @@ export default {
       }
     },
     Lang(lang) {
-      const curr_id=this.currentQuestion.Id;
+      const curr_id = this.currentQuestion.Id;
       if (lang.name == "English") {
         this.SetQuestions(dataEn);
       } else {
         this.SetQuestions(dataEs);
       }
-      let question = this.Questionnarie.Questions.find((x) => x.Id == curr_id);
-      this.SelectQuestion(question)
+        let question = this.Questionnarie.Questions.find((x) => x.Id == curr_id);
+        this.SelectQuestion(question)
     },
   },
   methods: {
     tryNext() {
       if (this.enableNext) {
-        console.log(this.currentQuestion.Name);
-        if (this.currentQuestion.Name == "QUESTION 1") {
+        const reg=new RegExp('QUESTION 1*');
+        if (reg.test(this.currentQuestion.Name)) {
           this.SelectNextQuestion();
           return;
         }
@@ -198,7 +185,7 @@ export default {
       this.$refs.form.validate();
     },
     SelectQuestion(question) {
-      if (this.currentQuestion.Id == question.Id) return; //если это повторный вызов
+ //     if (this.currentQuestion.Id && this.currentQuestion.Id == question.Id) return; //если это повторный вызов
       if (question.Id == 0) return; //если это фейк  currentQuestion нужный для инициализации Vue
 
       let prmodel = this.models.find(
@@ -301,7 +288,7 @@ export default {
     console.log(Id);
     // if (Id) {
     // this.GetQuestions();
-    this.SetQuestions(dataEn);
+    this.SetQuestions(dataEs);
     //}
   },
 };

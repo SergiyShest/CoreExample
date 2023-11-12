@@ -11,7 +11,7 @@ export const dataEs = {
     },
     "Questions": [
       {
-        "Name": "QUESTION 1",
+        "Name": "QUESTION 1 es",
         "Text": "¿Tienes picazón en la piel?",
         "Order": 1,
         "NextQuestionCondition": "if($Answer == 1) return 'Images'; else return 'END1';",
