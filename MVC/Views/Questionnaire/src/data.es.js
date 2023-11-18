@@ -20,7 +20,7 @@ export const dataEs = {
         "ShowNextButton": false,
         "ShowPrevButton": false,
         "Images": [],
-        "CssStyle": null,
+        "CssStyle": null, "ShowCounter":true,
         "Schema": {
           "type": "object",
           "requred": [
@@ -73,7 +73,7 @@ export const dataEs = {
           "/Content/Images/item5.PNG",
           "/Content/Images/item6.PNG",
         ],
-        "CssStyle": null,
+        "CssStyle": null, "ShowCounter":true,
         "Schema": {
           "type": "object",
           "requred": [
@@ -119,7 +119,7 @@ export const dataEs = {
         "ShowNextButton": true,
         "ShowPrevButton": false,
         "Images": [],
-        "CssStyle": null,
+        "CssStyle": null, "ShowCounter":true,
         "Schema": {
           "type": "object",
           "requred": [
@@ -168,7 +168,7 @@ export const dataEs = {
         "ShowNextButton": false,
         "ShowPrevButton": false,
         "Images": [],
-        "CssStyle": null,
+        "CssStyle": null, "ShowCounter":true,
         "Schema": {},
         "Options": {},
         "QuestionnaireId": 10,
@@ -185,7 +185,7 @@ export const dataEs = {
         "ShowNextButton": false,
         "ShowPrevButton": false,
         "Images": [],
-        "CssStyle": null,
+        "CssStyle": null, "ShowCounter":true,
         "Schema": {},
         "Options": {},
         "QuestionnaireId": 10,

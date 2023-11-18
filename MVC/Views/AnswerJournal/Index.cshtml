@@ -1,18 +1,67 @@
 ﻿@{
     Layout = "_Layout";
 }
-
+<script src="/lib/vue.js"></script>
 @section Scripts {
     <title>Questionniaire answers</title>
     <script src="/js/answerJournal.js"></script>
 }
 
 <h1>View responses</h1>
+<div id="app" style="display: flex;flex-direction: column;width: 450px;">
+@*     <div style="display: flex;;align-items:center">
+        <div style="width: 100px;margin-left:15px">Date:</div>
+        from<input id="d1From" type="date" v-model="from" style="margin:3px">
+        to<input id="d1To" type="date" v-model="to" style="margin:3px">
+        <button @@click="FindDate()" style="margin:3px">Find</button>
+    </div>
+ *@
+
+</div>
     <div id="grid"></div>
-<script>
-        document.addEventListener("DOMContentLoaded", (event) => {
-            console.log("DOM fully loaded and parsed");
-        });
+<script type="module">
+    import { baseMixin } from '/js/BaseMixin.js';
+    const App = {
+        mixins: [baseMixin],
+        data() {
+            return {
+
+                from: null,
+                to: null
+            }
+
+        }
+        ,
+        methods: {
+
+            FindDate() {
+                localStorage.setItem('dateFrom', this.from);
+                localStorage.setItem('dateTo', this.to);
+                const pathEnd = "/AnswerJournal/SetFilter";
+                const data = { from: this.from, to: this.to };
+                console.log(data);
+                this.fetch(this.Ok, pathEnd, data)
+            },
+            Ok() {
+                console.log("ok")
+                var dataGrid = $('#grid').dxDataGrid('instance');
+                dataGrid.refresh()
+            }
+
+
+        },
+        mounted() {
+            console.log(localStorage.getItem('dateFrom'))
+            console.log(localStorage.getItem('dateTo'))
+            this.from = localStorage.getItem('dateFrom')
+            this.to = localStorage.getItem('to')
+        }
+
+    }
+
+    Vue.createApp(App).mount('#app')
+
+
 
 </script>
 

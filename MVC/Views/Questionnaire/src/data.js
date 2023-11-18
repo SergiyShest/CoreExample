@@ -124,7 +124,7 @@ export const dataEn = {
     "Questions": [
       {
         "Name": "QUESTION 1 en",
-        "Text": "Do you have itching on your skin?",
+        "Text": "Do you have itchy skin?",
         "Order": 1,
         "NextQuestionCondition": "if($Answer == 1) return 'Images'; else return 'END1';",
         "NextButtonText": "NEXT",
@@ -132,11 +132,10 @@ export const dataEn = {
         "ShowNextButton": false,
         "ShowPrevButton": false,
         "Images": [],
-        "CssStyle": null,
+        "CssStyle": null, "ShowCounter":true,
         "Schema": {
           "type": "object",
           "requred": [
-            "Answer"
           ],
           "properties": {
             "Answer": {
@@ -170,7 +169,7 @@ export const dataEn = {
       },
       {
         "Name": "Images",
-        "Text": "From the following images, can you identify any that resemble the current condition of your skin?",
+        "Text": "Do any of these photos resemble the current condition of your skin?",
         "Order": 2,
         "NextQuestionCondition": "if($Answer == 1) return 'InputUserData'; else return 'END1';",
         "NextButtonText": "NEXT",
@@ -185,7 +184,7 @@ export const dataEn = {
           "/Content/Images/item5.PNG",
           "/Content/Images/item6.PNG",
         ],
-        "CssStyle": null,
+        "CssStyle": null, "ShowCounter":true,
         "Schema": {
           "type": "object",
           "requred": [
@@ -231,7 +230,7 @@ export const dataEn = {
         "ShowNextButton": true,
         "ShowPrevButton": false,
         "Images": [],
-        "CssStyle": null,
+        "CssStyle": null, "ShowCounter":true,
         "Schema": {
           "type": "object",
           "requred": [
@@ -280,7 +279,7 @@ export const dataEn = {
         "ShowNextButton": false,
         "ShowPrevButton": false,
         "Images": [],
-        "CssStyle": null,
+        "CssStyle": null, "ShowCounter":true,
         "Schema": {},
         "Options": {},
         "QuestionnaireId": 10,
@@ -297,7 +296,7 @@ export const dataEn = {
         "ShowNextButton": false,
         "ShowPrevButton": false,
         "Images": [],
-        "CssStyle": null,
+        "CssStyle": null, "ShowCounter":true,
         "Schema": {},
         "Options": {},
         "QuestionnaireId": 10,

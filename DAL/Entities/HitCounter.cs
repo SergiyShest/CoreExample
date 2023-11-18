@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 namespace Entity;
 
 public partial class HitCounter:IEntity
-
 {
     public int? Id { get; set; }
 

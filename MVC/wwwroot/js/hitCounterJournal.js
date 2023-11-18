@@ -76,7 +76,9 @@ function getColumnFieldName(dataGridInstance, getter) {
             key: "id",
             loadUrl: "../HitCounter/Get",
         }),
-
+        groupPanel: {
+            visible: true,
+        },
         stateStoring: {
             storageKey: 'hitCounter_Grid',
         },

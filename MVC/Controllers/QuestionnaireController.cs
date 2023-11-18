@@ -13,25 +13,39 @@ namespace Entity.Controllers
     {
         public QuestionnaireController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) { }
 
+
         public ActionResult Index(int? id)
         {
             ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
-            var qs = uow.GetRepository<Questionnaire>().GetAll();
-  
-            if (id != null) {
-                   ViewBag.Id = qs.FirstOrDefault(x => x.Id == id && x.Enabled==true)?.Id;
-                if (ViewBag.Id == null)
-                {
-                    //var error = "Not ";
-                }
-            }
-            else { 
-                  ViewBag.Id = qs.FirstOrDefault(x => x.Main == true)?.Id;
-           }
+			ViewBag.Lang = "";
+			// var qs = uow.GetRepository<Questionnaire>().GetAll();
+
+			// if (id != null) {
+			//        ViewBag.Id = qs.FirstOrDefault(x => x.Id == id && x.Enabled==true)?.Id;
+			//     if (ViewBag.Id == null)
+			//     {
+			//         //var error = "Not ";
+			//     }
+			// }
+			// else { 
+			//       ViewBag.Id = qs.FirstOrDefault(x => x.Main == true)?.Id;
+			//}
+			return View("Index");
+        }
+        [Route("en")]
+        public ActionResult En(int? id)
+        {
+            ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
+            ViewBag.Lang = "en";
             return View("Index");
         }
-
-
+		[Route("es")]
+		public ActionResult Es(int? id)
+        {
+            ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
+			ViewBag.Lang = "es";
+			return View("Index");
+        }
 
         public IActionResult Get(int  Id)
         {
@@ -40,16 +54,18 @@ namespace Entity.Controllers
             return Content(json, "application/json");
         }
 
-         public ActionResult SaveAnsvers(int? questionnaireId, string? sessionId)
+        public ActionResult SaveAnsvers(int? questionnaireId, string? sessionId)
         {
-            var model = new QuestionnaireModel(questionnaireId);
+
+            if (sessionId != null)
+            {
+                var model = new QuestionnaireModel(questionnaireId);
 
 
-			string json = base.GetJsonSafe(() => model.SaveAnsvers(base.Body(), GetCurrentUser(), sessionId));
+                string json = base.GetJsonSafe(() => model.SaveAnsvers(base.Body(), GetCurrentUser(), sessionId));
+            }
             return Content("{}", "application/json");
         }
-
-
 
         public ActionResult SaveUserCounter( string? sessionId)
         {
@@ -74,7 +90,6 @@ namespace Entity.Controllers
 
             return Content("{}", "application/json");
         }
-
 
         private UserDTO GetCurrentUser()
         {

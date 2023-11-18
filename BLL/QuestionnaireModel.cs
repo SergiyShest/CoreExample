@@ -155,7 +155,8 @@ namespace BLL
 		 	//var answers = GetAnswers(sessionId);
 
 			// ansver = answers.FirstOrDefault(x => x.QuestionnarieId == Id);
-			//if (ansver == null)
+			if (Id == null) 
+			{ Id = -10; }
 			var ansver = new AnswersBo(sessionId, (int)Id,  bodyText);
 
 			

@@ -108,7 +108,7 @@ export const baseMixin = {
 				}).catch(error => {
 					this.loadingData = false;
 					console.error("Error while getting server data: " + path + ' :' + error)
-					this.ShowAlert("Error while getting server data: " + path + ' :' + error);
+					//this.ShowAlert("Error while getting server data: " + path + ' :' + error);
 				});
 
 		}

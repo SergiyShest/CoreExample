@@ -17,13 +17,47 @@
 <body>
 
 
-	<div id="app"></div>
+	
 	<script>
 		const Id = '@ViewBag.Id'
 		const SessionId = '@ViewBag.sessionId'
-		console.log(SessionId)
-	</script>
+		const Lang = '@ViewBag.Lang'
 
+</script>
+    <script>
+
+		window.addEventListener("error", (event) => {
+
+			console.log(event.type + '  ' + event.message + '  ' + event.lineno + '  ' + event.colno + '    ' + event.filename)
+		
+			console.log('ошибка');
+
+			//alert(msg + "\n" + url + "\n" + "\n" + line);
+			// const data = { session: SessionId, message: event.message, url: event.filename, line: event.lineno,col:event.colno };
+			//  console.log(data)
+			// const path = document.location.origin + '/sendError
+			// const json = JSON.stringify(data);
+			// fetch(path,
+			// 	{
+			// 		method: 'POST', // *GET, POST, PUT, DELETE, etc.
+			// 		mode: 'no-cors', // no-cors, *cors, same-origin
+			// 		body: json, //sending data
+			// 		referrer: 'unsafe-url',
+			// 		headers: {
+			// 			'Content-Type': 'application/json'
+			// 		}
+			// 	})
+			// 	.catch(error => {
+
+			// 		console.error("Error while getting server data: " + path + ' :' + error)
+					
+			// 	});
+
+			return true;
+		})
+    </script>
+
+    <div id="app"></div>
 	<script src="~/Scripts/vue-apps/questionnaire/js/chunk-vendors.js" asp-append-version="true"></script>
 	<script src="~/Scripts/vue-apps/questionnaire/js/app.js" asp-append-version="true"></script>
 	<script src="/js/userCounter.js" asp-append-version="true"></script>

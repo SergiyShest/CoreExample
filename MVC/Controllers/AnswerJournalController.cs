@@ -1,4 +1,4 @@
-﻿using Core;
+﻿using DAL.Core;
 using DAL;
 using DevExtreme.AspNet.Data;
 using Microsoft.AspNetCore.Authorization;
@@ -23,11 +23,72 @@ namespace Entity.Controllers
 		public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
 		{
 			var answers = uow.GetRepository<Answer>().GetAll();
+            //var dateFrom = base.HttpContext.Session.GetString("dateFrom");
+            //var dateTo = base.HttpContext.Session.GetString("dateTo");
+            //if (!string.IsNullOrWhiteSpace(dateFrom))
+            //{
+            //    var dateFr = DateOnly.FromDateTime(DateTime.Parse(dateFrom));
+            //    answers = answers.Where(x => x.Cdate > dateFr);
+            //}
+            //if (!string.IsNullOrWhiteSpace(dateTo))
+            //{
+            //    var dateT = DateOnly.FromDateTime(DateTime.Parse(dateTo));
+            //    answers = answers.Where(x => x.Cdate < dateT);
+            //}
+            //var x = answers.ToList();
 
-			loadOptions.PrimaryKey = new[] { "Id" };
+            loadOptions.PrimaryKey = new[] { "Id" };
 			loadOptions.PaginateViaPrimaryKey = true;
-			return Json(await DataSourceLoader.LoadAsync(answers, loadOptions));
+            try
+            {
+              return Json(await DataSourceLoader.LoadAsync(answers, loadOptions));
+            }catch(Exception ex)
+            {
+			 return Json(answers.ToList());
+            }
+
 		}
+
+        public async Task<IActionResult> SetFilter()
+        {
+            try
+            {
+                var body = JsonConvert.DeserializeObject<DateFromTo>(base.Body());
+
+                base.HttpContext.Session.SetString("dateFrom", body.from);
+
+                if (body.from == null)
+                {
+                    base.HttpContext.Session.Remove("dateFrom");
+                }
+                else
+                {
+                    base.HttpContext.Session.SetString("dateFrom", body.from);
+                }
+
+
+                if (body.to == null)
+                {
+                    base.HttpContext.Session.Remove("dateTo");
+                }
+                else
+                {
+                    base.HttpContext.Session.SetString("dateTo", body.to);
+                }
+
+
+
+                Console.WriteLine(base.Body());
+                return Ok(new { Reload = true });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    error = ex.GetAllMessages()
+                });
+            }
+        }
 
 
 
