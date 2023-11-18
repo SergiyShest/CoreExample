@@ -96,10 +96,8 @@
 </template>
 
 <script>
-// if (Id == undefined) {
-//   var Id = null;
-//   var SessionId = "XXXXXXXXXXXXXXXXX";
-// }
+console.log('-----------------------------------------------------go---------------------------------------------')
+//let SessionId='ddddd'
 import { selectLang } from "./selectLang.js";
 import { Languages, dataEn } from "./data.js";
 import { dataEs } from "./data.es";
@@ -277,7 +275,7 @@ export default {
         this.ShowErrors(val);
       }
       if (val.Item) {
-        this.Questionnarie = val.Item; // new QuestionnarieBo (val.Item);
+        this.Questionnarie = val.Item; 
         if (this.Questionnarie.Questions.length > 0) {
           console.log(this.Questionnarie.Questions[0])
           this.SelectQuestion(this.Questionnarie.Questions[0]);
@@ -299,7 +297,8 @@ export default {
       );
     },
   },
-  mounted: function () {
+        mounted: function () {
+     console.log('Lang=' + Lang)
     if (Lang) {
       if (Lang == "en") {
         this.SetQuestions(dataEn);

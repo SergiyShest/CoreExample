@@ -22,7 +22,7 @@ namespace Entity.Controllers
 
 		public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
 		{
-			var answers = uow.GetRepository<Answer>().GetAll();
+			var answers = uow.GetRepository<vAnswer>().GetAll();
             //var dateFrom = base.HttpContext.Session.GetString("dateFrom");
             //var dateTo = base.HttpContext.Session.GetString("dateTo");
             //if (!string.IsNullOrWhiteSpace(dateFrom))

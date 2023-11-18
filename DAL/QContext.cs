@@ -103,6 +103,13 @@ public partial class QContext : DbContext
 
 		});
 
+		modelBuilder.Entity<vAnswer>(entity =>
+		{
+			entity.ToTable("v_answer");
+		});
+
+
+
 		modelBuilder.Entity<AvaiableUser>(entity =>
 		{
 			entity.ToTable("AvaiableUser");

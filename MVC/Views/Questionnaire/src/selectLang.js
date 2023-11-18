@@ -12,7 +12,7 @@ export const selectLang = {
     "Questions": [
       {
           "Name": "QUESTION 0 ",
-          "Text": "Please choose the language",
+            "Text": "Please select your language",
           "Order": 1,
           "NextQuestionCondition": "let lg='es' ;if($Answer == 1){lg='en'}; window.location.href = document.location.origin + '/'+lg;",
           "NextButtonText": "NEXT",

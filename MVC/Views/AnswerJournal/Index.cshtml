@@ -1,21 +1,22 @@
-﻿@{
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
     Layout = "_Layout";
 }
 <script src="/lib/vue.js"></script>
 @section Scripts {
     <title>Questionniaire answers</title>
-    <script src="/js/answerJournal.js"></script>
+    <script src="/js/answerJournal.js" asp-append-version="true"></script>
 }
 
 <h1>View responses</h1>
 <div id="app" style="display: flex;flex-direction: column;width: 450px;">
-@*     <div style="display: flex;;align-items:center">
+     <div style="display: flex;;align-items:center">
         <div style="width: 100px;margin-left:15px">Date:</div>
         from<input id="d1From" type="date" v-model="from" style="margin:3px">
         to<input id="d1To" type="date" v-model="to" style="margin:3px">
         <button @@click="FindDate()" style="margin:3px">Find</button>
     </div>
- *@
+ 
 
 </div>
     <div id="grid"></div>
