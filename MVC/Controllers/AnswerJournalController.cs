@@ -23,19 +23,19 @@ namespace Entity.Controllers
 		public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
 		{
 			var answers = uow.GetRepository<vAnswer>().GetAll();
-            //var dateFrom = base.HttpContext.Session.GetString("dateFrom");
-            //var dateTo = base.HttpContext.Session.GetString("dateTo");
-            //if (!string.IsNullOrWhiteSpace(dateFrom))
-            //{
-            //    var dateFr = DateOnly.FromDateTime(DateTime.Parse(dateFrom));
-            //    answers = answers.Where(x => x.Cdate > dateFr);
-            //}
-            //if (!string.IsNullOrWhiteSpace(dateTo))
-            //{
-            //    var dateT = DateOnly.FromDateTime(DateTime.Parse(dateTo));
-            //    answers = answers.Where(x => x.Cdate < dateT);
-            //}
-            //var x = answers.ToList();
+            var dateFrom = base.HttpContext.Session.GetString("dateFrom");
+            var dateTo = base.HttpContext.Session.GetString("dateTo");
+            if (!string.IsNullOrWhiteSpace(dateFrom))
+            {
+                var dateFr = DateOnly.FromDateTime(DateTime.Parse(dateFrom));
+                answers = answers.Where(x => x.Cdate > dateFr);
+            }
+            if (!string.IsNullOrWhiteSpace(dateTo))
+            {
+                var dateT = DateOnly.FromDateTime(DateTime.Parse(dateTo));
+                answers = answers.Where(x => x.Cdate < dateT);
+            }
+   
 
             loadOptions.PrimaryKey = new[] { "Id" };
 			loadOptions.PaginateViaPrimaryKey = true;

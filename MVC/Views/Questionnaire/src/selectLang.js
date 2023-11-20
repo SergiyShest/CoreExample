@@ -12,7 +12,8 @@ export const selectLang = {
     "Questions": [
       {
           "Name": "QUESTION 0 ",
-            "Text": "Please select your language",
+           "Text": "Please select your language",
+           "Text2": "Por favor seleccione su lenguaje",
           "Order": 1,
           "NextQuestionCondition": "let lg='es' ;if($Answer == 1){lg='en'}; window.location.href = document.location.origin + '/'+lg;",
           "NextButtonText": "NEXT",
@@ -48,7 +49,7 @@ export const selectLang = {
                 },
                 {
                   "Id": 2,
-                  "Name": "Spanish"
+                  "Name": "Español"
                 }
               ]
             },

@@ -38,9 +38,14 @@
         class="panel"
       >
         <div style="display: flex; justify-content: space-between">
+         <div>
           <h3 v-if="currentQuestion != null">
             {{ currentQuestion.Text }}
           </h3>
+          <h3 v-if="currentQuestion != null && currentQuestion.Text2 ">
+            {{ currentQuestion.Text2 }}
+          </h3>
+        </div>
           <div class="questionInfo" v-if="this.Questionnarie.Questions != null && currentQuestion.ShowCounter">
             {{ currentQuestion.Order }} of
             {{ this.Questionnarie.Questions.length }}

@@ -2,13 +2,15 @@
 @{
     Layout = "_Layout";
 }
-<script src="/lib/vue.js"></script>
+@* <script src="/lib/vue.js"></script> *@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 @section Scripts {
     <title>Questionniaire answers</title>
     <script src="/js/answerJournal.js" asp-append-version="true"></script>
 }
 
 <h1>View responses</h1>
+
 <div id="app" style="display: flex;flex-direction: column;width: 450px;">
      <div style="display: flex;;align-items:center">
         <div style="width: 100px;margin-left:15px">Date:</div>
@@ -21,7 +23,7 @@
 </div>
     <div id="grid"></div>
 <script type="module">
-    import { baseMixin } from '/js/BaseMixin.js';
+
     const App = {
         mixins: [baseMixin],
         data() {
@@ -34,13 +36,11 @@
         }
         ,
         methods: {
-
             FindDate() {
                 localStorage.setItem('dateFrom', this.from);
                 localStorage.setItem('dateTo', this.to);
                 const pathEnd = "/AnswerJournal/SetFilter";
                 const data = { from: this.from, to: this.to };
-                console.log(data);
                 this.fetch(this.Ok, pathEnd, data)
             },
             Ok() {
@@ -48,14 +48,13 @@
                 var dataGrid = $('#grid').dxDataGrid('instance');
                 dataGrid.refresh()
             }
-
-
         },
         mounted() {
-            console.log(localStorage.getItem('dateFrom'))
-            console.log(localStorage.getItem('dateTo'))
+//            console.log(localStorage.getItem('dateFrom'))
+//            console.log(localStorage.getItem('dateTo'))
             this.from = localStorage.getItem('dateFrom')
             this.to = localStorage.getItem('to')
+            dataGrid.refresh()
         }
 
     }
