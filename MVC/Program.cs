@@ -97,6 +97,6 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
 //     pattern: "{controller=Home}/{action=Index}/{id?}");
-   pattern: "{controller=Questionnaire}/{action=Index}/{id?}");
+   pattern: "{controller=Questionnaire2}/{action=Index}/{id?}");
 
 app.Run();
