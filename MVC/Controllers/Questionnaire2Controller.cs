@@ -18,53 +18,22 @@ namespace Entity.Controllers
         {
             ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
 			ViewBag.Lang = "";
-			// var qs = uow.GetRepository<Questionnaire>().GetAll();
 
-			// if (id != null) {
-			//        ViewBag.Id = qs.FirstOrDefault(x => x.Id == id && x.Enabled==true)?.Id;
-			//     if (ViewBag.Id == null)
-			//     {
-			//         //var error = "Not ";
-			//     }
-			// }
-			// else { 
-			//       ViewBag.Id = qs.FirstOrDefault(x => x.Main == true)?.Id;
-			//}
-			return View("Index");
-        }
-        [Route("en")]
-        public ActionResult En(int? id)
-        {
-            ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
-            ViewBag.Lang = "en";
-            return View("Index");
-        }
-		[Route("es")]
-		public ActionResult Es(int? id)
-        {
-            ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
-			ViewBag.Lang = "es";
 			return View("Index");
         }
 
-        public IActionResult Get(int  Id)
-        {
-            var model = new QuestionnaireModel(Id);
-            string json = base.GetJsonSafe(() => model.Get());
-            return Content(json, "application/json");
-        }
 
-        public ActionResult SaveAnsvers(int? questionnaireId, string? sessionId)
+        public ActionResult SaveAnswer( string? sessionId)
         {
 
-            if (sessionId != null)
+            if (sessionId != null)sessionId=Guid.NewGuid().ToString();
             {
-                var model = new QuestionnaireModel(questionnaireId);
+                var model = new Answer2Model();
 
 
-                string json = base.GetJsonSafe(() => model.SaveAnsvers(base.Body(), GetCurrentUser(), sessionId));
+                string json = base.GetJsonSafe(() => model.SaveAnswers(base.Body(), GetCurrentUser(), sessionId));
             }
-            return Content("{}", "application/json");
+            return Content("{ok:true}", "application/json");
         }
 
         public ActionResult SaveUserCounter( string? sessionId)

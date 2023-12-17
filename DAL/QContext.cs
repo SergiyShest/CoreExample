@@ -103,6 +103,15 @@ public partial class QContext : DbContext
 
 		});
 
+		modelBuilder.Entity<SimpleAnswer>(entity =>
+		{
+			entity.ToTable("SimpleAnsver");
+			entity.Property(e => e.DateTime)
+              .HasColumnType("timestamp with time zone")
+              .HasColumnName("dateTime");
+
+		});
+
 		modelBuilder.Entity<vAnswer>(entity =>
 		{
 			entity.ToTable("v_answer");

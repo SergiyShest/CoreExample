@@ -60,7 +60,7 @@ namespace Tests
         }
 
         [Test]
-        public void SaveAnsvers()
+        public void SaveAnswers()
         {
             var questionnaire = createQuestionnaire(false, true);
             var model = new QuestionnaireModel(questionnaire.Id);
@@ -71,7 +71,7 @@ namespace Tests
                 "{\"QuestionId\":7,\"answerModel\":{\"Phone\":'345-23-45-455-45'},\"valid\":true}" +
                 "]";
 
-            model.SaveAnsvers(bodyText, _user, "sessionId");
+            model.SaveAnswers(bodyText, _user, "sessionId");
 
         }
 

@@ -83,13 +83,13 @@ namespace Entity.Controllers
             return Content(json, "application/json");
         }
 
-        public ActionResult SaveAnsvers(int? questionnaireId, int? patientId)
+        public ActionResult SaveAnswers(int? questionnaireId, int? patientId)
         {
             var model = new QuestionnaireModel(questionnaireId);
             var bodyStream = new StreamReader(HttpContext.Request.Body);
             bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
             var bodyText = bodyStream.ReadToEnd();
-            string json = base.GetJsonSafe(() => model.SaveAnsvers(bodyText, GetCurrentUser(), patientId));
+            string json = base.GetJsonSafe(() => model.SaveAnswers(bodyText, GetCurrentUser(), patientId));
             return Content("json", "application/json");
         }
 

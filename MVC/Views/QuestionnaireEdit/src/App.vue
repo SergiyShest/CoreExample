@@ -681,7 +681,7 @@ export default {
       return;
       this.fetch(
         this.ok,
-        'Questionnaire/SaveAnsvers?questionnaireId=' + Id + '&sessionId=' + this.session,
+        'Questionnaire/SaveAnswers?questionnaireId=' + Id + '&sessionId=' + this.session,
         this.models
       );
     },

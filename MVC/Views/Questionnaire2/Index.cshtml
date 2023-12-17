@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Help us find new treatments for eczema and earn $400, копия</title>
   <meta name="description" content="">
+    <script src="lib/vue2.js"></script>
   <link rel="icon" href="https://mavarel.my.canva.site/test3/26387fa4f5b1e3f7b6217b27d79bf264.png" type="image/png"
     sizes="16x16">
   <link rel="icon" href="https://mavarel.my.canva.site/test3/2d0b56e7e51cf11036ad8734bdb67e2d.png" type="image/png"
@@ -1113,7 +1114,7 @@
         min-width: 78.8rem;
       }
 
-      #TRhwSjCwI76mkvQt {
+      #app {
         grid-area: 2 / 2 / 15 / 15;
         position: relative;
       }
@@ -1877,7 +1878,7 @@
         min-width: 83.4375rem;
       }
 
-      #TRhwSjCwI76mkvQt {
+      #app {
         grid-area: 2 / 2 / 15 / 15;
         position: relative;
       }
@@ -2641,7 +2642,7 @@
         min-width: 83.3984375rem;
       }
 
-      #TRhwSjCwI76mkvQt {
+      #app {
         grid-area: 2 / 2 / 15 / 15;
         position: relative;
       }
@@ -3405,7 +3406,7 @@
         min-width: 76.32270661rem;
       }
 
-      #TRhwSjCwI76mkvQt {
+      #app {
         grid-area: 2 / 2 / 15 / 15;
         position: relative;
       }
@@ -4166,7 +4167,7 @@
         min-width: 57.21409339rem;
       }
 
-      #TRhwSjCwI76mkvQt {
+      #app {
         grid-area: 2 / 2 / 15 / 15;
         position: relative;
       }
@@ -4932,7 +4933,7 @@
                 </svg></div>
             </div>
             <div id="F6nUfa9U0Ok9omcN" style="display:grid;position:relative;grid-area:3 / 3 / 5 / 6;">
-              <div id="TRhwSjCwI76mkvQt" style="z-index:5;">
+              <div id="app" style="z-index:5;">
                 <div id="KdGQ2Gak3OEMlumk" style="box-sizing:border-box;width:100%;height:100%;transform:rotate(0deg);">
                   <div id="lS4WdCZebctlpTcJ"
                     style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
@@ -4945,7 +4946,7 @@
                     </ol>
 
                     <p id="TEZvkGNT5X1dLAYO" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;">
-                        <input v-model="Item.ddd"  type="checkbox"  class="checkbox-round"  >Yes</input>
+                        <input v-model="yes"  type="checkbox"  class="checkbox-round"  >Yes</input>
 @*                       <span id="P34ZPC4kb5MHAzAg" style="color:#000000;"> </span><span id="xNsYxCdgS8p61aHy"
                         style="color:#000000;">Yes</span><span id="ofeGhtwMCGzO70pO" style="color:#000000;"> </span>
                         <br> *@
@@ -4958,7 +4959,7 @@
                     <p id="Zkd2NQoAZDsD4eAH" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;">
 @*                       <span id="M3gGsl6BIgnubcf9" style="color:#000000;"> </span><span id="QwUPLQ2wMYyikUQa"
                         style="color:#000000;">No</span><br> *@
-                           <input type="checkbox"  class="checkbox-round" >No</input>
+                                            <input v-model="no" type="checkbox" class="checkbox-round">No</input>
                     </p>
 
                     <p id="FcmQBK8pZTCJvDCZ"
@@ -4977,7 +4978,7 @@
                      <p id="QOWWreukf2s1bEgH" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;">
                       <span id="PMAEXiz2mZ1BpU2J" style="color:#000000;">2. Your full name</span>
                       <span   id="fzaPSroPJZKFcCV9" style="color:#ff3131;">*</span>:
-                      <input v-model="Item.Email" id="C1BugNEwfxfySWID" style="color:#000000;"  ></input></p>
+                      <input v-model="Item.Name" id="C1BugNEwfxfySWID" style="color:#000000;"  ></input></p>
                    
                       <p id="THgDuwRdxdbnIEE2" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;">
                       <span id="zpK7UDtLuhaWUl5e" style="color:#000000;">3. Your telephone number</span>
@@ -5133,8 +5134,9 @@
                 </div>
               </div>
             </div>
-            <div id="tPfE53BVzcOccuVk" style="display:grid;position:relative;grid-area:4 / 4 / 7 / 5;">
-              <div id="a6emBK6HikTacCZY" style="display:grid;position:relative;grid-area:2 / 2 / 3 / 3;">
+            <div id="tPfE53BVzcOccuVk" style="display:grid;position:relative;grid-area:4 / 4 / 7 / 5;" >
+                        <div style="margin-left:40vw; display:flex;flex-direction:row; justify-content:center">
+                            <div id="a6emBK6HikTacCZY" style="display:grid;position:relative;grid-area:2 / 2 / 3 / 3;" onclick="submitform()" >
                 <div id="noZ9Zid4PNsiXVVT" style="z-index:12;">
                   <div id="EC3GjAXgyn4RqBxI" style="padding-top:30.7349598%;transform:rotate(0deg);">
                     <div id="Df13s0KkkoYmTYgp" style="position:absolute;top:0px;left:0px;width:100%;height:100%;"><svg
@@ -5154,8 +5156,8 @@
                       </svg></div>
                   </div>
                 </div>
-                <a id="IF0G64bxGtj6dBHC" style="z-index:13;cursor: pointer;" href="#rRSm8al3ob7Ms9Ch">
-                  <div id="EyJo5wLcyyavAVVV"
+                <a id="IF0G64bxGtj6dBHC" style="z-index:13;cursor: pointer;" href="#rRSm8al3ob7Ms9Ch"  >
+                  <div id="EyJo5wLcyyavAVVV"  
                     style="box-sizing:border-box;width:100%;height:100%;transform:rotate(0deg);">
                     <div id="RpAArbFavLKfToer"
                       style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:center;width:100%;height:100%;">
@@ -5166,9 +5168,11 @@
                   </div>
                 </a>
               </div>
+            </div>@* submit *@
+           </div>
+                </div>
+            
             </div>
-          </div>
-        </div>
       </div>
     </section><a id="page-4" aria-hidden="true" style="visibility:hidden;"></a>
     <section id="Vpgz55JRMFpJBbwV"
@@ -5878,27 +5882,102 @@
     </div>
   </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
-<script   src="vueComponents.js"></script>
+<script >
+const SessionId='@ViewBag.sessionId'
+</script>
+
+<script src="/js/userCounter.js" asp-append-version="true"></script>
+<script src="vueComponents.js" asp-append-version="true"></script>
 <link rel="stylesheet" href="example.css">
   <script>
  
   
  let vue_=  new Vue({
-    el: "#TRhwSjCwI76mkvQt",
+    el: "#app",
 	data: {
+        yes: null,
+        no:null,       
 	 Item:{
-     Name:  'Vue.js',
-     Phone: null,
-     Email: null
+
+        Name: null,
+        Phone: null,
+        Email: null,
+        Check: null
     }
   },
+     watch: {
+            yes(y) {
+             if (y) {
+                    this.no=false
+                    this.Item.Check=false
+                }
+             },
+            no(n) {
+                if (n) {
+                    this.yes = false
+                    this.Item.Check=true
+                }
+            },
+     },
   methods: {
-  	
+      send() {
+
+                var path = "Questionnaire2/SaveAnswer?sessionId=" + SessionId
+          this.fetch(this.ok,path,this.Item)
+      },
+      ok() {
+         console.log('ok')
+      },
+
+            //универсальная функция получения/отправки данных
+            fetch: function (execFunction, pathEnd, data = null) {
+                this.loadingData = true;
+                const fetchRef = execFunction;
+                const path = document.location.origin + '/' + pathEnd
+                   const json = JSON.stringify(data);
+                fetch(path,
+                    {
+                        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                        mode: 'no-cors', // no-cors, *cors, same-origin
+                        body: json, //sending data
+                        referrer: 'unsafe-url',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then((response) => {
+                        this.loadingData = false;
+                        if (response) {
+                            return response.json();
+                        }
+                    })
+                    .then((retData) => {
+                        if (retData) {
+                            {
+                                console.log(retData)
+                                fetchRef(retData)
+                            }
+                        }
+                        this.loadingData = false;
+
+                    }).catch(error => {
+                        this.loadingData = false;
+                        console.error("Error while getting server data: " + path + ' :' + error)
+                        //this.ShowAlert("Error while getting server data: " + path + ' :' + error);
+                    });
+
+            }
+            ,
+
   },
    mounted: function () {
-    console.log('this.valueInt = this.value')
+    
   }
 });//.$mount('#app')
+
+      function submitform() {
+          vue_.send()
+      }
+
   </script>
 </html>

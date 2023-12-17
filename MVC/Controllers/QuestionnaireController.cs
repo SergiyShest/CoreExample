@@ -54,7 +54,7 @@ namespace Entity.Controllers
             return Content(json, "application/json");
         }
 
-        public ActionResult SaveAnsvers(int? questionnaireId, string? sessionId)
+        public ActionResult SaveAnswers(int? questionnaireId, string? sessionId)
         {
 
             if (sessionId != null)
@@ -62,7 +62,7 @@ namespace Entity.Controllers
                 var model = new QuestionnaireModel(questionnaireId);
 
 
-                string json = base.GetJsonSafe(() => model.SaveAnsvers(base.Body(), GetCurrentUser(), sessionId));
+                string json = base.GetJsonSafe(() => model.SaveAnswers(base.Body(), GetCurrentUser(), sessionId));
             }
             return Content("{}", "application/json");
         }

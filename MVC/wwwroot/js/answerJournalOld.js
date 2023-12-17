@@ -91,16 +91,14 @@ function getColumnFieldName(dataGridInstance, getter) {
                 headerCellTemplate: $('<i style="color: black">ID</i>')
             },
             { caption: "Code ",dataField: "name"  },    
-            { caption: "Name ", dataField: "userName" }, 
-            { caption: "Email ", dataField: "userEmail" },
-            { caption: "Phone ", dataField: "userPhone" },           
+            { caption: "Ansver ",dataField: "value" },           
             { caption: "Date", dataField: "cdate", dataType: "date" },
             { caption: "Time", dataField: "Time" },
             { caption: "SessionId", dataField: "sessionId", groupIndex: 1 },
-            //{ caption: "Os", dataField: "os" },
-            //{ caption: "Area", dataField: "area" },
-            //{ caption: "Browser", dataField: "browser" },
-            //{ caption: "ScreenSize", dataField: "screenSize", width: 50 },   
+            { caption: "Os", dataField: "os" },
+            { caption: "Area", dataField: "area" },
+            { caption: "Browser", dataField: "browser" },
+            { caption: "ScreenSize", dataField: "screenSize", width: 50 },   
         ]
         ,
 

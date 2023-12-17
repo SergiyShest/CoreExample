@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 namespace BLL
 {
 
-
     public class QuestionnaireModel : BaseModel
 	{
 
@@ -108,46 +107,8 @@ namespace BLL
 		}
 
 
-		//public virtual string GetContextMenuItemsFromSettings()
-		//{
-		//	dynamic expOb = new ExpandoObject();
-		//	string json;
-		//	try
-		//	{
-		//		var items = new List<JsContextMenuItem>();
 
-		//		items = new List<JsContextMenuItem>()
-		//			{
-
-		//			new JsContextMenuItem(0){ Name = "Add ",    Slug= "addChaild" ,AvaiableCodes=new List<string>{ } },
-		//			new JsContextMenuItem(0){ Name = "Edit",    Slug= "edit"    ,AvaiableCodes=new List<string>{ } } ,
-		//			new JsContextMenuItem(0){ Name = "Delete" , Slug= "delete"   ,AvaiableCodes=new List<string>{ } },
-		//			new JsContextMenuItem(0){ Name = "Copy"   , Slug= "copy"   ,AvaiableCodes=new List<string>{ } }
-		//			};
-
-		//		expOb.Item = items;
-
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		expOb.Errors = new List<ObjectError>() { new ObjectError("", ex.GetAllMessages()) };
-		//		log.Error(ex);
-		//	}
-		//	var jsonResolver = new PropertyRenameAndIgnoreSerializerContractResolver();
-
-
-		//	jsonResolver.RenameProperty(typeof(JsContextMenuItem), "Name", "name");
-		//	jsonResolver.RenameProperty(typeof(JsContextMenuItem), "Slug", "slug");
-		//	jsonResolver.RenameProperty(typeof(JsContextMenuItem), "NeedContent", "needContent");
-		//	jsonResolver.RenameProperty(typeof(JsContextMenuItem), "AvaiableCodes", "avaiableCodes");
-
-		//	var serializerSettings = new JsonSerializerSettings();
-		//	serializerSettings.ContractResolver = jsonResolver;//
-		//	json = JsonConvert.SerializeObject(expOb, serializerSettings);
-		//	return json;
-		//}
-
-		public void SaveAnsvers(string bodyText, UserDTO user, string? sessionId)
+		public void SaveAnswers(string bodyText, UserDTO user, string? sessionId)
 		{
 
 			if (string.IsNullOrEmpty(sessionId) )
@@ -163,7 +124,7 @@ namespace BLL
 
 			ansver.Save();
 		}
-		public void SaveAnsvers(string bodyText, UserDTO user, int? patientId)
+		public void SaveAnswers(string bodyText, UserDTO user, int? patientId)
 		{
 
 			if (!patientId.HasValue)

@@ -292,7 +292,7 @@ export default {
       if (this.models.length == 4) this.userAnsverCounter++;
       this.fetch(
         this.ok,
-        "Questionnaire/SaveAnsvers?questionnaireId=" +
+        "Questionnaire/SaveAnswers?questionnaireId=" +
           Id +
           "&sessionId=" +
           this.session +

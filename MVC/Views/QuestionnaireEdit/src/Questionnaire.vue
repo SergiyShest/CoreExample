@@ -792,7 +792,7 @@ export default {
     SaveAnsver() {
       this.fetch(
         this.ok,
-        "/Questions/Questionnaire/SaveAnsvers?questionnaireId=" +
+        "/Questions/Questionnaire/SaveAnswers?questionnaireId=" +
           Id +
           "&patientId=" +
           this.patient.id,
