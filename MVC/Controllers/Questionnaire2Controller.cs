@@ -11,10 +11,11 @@ namespace Entity.Controllers
     
     public class Questionnaire2Controller : BaseController
     {
-        public Questionnaire2Controller(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) { }
+        public Questionnaire2Controller(IHttpContextAccessor httpContextAccessor) : 
+            base(httpContextAccessor) { }
 
 
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
             ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
 			ViewBag.Lang = "";
@@ -23,18 +24,29 @@ namespace Entity.Controllers
         }
 
 
-        public ActionResult SaveAnswer( string? sessionId)
+        public ActionResult End()
+        {
+            ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
+			return View("End");
+        }
+
+
+
+
+        public ActionResult SaveAnswer(string? sessionId)
         {
 
-            if (sessionId != null)sessionId=Guid.NewGuid().ToString();
+            if (sessionId != null) sessionId = Guid.NewGuid().ToString();
             {
                 var model = new Answer2Model();
 
 
                 string json = base.GetJsonSafe(() => model.SaveAnswers(base.Body(), GetCurrentUser(), sessionId));
             }
-            return Content("{ok:true}", "application/json");
-        }
+ 
+        return Ok(new { ok = true});
+    
+}
 
         public ActionResult SaveUserCounter( string? sessionId)
         {
