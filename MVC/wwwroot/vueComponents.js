@@ -2,7 +2,10 @@ var compBase = {
   props: {
     'text': String,
     'req': Boolean,
-    'requretext': {type:String, default:'Значение должно быть заполнено!!!'}
+    'valudateonload': { type:[ Boolean,String], default: false },
+    'requretext': { type: String, default: 'The value must be filled in!!!' },
+    'rules': []
+
   },
   data: function () {
     return {
@@ -15,7 +18,8 @@ var compBase = {
   watch: {
     immediate: true,
     value(val) {
-       this.valueInt = val;
+        this.valueInt = val;
+        this.Validate(val)
     }
   },
   methods: {
@@ -27,24 +31,75 @@ var compBase = {
    ,
     valChanged(event) {
       this.virtChange( event.target.value)
-      this.Validate(event.target.value)
+     
     },
 
-    Validate(val) {
+      Validate(val) {
+          if (typeof val === "undefined") {
+              val = this.value;
+          }
+          this.valid = true
+          let errList = []
+          this.notValidText = null;
 
       if (this.req && !val) {
         this.valid = false
         this.notValidText = this.requretext;
       } else {
-        this.valid = true
-        this.notValidText = null;
-      }
-    },
+          try {
+              if (this.rules) {
+                  this.rules.forEach(element => {
+
+                      let valResult = element(val)
+                      {
+                          if (valResult !== true) {
+                              errList.push(valResult)
+                              this.valid = false
+                          }
+                      }
+                  });
+                  if (!this.valid) {
+                      this.notValidText = errList.join('\n');
+                  }
+              }
+             
+          }
+          catch (error)
+          {
+              console.error("Error while validation rules executing: "+error)
+          }
+        }
+
+        console.log('this.valid = '+this.valid)
+      },
+
   },
   mounted: function () {
-    this.valueInt = this.value
+      this.valueInt = this.value
+      if (this.valudateonload==true) { 
+        this.Validate(this.value)
+      }
+
   }
 }
+Vue.component('kf-field', {
+    mixins: [compBase],
+    props: {
+        'value': { type: String },
+    },
+
+    methods: {
+    },
+    template: `
+   <input 
+   :class="{ invalid: !valid }" 
+    :title="notValidText" 
+     v-bind:value="value"
+     v-on:input="valChanged($event)"
+   />
+   </div>
+ `
+})
 
 Vue.component('kf-input', {
   mixins: [compBase],
