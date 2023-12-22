@@ -70,7 +70,7 @@ var compBase = {
           }
         }
 
-        console.log('this.valid = '+this.valid)
+        console.log(this.text+' valid = '+this.valid)
       },
 
   },
