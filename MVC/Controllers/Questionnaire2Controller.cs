@@ -22,6 +22,12 @@ namespace Entity.Controllers
 
 			return View("Index");
         }
+        public ActionResult Form()
+        {
+            ViewBag.sessionId = base.Request.HttpContext.Connection.Id;
+			ViewBag.Lang = "";
+			return View("Form");
+        }
 
 
         public ActionResult End()
