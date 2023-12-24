@@ -41,40 +41,30 @@ namespace Entity.Controllers
 
         public ActionResult SaveAnswer(string? sessionId)
         {
-
-            if (sessionId != null) sessionId = Guid.NewGuid().ToString();
+            if (sessionId == null) sessionId = Guid.NewGuid().ToString();
             {
                 var model = new Answer2Model();
-
-
                 string json = base.GetJsonSafe(() => model.SaveAnswers(base.Body(), GetCurrentUser(), sessionId));
             }
- 
-        return Ok(new { ok = true});
-    
-}
+
+            return Ok(new { ok = true });
+
+        }
 
         public ActionResult SaveUserCounter( string? sessionId)
         {
             var rep = uow.GetRepository<HitCounter>();
-
 			var exists = rep.FirstOrDefault(x => x.SessionId == sessionId);
             if(exists == null)
             {
-           
-			string json = base.GetJsonSafe( () =>
+			string json = base.GetJsonSafe(() =>
                 {
                     var answer= JsonConvert.DeserializeObject<HitCounter>(base.Body());
                     answer.Cdate = DateTime.Now;
                     rep.Create(answer); 
                 }
                 );
-
             }
-
-
-
-
             return Content("{}", "application/json");
         }
 

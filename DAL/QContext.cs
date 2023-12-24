@@ -117,7 +117,10 @@ public partial class QContext : DbContext
 			entity.ToTable("v_answer");
 		});
 
-
+		modelBuilder.Entity<vAnswer2>(entity =>
+		{
+			entity.ToTable("v_answer2");
+		});
 
 		modelBuilder.Entity<AvaiableUser>(entity =>
 		{

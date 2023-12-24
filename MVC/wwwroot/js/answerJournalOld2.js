@@ -43,16 +43,15 @@ function processFilter(dataGridInstance, filter) {
     }
 }
 
-//$("#buttonContainer").dxButton({
-//    text: "проверка фильтра",
-//    onClick: function (e) {
-//        var grid = $("#grid").dxDataGrid("instance"),
-//        filter = grid.getCombinedFilter();
-//        processFilter(grid, filter);
-//        alert(filter);
-//    }
-    //}).dxButton("instance");
-
+$("#buttonContainer").dxButton({
+    text: "проверка фильтра",
+    onClick: function (e) {
+        var grid = $("#grid").dxDataGrid("instance"),
+        filter = grid.getCombinedFilter();
+        processFilter(grid, filter);
+        alert(filter);
+    }
+}).dxButton("instance");
 //поиск имени конолки по фильтру
 function getColumnFieldName(dataGridInstance, getter) {
     var column,
@@ -79,7 +78,7 @@ function getColumnFieldName(dataGridInstance, getter) {
         }),
 
         stateStoring: {
-            storageKey: 'answer2_Grid',
+            storageKey: 'answer_Grid',
         },
 
         columns: [
@@ -91,18 +90,17 @@ function getColumnFieldName(dataGridInstance, getter) {
                 },
                 headerCellTemplate: $('<i style="color: black">ID</i>')
             },
-
-        { caption: 'User Name', dataField: 'userName' },
-        { caption: 'Email', dataField: 'userEmail' },
-        { caption: 'Phone', dataField: 'userPhone' },
-        { caption: 'Date', dataField: 'cdate', dataType: 'date' },
-        { caption: 'Time', dataField: 'time' },
-        { caption: 'Session Id', dataField: 'sessionId' },
-        { caption: 'OS', dataField: 'os' },
-        { caption: 'Area', dataField: 'area' },
-        { caption: 'Browser', dataField: 'browser' },
-        { caption: 'Screen Size', dataField: 'screenSize', width: 50 }
-
+            { caption: "Code ",dataField: "name"  },    
+            { caption: "Name ", dataField: "userName" }, 
+            { caption: "Email ", dataField: "userEmail" },
+            { caption: "Phone ", dataField: "userPhone" },           
+            { caption: "Date", dataField: "cdate", dataType: "date" },
+            { caption: "Time", dataField: "Time" },
+            { caption: "SessionId", dataField: "sessionId", groupIndex: 1 },
+            //{ caption: "Os", dataField: "os" },
+            //{ caption: "Area", dataField: "area" },
+            //{ caption: "Browser", dataField: "browser" },
+            //{ caption: "ScreenSize", dataField: "screenSize", width: 50 },   
         ]
         ,
 

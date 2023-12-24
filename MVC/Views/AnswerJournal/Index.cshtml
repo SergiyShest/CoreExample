@@ -2,20 +2,19 @@
 @{
     Layout = "_Layout";
 }
-@* <script src="/lib/vue.js"></script> *@
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="/lib/vue.js"></script>
 @section Scripts {
-    <title>Questionniaire answers</title>
-    <script src="/js/answerJournal.js" asp-append-version="true"></script>
+    <title>Hit Counter</title>
+    <script src="/js/answerJournal.js"></script>
 }
 
-<h1>View responses</h1>
 
-<div id="app" style="display: flex;flex-direction: column;width: 450px;">
-     <div style="display: flex;;align-items:center">
-        <div style="width: 100px;margin-left:15px">Date:</div>
-        from<input id="d1From" type="date" v-model="from" style="margin:3px">
-        to<input id="d1To" type="date" v-model="to" style="margin:3px">
+<h1>View responses</h1>
+<div id="app" style="display: flex;flex-direction: column;width: 300px;">
+    <div style="display: flex;">
+        <div style="width: 100px;">Date</div>
+        <input id="d1From" type="date" v-model="from" style="margin:3px">
+        <input id="d1To" type="date" v-model="to" style="margin:3px">
         <button @@click="FindDate()" style="margin:3px">Find</button>
     </div>
  
@@ -23,7 +22,7 @@
 </div>
     <div id="grid"></div>
 <script type="module">
-
+    import { baseMixin } from '/js/BaseMixin.js';
     const App = {
         mixins: [baseMixin],
         data() {
@@ -32,7 +31,6 @@
                 from: null,
                 to: null
             }
-
         }
         ,
         methods: {
@@ -50,11 +48,11 @@
             }
         },
         mounted() {
-//            console.log(localStorage.getItem('dateFrom'))
-//            console.log(localStorage.getItem('dateTo'))
+           console.log(localStorage.getItem('dateFrom'))
+            console.log(localStorage.getItem('dateTo'))
             this.from = localStorage.getItem('dateFrom')
             this.to = localStorage.getItem('to')
-            dataGrid.refresh()
+           //  dataGrid.refresh()
         }
 
     }
