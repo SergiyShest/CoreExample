@@ -16,9 +16,10 @@ let vue_ = new Vue({
             fieldsNumb: (value) => (!value || value && value <= 5) || "Max 5 ",
             phone: (value) => {
                 if (value) {
-                    value = value.replaceAll(' ','').replaceAll('-','')
+                    value = value.replaceAll(' ', '').replaceAll('-', '')
+                    const len = value.length
                     const res = /^\d{8,10}$/.test(value)
-                    if (!res) return "Telephone number mast conatins 8-10 numbers, possilble white space or hyphens";
+                    if (!res) return `Telephone number mast conatins 8-10 numbers (current ${len}), possilble white space or hyphens`;
                 }
                 return true;
             },
@@ -31,6 +32,7 @@ let vue_ = new Vue({
                 return true;
             }
         },
+        errors:[]
 
     },
     watch: {
@@ -50,12 +52,16 @@ let vue_ = new Vue({
     methods: {
 
         validation() { 
-          var valid = true;
+            var valid = true;
+            this.errors=[]
             for (var i = 0; i < 3; i++){
                 const comp = this.$children[i];
                 comp.Validate();
                 if (!comp.valid) {
                     valid = false;
+                    console.log(comp);
+                    this.errors.push(comp.notValidText);
+                    console.log(`${comp.text}: ${comp.notValidText};`)
                 }
             }
 
@@ -68,7 +74,9 @@ let vue_ = new Vue({
            
             if (!this.validation())
             {
-                alert("Please fill in the required fields");
+                var err = this.errors.join('\n');
+
+                alert(err);
             }
             else {
                 var path = "Questionnaire2/SaveAnswer?sessionId=" + SessionId

@@ -24,7 +24,7 @@ namespace CookieReaders.Controllers
 
         public IActionResult Index()
         {
-            return View();
+          return  Redirect("AnswerJournal");
         }
 
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)

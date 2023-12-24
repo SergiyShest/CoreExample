@@ -2,8 +2,7 @@
 .footer-overflow-container {
     overflow-x: auto;
     display: flex;
-    background-color: navy;
-  
+    background-color: #3d4492;
 }
 
 .footer-container {
@@ -13,8 +12,8 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 2px;
-    max-height:30px;
-   background-color: #304090;
+    max-height: 100px;
+    background-color: #3d4492;
 }
 
 .footer-pill-link {

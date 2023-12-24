@@ -9,10 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Help us find new treatments for eczema and earn $400</title>
     <meta name="description" content="">
-  
-    <link href="~/Questionnaire2.css" rel="stylesheet" asp-append-version="true">
+    <script src="~/lib/vue2.js"></script>
 
-    <link rel="stylesheet" href="/css/footer.css" asp-append-version="true">
+    <link href="~/css/footer.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/Questionnaire2.css" rel="stylesheet" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/example.css" asp-append-version="true" />
     <meta property="og:type" content="website">
     <meta property="og:title" content="Help us find new treatments for eczema and earn $400">
 
@@ -987,7 +989,6 @@
             #SI3MNSqV3JhrrFOm2 {
                 font-size: max(calc(12px * var(--rfso, var(--bfso, 1))), calc(4.97779733em - var(--ffsd)));
             }
-
             #sF0b6FSPXTyR5cND {
                 --first-font-size: max(calc(12px * var(--rfso, var(--bfso, 1))), 4.97779733em);
                 --last-font-size: var(--first-font-size);
@@ -1206,7 +1207,8 @@
             #Ep6N8nTTCinlH4EN {
                 grid-area: 6 / 4 / 7 / 7;
                 grid-template-columns: 0 6.4rem 31.5266264rem 16.09945093rem 31.04058933rem 6.4rem;
-                grid-template-rows: 0 minmax(5.36760585rem, max-content) minmax(47.38585714rem, max-content) minmax(0.52744374rem, max-content) minmax(4.42071603rem, max-content) 0;
+                grid-template-rows:/*  0 minmax(5.36760585rem, max-content)  */
+                minmax(47.38585714rem, max-content) minmax(0.52744374rem, max-content) minmax(4.42071603rem, max-content) 0;
             }
 
             #mnV2Ux2sBoblyUcb {
@@ -1216,7 +1218,7 @@
 
             #yNNpuGIwYLxG94Eq {
                 grid-template-columns: 4.26666667rem 0 0 91.46666667rem 0 0 4.26666667rem;
-    /*             grid-template-rows: 0 minmax(32.68098078rem,max-content) minmax(0.17236309rem, max-content) minmax(26.48474275rem, max-content) minmax(0.26666667rem, max-content) ; */
+                /*  grid-template-rows:  0 minmax(32.68098078rem, max-content)  minmax(0.17236309rem, max-content) minmax(26.48474275rem, max-content) minmax(0.26666667rem, max-content) minmax(57.70162275rem, max-content);*/
             }
 
             #rHXHASJBws56bKm9 {
@@ -1983,7 +1985,7 @@
 
             #yNNpuGIwYLxG94Eq {
                 grid-template-columns: 3.33333333rem 0 0 93.33333333rem 0 0 3.33333333rem;
-               /*  grid-template-rows: 0 minmax(25.53201624rem, max-content) minmax(0.13465866rem, max-content) minmax(22.42485963rem, max-content) minmax(0.20833333rem, max-content) ; */
+                /* grid-template-rows:  0 minmax(25.53201624rem, max-content)  minmax(0.13465866rem, max-content) minmax(22.42485963rem, max-content) minmax(0.20833333rem, max-content) minmax(59.6320193rem, max-content);  */
             }
 
             #rHXHASJBws56bKm9 {
@@ -2750,7 +2752,7 @@
 
             #yNNpuGIwYLxG94Eq {
                 grid-template-columns: 4.16666667rem 0 0 91.66666667rem 0 0 4.16666667rem;
-                /* grid-template-rows: 0 minmax(16.99917682rem, max-content) minmax(0.08416167rem, max-content) minmax(17.53385301rem, max-content) minmax(0.13020833rem, max-content) ; */
+                /*    grid-template-rows:  0 minmax(16.99917682rem, max-content)   minmax(0.08416167rem, max-content) minmax(17.53385301rem, max-content) minmax(0.13020833rem, max-content) minmax(58.05947853rem, max-content);*/
             }
 
             #rHXHASJBws56bKm9 {
@@ -3517,7 +3519,7 @@
 
             #yNNpuGIwYLxG94Eq {
                 grid-template-columns: 3.125rem 0 0 93.75rem 0 0 3.125rem;
-          /*       grid-template-rows: 0 minmax(12.74938261rem, max-content) minmax(0.06312125rem, max-content) minmax(15.13170901rem, max-content) minmax(0.09765625rem, max-content) ; */
+                /*  grid-template-rows: 0 0 minmax(0.06312125rem, max-content) minmax(15.13170901rem, max-content) minmax(0.09765625rem, max-content) minmax(52.70785961rem,  */max-content);
             }
 
             #rHXHASJBws56bKm9 {
@@ -4281,7 +4283,7 @@
 
             #yNNpuGIwYLxG94Eq {
                 grid-template-columns: 0 0 10.66983515rem 79.89004549rem 9.44011936rem 0;
-        /*         grid-template-rows: 0 minmax(7.21476412rem, max-content) minmax(0.04731783rem, max-content) minmax(9.37565725rem, max-content) minmax(0.07320644rem, max-content) ; */
+/*                 grid-template-rows: 0 minmax(7.21476412rem, max-content) minmax(0.04731783rem, max-content) minmax(9.37565725rem, max-content) minmax(0.07320644rem, max-content) minmax(39.51160193rem, max-content); */
             }
 
             #rHXHASJBws56bKm9 {
@@ -4434,9 +4436,7 @@
 </head>
 
 <body>
-  
     <div id="root">
-      @*   <a id="page-1" aria-hidden="true" style="visibility:hidden;"></a> *@
         <section id="ZgZqQqbJhtW1Y2A1"
                  style="position:relative;overflow:hidden;display:grid;align-items:center;grid-template-columns:auto 100rem auto;z-index:0;">
             <div id="P7XikGmAWy2cXYau"
@@ -4647,7 +4647,7 @@
                     </div>
                 </div>
             </div>
-        </section>@* <a id="page-2" aria-hidden="true" style="visibility:hidden;"></a> *@
+        </section><a id="page-2" aria-hidden="true" style="visibility:hidden;"></a>
         <section id="w0iaFA4ualDln7P9"
                  style="position:relative;overflow:hidden;display:grid;align-items:center;grid-template-columns:auto 100rem auto;z-index:0;margin-top:-1px;">
             <div id="Sx0lCprCQ2nPd4eo"
@@ -4797,25 +4797,13 @@
         </section>
         <section id="rHXHASJBws56bKm9"
                  style="position:relative;overflow:hidden;display:grid;align-items:center;grid-template-columns:auto 100rem auto;z-index:0;margin-top:-1px;">
-            <div id="HZRLZr1TLhnu3Gu0"
-                 style="grid-area:1 / 1 / 2 / 4;display:grid;position:absolute;min-height:100%;min-width:100%;">
-                <div id="S02g3Gc1isyQpxDu" style="z-index:0;">
-                    <div id="BcIEZsdrvtrRxmdz" style="box-sizing:border-box;width:100%;height:100%;transform:rotate(0deg);">
-                        <div id="T9iG0Y6gLEHKOrDX" style="width:100%;height:100%;opacity:1.0;">
-                            <div id="ol8IyxtiuJhWkr27"
-                                 style="background-color:#ffffff;opacity:1.0;transform:scale(1, 1);width:100%;height:100%;overflow:hidden;position:relative;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="yNNpuGIwYLxG94Eq" style="display:grid;position:relative;grid-area:1 / 2 / 2 ; background-color:#3d4492">
+
+            <div id="yNNpuGIwYLxG94Eq" style="display:grid;position:relative;grid-area: 1/ 2 ">
 
                 <div id="u6vPcUYAs76iNwZx">
                     <div id="apSNmlv9MNu58B4S" style="display:grid;position:relative;">
                         <div id="pmau1HKpFFxD0DSt" style="z-index:3;">
                             <div id="VnCib2yIaIeOFjsm" style="box-sizing:border-box;width:100%;height:100%;transform:rotate(0deg);">
-
                                 <svg id="Rf2slvX161LbTK22" viewBox="0 0 379.4444 35.5754" preserveAspectRatio="none"
                                      style="width:100%;height:100%;opacity:1.0;overflow:hidden;position:absolute;top:0%;left:0%;background:url(&#39;data:image/png;base64,&#39;);">
                                     <g id="puRzqNAnJuaZ8Mmf" style="transform:scale(1, 1);">
@@ -4841,8 +4829,6 @@
                                               style="fill:#3d4492;opacity:1.0;"></path>
                                     </g>
                                 </svg>
-                                
-                                
                                 <svg id="rBpPTS9KorHTMMDV" viewBox="0 0 95.2778 27.5883" preserveAspectRatio="none"
                                            style="width:100%;height:100%;opacity:1.0;overflow:hidden;position:absolute;top:0%;left:0%;background:url(&#39;data:image/png;base64,&#39;);">
                                     <g id="fwZ5lR7j7w7IRrtm" style="transform:scale(1, 1);">
@@ -4861,8 +4847,8 @@
                                         <span id="M4WYmllYIr5dcF9u" style="color:#ffffff;font-weight:700;">Interest Form</span>
 
 
-</p>
-                                    <p id="SI3MNSqV3JhrrFOm" 
+                                    </p>
+                                    <p id="SI3MNSqV3JhrrFOm"
                                        style="color:#ffffff;font-family:YAFdJt8dAY0-1;line-height:1.3977098em;text-align:center;">
                                         <span id="M4WYmllYIr5dcF9u" style="color:#ffffff;font-weight:700;">Thank you</span><span id="aSfLm1ZTloNp8S8l" style="color:#ffffff;">
                                             for your interest! Please fill out the following
@@ -4874,84 +4860,190 @@
                         </div>
                     </div>
                 </div>
-              </div>
-        </section>
-        </section>
+                <div id="mnV2Ux2sBoblyUcb" style="background:white;">
+                    <div id="Ep6N8nTTCinlH4EN" style="display:grid;position:relative;;">
+                        <div id="RqpJINC3M5C8ASHd" style="z-index:4;">
+                            <div id="Hjz67JZFm4HyHefP" style="box-sizing:border-box;width:100%;height:100%;transform:rotate(0deg)">
+                                <svg id="KTakyfsyl4ebbO0e" viewBox="0 0 303.1383 149.9246" preserveAspectRatio="none"
+                                     style="width:100%;height:100%;opacity:0.11;overflow:hidden;position:absolute;top:0%;left:0%;background:url(&#39;data:image/png;base64,&#39;);">
+                                    <g id="Mrg0md5kcHhcMmUh" style="transform:scale(1, 1);">
+                                        <path id="AgjuBzUhT4MjtBu8" d="M0,0 L303.13833928,0 L303.13833928,149.92457844 L0,149.92457844 Z"
+                                              style="fill:#3e4493;opacity:1.0;"></path>
+                                    </g>
+                                </svg><svg id="BXUZsbhmU52TW6cM" viewBox="0 0 266.6667 149.9246" preserveAspectRatio="none"
+                                           style="width:100%;height:100%;opacity:0.11;overflow:hidden;position:absolute;top:0%;left:0%;background:url(&#39;data:image/png;base64,&#39;);">
+                                    <g id="IhgPKWBSg6e22LeH" style="transform:scale(1, 1);">
+                                        <path id="FOFqs4vpaLVtpO8K" d="M0,0 L266.66666667,0 L266.66666667,149.92457844 L0,149.92457844 Z"
+                                              style="fill:#3e4493;opacity:1.0;"></path>
+                                    </g>
+                                </svg><svg id="CZzf5ItiFw89pnxj" viewBox="0 0 195.5556 123.8602" preserveAspectRatio="none"
+                                           style="width:100%;height:100%;opacity:0.11;overflow:hidden;position:absolute;top:0%;left:0%;background:url(&#39;data:image/png;base64,&#39;);">
+                                    <g id="HOJnx7lQvgEDxPRW" style="transform:scale(1, 1);">
+                                        <path id="JEq3wywqXOaRrVAf" d="M0,0 L195.55555556,0 L195.55555556,123.86022086 L0,123.86022086 Z"
+                                              style="fill:#3e4493;opacity:1.0;"></path>
+                                    </g>
+                                </svg><svg id="zHv0wUdqvPxfaIB7" viewBox="0 0 124.4444 79.5094" preserveAspectRatio="none"
+                                           style="width:100%;height:100%;opacity:0.11;overflow:hidden;position:absolute;top:0%;left:0%;background:url(&#39;data:image/png;base64,&#39;);">
+                                    <g id="QCD2Skp7XjbyplG9" style="transform:scale(1, 1);">
+                                        <path id="WnNelq3vjHfTHqn3" d="M0,0 L124.44444444,0 L124.44444444,79.50935907 L0,79.50935907 Z"
+                                              style="fill:#3e4493;opacity:1.0;"></path>
+                                    </g>
+                                </svg><svg id="sEqgGQO9eJNRvDdC" viewBox="0 0 95.2778 60.1059" preserveAspectRatio="none"
+                                           style="width:100%;height:100%;opacity:0.11;overflow:hidden;position:absolute;top:0%;left:0%;background:url(&#39;data:image/png;base64,&#39;);">
+                                    <g id="iahU6mZu2SOJt2IQ" style="transform:scale(1, 1);">
+                                        <path id="OyHnNU80QMQYpCta" d="M0,0 L95.27777778,0 L95.27777778,60.10585704 L0,60.10585704 Z"
+                                              style="fill:#3e4493;opacity:1.0;"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="F6nUfa9U0Ok9omcN" style="display:grid;position:relative;grid-area:3 / 3 / 5 / 6;">
+                            <div id="app" style="z-index:5;">
+                                <div id="KdGQ2Gak3OEMlumk" style="box-sizing:border-box;width:100%;height:100%;transform:rotate(0deg);">
+                                    <div id="lS4WdCZebctlpTcJ"
+                                         style="opacity:1.0;display:flex;box-sizing:border-box;flex-direction:column;justify-content:flex-start;width:100%;height:100%;">
+                                        <ol id="qe4bBUv5UgJM0JAG">
+                                            <li id="K4EcxLf5soqPDDDw"
+                                                style="color:#000000;font-family:YAFdJt8dAY0-1;margin-left:1.7em;line-height:1.39819074em;list-style-type:decimal;">
+                                                <span id="OXqOzi19lKDVCCgx" style="color:#000000;">
+                                                    Do any of these photos resemble the current
+                                                    condition of your skin?
+                                                </span><span id="vSU8qf2kdIF5Rcho" style="color:#ff3131;">*</span><span id="FoZ3CMb9nqRnwyvM" style="color:#000000;"> </span><br>
+                                            </li>
+                                        </ol>
 
-    </div>
+                                        <p id="TEZvkGNT5X1dLAYO" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;margin:10px">
+                                            <input v-model="yes" type="checkbox" class="checkbox-round">Yes</input>
+                                        </p>
 
-    </div>
+                                        <p id="FsB1GVh67uKbmm8b"
+                                           style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;white-space:pre">
+                                            <span id="DAIxPJ4PnDltWplh" style="color:#000000;"> </span>
+                                        </p>
+
+                                        <p id="Zkd2NQoAZDsD4eAH" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;margin:10px">
+
+
+                                            <input v-model="no" type="checkbox" class="checkbox-round">No</input>
+                                        </p>
+
+                                        <p id="FcmQBK8pZTCJvDCZ"
+                                           style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;white-space:pre;"><br></p>
+                                        <p id="qS26Lg3PkJaEJpZU"
+                                           style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;white-space:pre;"><br></p>
+                                        <p id="kd67eqnh9DNk4mPX"
+                                           style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;white-space:pre;"><br></p>
+                                        <p id="BijEWEZEcDkqd9QY"
+                                           style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;white-space:pre;"><br></p>
+                                        <p id="bPATXpPnM0FMl1eN"
+                                           style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;white-space:pre;"><br></p>
+                                        <p id="jv1fKQrGVdFh9DUq"
+                                           style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;white-space:pre;"><br></p>
+
+                                        <p id="QOWWreukf2s1bEgH" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;">
+                                            <span id="PMAEXiz2mZ1BpU2J" style="color:#000000;">2. Your full name</span>
+                                            <span id="fzaPSroPJZKFcCV9" style="color:#ff3131;">*</span>:
+                                            <kf-field v-model="Item.Name" id="C1BugNEwfxfySWID" style="color:#000000;" req ></kf-field>
+                                        </p>
+                                        <p style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;height:10px "></p>
+                                        <p id="THgDuwRdxdbnIEE2" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;">
+                                            <span id="zpK7UDtLuhaWUl5e" style="color:#000000;">3. Your telephone number</span>
+                                            <span id="QLkBMB9btO4hEHYm" style="color:#ff3131;">*</span>:
+                                            <kf-field v-model="Item.Phone" id="BQKFvD9nsMMqM0X1" style="color:#000000;" req :rules="[ rules.phone]"></kf-field>
+                                        </p>
+                                        <p style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;height:10px "></p>
+                                        <p id="EomI0wHf1fx4ptCD" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em; ">
+                                            <span id="D18Z1RnwGLrjcShk" style="color:#000000;">4. Your email address (optional):</span>
+                                            <kf-field v-model="Item.Email" id="pAv7roTMaPY3tccR_" style="color:#000000;" :rules="[rules.email]"> </kf-field>
+                                        </p>
+                                        <br>
+                                     
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="iWUXrTmbdA6yShJP" style="z-index:14;">
+                                <div id="TD0gTUXe4SqJzDpU" style="padding-top:47.43589744%;transform:rotate(0deg);">
+                                    <div id="RtkJLpNkKgmBa6yD" style="position:absolute;top:0px;left:0px;width:100%;height:100%;">
+                                        <div id="I6vTsq2FVGH5nUy3" style="width:100%;height:100%;opacity:1.0;">
+                                            <div id="boG7MfdnCpgrtDv5"
+                                                 style="transform:scale(1, 1);width:100%;height:100%;overflow:hidden;position:relative;">
+                                                <div id="Rnf6XCIOiqGdwBf5"
+                                                     style="width: calc(100% * max(1, var(--scale-fill, 1))); height: calc(100% / min(1, var(--scale-fill, 1))); position: absolute; top: 50%; left: 50%; opacity: 1; animation: auto ease 0s 1 normal none running none;">
+                                                    <img src="./copy_files/6c670e2b1c7a2d230804f5617110133c.jpg" loading="lazy"
+                                                         style="width:100%;height:100%;display:block;object-fit:cover;object-position:50% 50%;transform:translate(-50%, -50%) rotate(0deg);">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="lOl8HAiAXPflgNzD" style="z-index:10;margin-top:60px">
+                                <div id="ofVB80w3jnVMapZp" style="padding-top:11.89017364%;transform:rotate(0deg);">
+                                    <div id="VRYmzV0br4BY0jB3" style="position:absolute;top:0px;left:0px;width:100%;height:100%;">
+
+                                            <div id="a6emBK6HikTacCZY" style="display:grid;position:relative;grid-area:2 / 2 / 3 / 3;" onclick="submitform()">
+                                                <div id="noZ9Zid4PNsiXVVT" style="z-index:12;">
+                                                    <div id="EC3GjAXgyn4RqBxI" style="padding-top:30.7349598%;transform:rotate(0deg);">
+                                                        <div id="Df13s0KkkoYmTYgp" style="position:absolute;top:0px;left:0px;width:100%;height:100%;">
+                                                            <svg id="rTY9zZNRdGDYdQWt" viewBox="0 0 23.3376 7.1728"
+                                                                 style="width:100%;height:100%;opacity:1.0;overflow:hidden;position:absolute;top:0%;left:0%;background:url(&#39;data:image/png;base64,&#39;);">
+                                                                <defs>
+                                                                    <lineargradient id="rjfdR69OiyqTJdrh" gradientUnits="userSpaceOnUse" x1="0" y1="4" x2="24"
+                                                                                    y2="4">
+                                                                        <stop offset="0%" stop-color="#ff3131" stop-opacity="1"></stop>
+                                                                        <stop offset="100%" stop-color="#ff914d" stop-opacity="1"></stop>
+                                                                    </lineargradient>
+                                                                </defs>
+                                                                <g id="VsB6aNySXZ2zZGtg" style="transform:scale(1, 1);">
+                                                                    <path id="PFh5rvm47XoaW689" d="M0,0 L23.33756528,0 L23.33756528,7.17279131 L0,7.17279131 Z"
+                                                                          fill="url(#rjfdR69OiyqTJdrh)"></path>
+                                                                </g>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a id="IF0G64bxGtj6dBHC" style="z-index:13;cursor: pointer;" >
+                                                    <div id="EyJo5wLcyyavAVVV"
+                                                         style="box-sizing:border-box;width:100%;height:100%;transform:rotate(0deg);">
+                                                        <div id="RpAArbFavLKfToer"
+                                                             style="opacity:1.0;">
+                                                            <p id="lK8ieir5xQeLuc5g"
+                                                               style="color:#ffffff;font-family:YAFdJt8dAY0-1;line-height:1.38158622em;text-align:center;text-transform:none;letter-spacing:0em;">
+                                                                <span id="SsfpkbFpbziopkra" style="color:#ffffff;">Submit</span><br>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                         
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tPfE53BVzcOccuVk" style="display:grid;position:relative;grid-area:4 / 4 / 7 / 5;">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
     </div>
     <div class="footer-overflow-container" lang="en-en">
         <div class="footer-container">
-            <img src="copy_files/logo.svg" style="width:16px;"></img>
- 
-            <a class="footer-pill footer-pill-primary footer-pill-link" target="_blank" aria-label="" href="/Questionnaire2/form"  >
-                <div class="footer-pill-primary-background">
-                    <svg viewBox="20 20 55 55" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <radialgradient id="cyanSpotLarge" cx="0.5" cy="0.5" r="0.5" fx="0.8" fy="0.8" spreadMethod="pad">
-                                <stop offset="0%" stop-color="rgb(0, 196, 204)" stop-opacity="1"></stop>
-                                <stop offset="100%" stop-color="rgb(0, 196, 204)" stop-opacity="0"></stop>
-                            </radialgradient>
-                            <radialgradient id="cyanSpot" cx="0.5" cy="0.5" r="0.5" fx="0.2" fy="0.2" spreadMethod="pad">
-                                <stop offset="0%" stop-color="rgb(0, 196, 204)" stop-opacity="0.75"></stop>
-                                <stop offset="100%" stop-color="rgb(0, 196, 204)" stop-opacity="0"></stop>
-                            </radialgradient>
-                            <radialgradient id="purpleSpotLarge" cx="0.5" cy="0.5" r="0.5" fx="0.8" fy="0.8" spreadMethod="pad">
-                                <stop offset="0%" stop-color="rgb(125, 42, 232)" stop-opacity="1"></stop>
-                                <stop offset="100%" stop-color="rgb(125, 42, 232)" stop-opacity="0"></stop>
-                            </radialgradient>
-                            <radialgradient id="purpleSpot" cx="0.5" cy="0.5" r="0.5" fx="0.2" fy="0.2" spreadMethod="pad">
-                                <stop offset="0%" stop-color="rgb(125, 42, 232)" stop-opacity="0.85"></stop>
-                                <stop offset="100%" stop-color="rgb(125, 42, 232)" stop-opacity="0"></stop>
-                            </radialgradient>
-                        </defs>
-                        <!-- Average the RGB values of the Cyan & Purple brand colors -> Blue rect background -->
-                        <rect x="0" y="0" width="100" height="100" fill="rgb(62.5, 119, 218)"></rect>
-                        <g class="animation-container">
-                            <!-- Initial Rotation -->
-                            <g transform="rotate(25)">
-                                <!-- Large Spots -->
-                                <g transform="rotate(0) scale(2) translate(-40, -40)">
-                                    <rect x="0" y="0" width="100" height="100" fill="url(#cyanSpotLarge)"></rect>
-                                </g>
-                                <g transform="rotate(180) scale(2) translate(-40, -40)">
-                                    <rect x="0" y="0" width="100" height="100" fill="url(#cyanSpotLarge)"></rect>
-                                </g>
-                                <g transform="rotate(90) scale(1.5) translate(-25, -25)">
-                                    <rect x="0" y="0" width="100" height="100" fill="url(#purpleSpotLarge)"></rect>
-                                </g>
-                                <g transform="rotate(270) scale(1.5) translate(-25, -25)">
-                                    <rect x="0" y="0" width="100" height="100" fill="url(#purpleSpotLarge)"></rect>
-                                </g>
-                                <!-- Small spots -->
-                                <g transform="rotate(0) translate(-10, -10)">
-                                    <rect x="0" y="0" width="66" height="66" fill="url(#purpleSpot"></rect>
-                                </g>
-                                <g transform="rotate(180) translate(-10, -10)">
-                                    <rect x="0" y="0" width="66" height="66" fill="url(#purpleSpot"></rect>
-                                </g>
-                                <g transform="rotate(90) scale(1.2) translate(-10, -10)">
-                                    <rect x="0" y="0" width="66" height="66" fill="url(#cyanSpot)"></rect>
-                                </g>
-                                <g transform="rotate(270) scale(1.2) translate(-10, -10)">
-                                    <rect x="0" y="0" width="66" height="66" fill="url(#cyanSpot)"></rect>
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-                </div>
-                Start a survey
-            </a>
-                <img src="copy_files/logo.svg"></img>
-         
+            <img src="/images/physioseqWhite.png" style="height:73px;"></img>
+        </div>
     </div>
 </body>
 <script>
     const SessionId = '@ViewBag.sessionId'
 </script>
 
-<script src=@Url.Content("~/js/userCounter.js") asp-append-version="true"></script>
+<script src="/js/userCounter.js" asp-append-version="true"></script>
+<script src="vueComponents.js" asp-append-version="true"></script>
 
+<script src="~/Questionnaire2.js" asp-append-version="true"></script>
 </html>
