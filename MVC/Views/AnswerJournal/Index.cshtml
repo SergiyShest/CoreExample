@@ -1,13 +1,20 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@{
+ @{
     Layout = "_Layout";
 }
-<script src="/lib/vue.js"></script>
+ <script src="/lib/vue.js"></script>
+@*<script src="/lib/zip.js"></script>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/dx/dx.all.js"></script>
+<script src="/lib/dx/dx.aspnet.data.js"></script>
+<script src="~/js/dxBase.js" asp-append-version="true"></script>
+<link rel="stylesheet" type="text/css" href="/lib/dx/dx.common.css" />
+<link rel="stylesheet" type="text/css" href="/lib/dx/grey.css" /> *@
+<script src="/js/answerJournal.js"></script>
 @section Scripts {
     <title>Hit Counter</title>
-    <script src="/js/answerJournal.js"></script>
+    
 }
-
 
 <h1>View responses</h1>
 <div id="app" style="display: flex;flex-direction: column;width: 300px;">
@@ -15,13 +22,25 @@
         <div style="width: 100px;">Date</div>
         <input id="d1From" type="date" v-model="from" style="margin:3px">
         <input id="d1To" type="date" v-model="to" style="margin:3px">
-        <button @@click="FindDate()" style="margin:3px">Find</button>
+        <button @@click="Filter()" style="margin:3px">Find</button>
     </div>
- 
 
 </div>
     <div id="grid"></div>
 <script type="module">
+
+
+    function setDataSource() {
+        const dataSource = DevExpress.data.AspNet.createStore({
+            key: "id",
+            loadUrl: "../AnswerJournal/Get",
+
+        });
+        var grid = $("#grid").dxDataGrid("instance");
+        grid.option("dataSource", dataSource);
+    }
+
+
     import { baseMixin } from '/js/BaseMixin.js';
     const App = {
         mixins: [baseMixin],
@@ -34,7 +53,7 @@
         }
         ,
         methods: {
-            FindDate() {
+            Filter() {
                 localStorage.setItem('dateFrom', this.from);
                 localStorage.setItem('dateTo', this.to);
                 const pathEnd = "/AnswerJournal/SetFilter";
@@ -42,17 +61,18 @@
                 this.fetch(this.Ok, pathEnd, data)
             },
             Ok() {
-                console.log("ok")
-                var dataGrid = $('#grid').dxDataGrid('instance');
-                dataGrid.refresh()
+
+                setDataSource()
             }
         },
         mounted() {
-           console.log(localStorage.getItem('dateFrom'))
-            console.log(localStorage.getItem('dateTo'))
+           
             this.from = localStorage.getItem('dateFrom')
             this.to = localStorage.getItem('to')
-           //  dataGrid.refresh()
+             console.log('dateFrom = '+this.from)
+            console.log('dateTo = '+this.to)
+            this.Filter()
+
         }
 
     }

@@ -3,7 +3,7 @@ var compBase = {
     'text': String,
     'req': Boolean,
     'valudateonload': { type:[ Boolean,String], default: false },
-    'requretext': { type: String, default: 'The value must be filled in!!!' },
+    'requretext': { type: String, default: 'The value must be filled in!' },
     'rules': []
 
   },
@@ -86,19 +86,31 @@ Vue.component('kf-field', {
     mixins: [compBase],
     props: {
         'value': { type: String },
+        'inputStyle': { type: String },
+        'inputClass': { type: String } // новый пропс для классов
     },
-
     methods: {
+        valChanged(event) {
+            this.$emit('input', event.target.value);
+        }
+    },
+    computed: {
+        inputClasses() {
+            return {
+                'invalid': !this.valid,
+                [this.inputClass]: this.inputClass // добавляем переданный класс
+            };
+        }
     },
     template: `
-   <input 
-   :class="{ invalid: !valid }" 
-    :title="notValidText" 
-     v-bind:value="value"
-     v-on:input="valChanged($event)"
-   />
-   </div>
- `
+        <input 
+            :class="inputClasses" // объединение классов
+            :style="inputStyle"
+            :title="notValidText" 
+            v-bind:value="value"
+            v-on:input="valChanged($event)"
+        />
+    `
 })
 
 Vue.component('kf-input', {

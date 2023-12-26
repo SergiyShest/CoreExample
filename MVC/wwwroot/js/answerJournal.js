@@ -72,11 +72,19 @@ function getColumnFieldName(dataGridInstance, getter) {
 }
 
 
+    //установка источника данных
+    
+
+
+
+
+
     $("#grid").dxDataGrid({
-        dataSource: DevExpress.data.AspNet.createStore({
-            key: "id",
-            loadUrl: "../AnswerJournal/Get",
-        }),
+        remoteOperations: { paging: true, filtering: true, sorting: true, grouping: true, summary: true, groupPaging: true },
+        //dataSource: DevExpress.data.AspNet.createStore({
+        //    key: "id",
+        //    loadUrl: "../AnswerJournal/Get",
+        //}),
 
         stateStoring: {
             storageKey: 'answer2_Grid',

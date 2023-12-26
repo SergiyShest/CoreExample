@@ -22,6 +22,9 @@ namespace Entity.Controllers
 
 		public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
 		{
+
+            var request = Body();
+
 			var answers = uow.GetRepository<vAnswer2>().GetAll();
             var dateFrom = base.HttpContext.Session.GetString("dateFrom");
             var dateTo = base.HttpContext.Session.GetString("dateTo");
@@ -89,8 +92,6 @@ namespace Entity.Controllers
                 });
             }
         }
-
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
