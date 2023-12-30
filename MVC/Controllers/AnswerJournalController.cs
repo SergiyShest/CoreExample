@@ -18,9 +18,8 @@ namespace Entity.Controllers
         {
             return View();
         }
-
-
-		public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
+		
+        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
 		{
 
             var request = Body();

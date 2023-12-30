@@ -1,3 +1,17 @@
+function calculateSize() {
+    var emailTextEl = document.getElementById('idEmailText');
+    var phoneTextEl = document.getElementById('idPhoneText');
+    var nameTextEl = document.getElementById('idNameText');
+    var idPhoneStar = document.getElementById('idPhoneStar');
+    var width = (emailTextEl.offsetWidth) + 'px';
+ 
+
+    phoneTextEl.style.width = width;
+    nameTextEl.style.width = width;
+    console.log(phoneTextEl.offsetWidth)
+}
+
+
 let vue_ = new Vue({
     el: "#app",
     data: {
@@ -128,6 +142,8 @@ let vue_ = new Vue({
         ,
     },
     mounted: function () {
+
+       calculateSize();
     }
 });//.$mount('#app')
 

@@ -4422,7 +4422,7 @@
 <script>
     const SessionId = '@ViewBag.sessionId'
 </script>
-<body>
+<body onresize="calculateSize()">
     <div id="root">
 
 
@@ -4581,19 +4581,24 @@ z-index:0;margin-top:-1px;">
                                            style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;white-space:pre;"><br></p>
 
                                         <p id="QOWWreukf2s1bEgH" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;">
-                                            <span id="PMAEXiz2mZ1BpU2J" style="color:#000000;">2. Your full name</span>
+                                            <span id="idNameText" style="color:#000000;display: inline-block">
+                                            <span style="color:#000000;" >2. Your full name</span>
                                             <span id="fzaPSroPJZKFcCV9" style="color:#ff3131;">*</span>:
+                                            </span>
                                             <kf-field v-model="Item.Name" id="C1BugNEwfxfySWID" style="color:#000000;" req requretext="Name mast be filled"></kf-field>
                                         </p>
                                         <p style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;height:10px "></p>
                                         <p id="THgDuwRdxdbnIEE2" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;">
-                                            <span id="zpK7UDtLuhaWUl5e" style="color:#000000;">3. Your telephone number</span>
-                                            <span id="QLkBMB9btO4hEHYm" style="color:#ff3131;">*</span>:
+                                            <span id="idPhoneText" style="color:#000000;display: inline-block;">
+                                            <span   >3. Your telephone number</span>
+                                            <span id="QLkBMB9btO4hEHYm" style="color:#ff3131">*</span>:
+                                            </span>
                                             <kf-field v-model="Item.Phone" id="BQKFvD9nsMMqM0X1" style="color:#000000;" req :rules="[ rules.phone]" requretext="Phone mast be filled"></kf-field>
                                         </p>
                                         <p style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;height:10px "></p>
-                                        <p id="EomI0wHf1fx4ptCD" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em; ">
-                                            <span id="D18Z1RnwGLrjcShk" style="color:#000000;">4. Your email address (optional):</span>
+                                        <p id="doPCVV8vfhEqZpeJ" style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;">
+                                            <span id="idEmailText" style="color:#000000;display: inline-block" >4. Your email address (optional):</span>
+
                                             <kf-field v-model="Item.Email" id="pAv7roTMaPY3tccR_" style="color:#000000;" :rules="[rules.email]"> </kf-field>
                                         </p>
                                         <p style="color:#000000;font-family:YAFdJt8dAY0-1;line-height:1.39819074em;height:10px "></p>

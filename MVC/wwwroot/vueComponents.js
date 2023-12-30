@@ -69,8 +69,7 @@ var compBase = {
               console.error("Error while validation rules executing: "+error)
           }
         }
-
-        console.log(this.text+' valid = '+this.valid)
+        console.log(this.text + ' valid = '+this.valid)
       },
 
   },
@@ -104,7 +103,7 @@ Vue.component('kf-field', {
     },
     template: `
         <input 
-            :class="inputClasses" // объединение классов
+            :class="inputClasses" 
             :style="inputStyle"
             :title="notValidText" 
             v-bind:value="value"
