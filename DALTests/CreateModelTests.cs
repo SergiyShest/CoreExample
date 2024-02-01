@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 namespace Tests
 {
     [TestFixture]
+    //создание модели любого типа
     public class CreateModelTests : BaseTest
     {
 
@@ -55,6 +56,4 @@ namespace Tests
             return dyn;
         }
     }
-
-
 }

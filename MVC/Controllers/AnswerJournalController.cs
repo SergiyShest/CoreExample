@@ -21,12 +21,11 @@ namespace Entity.Controllers
 		
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
 		{
-
             var request = Body();
-
 			var answers = uow.GetRepository<vAnswer2>().GetAll();
             var dateFrom = base.HttpContext.Session.GetString("dateFrom");
             var dateTo = base.HttpContext.Session.GetString("dateTo");
+            
             if (!string.IsNullOrWhiteSpace(dateFrom))
             {
                 var dateFr = DateOnly.FromDateTime(DateTime.Parse(dateFrom));
@@ -37,18 +36,17 @@ namespace Entity.Controllers
                 var dateT = DateOnly.FromDateTime(DateTime.Parse(dateTo));
                 answers = answers.Where(x => x.Cdate < dateT);
             }
-   
-
+            
             loadOptions.PrimaryKey = new[] { "Id" };
 			loadOptions.PaginateViaPrimaryKey = true;
             try
             {
-              return Json(await DataSourceLoader.LoadAsync(answers, loadOptions));
-            }catch(Exception ex)
-            {
-			 return Json(answers.ToList());
+                return Json(await DataSourceLoader.LoadAsync(answers, loadOptions));
             }
-
+            catch(Exception ex)
+            {
+			    return Json(answers.ToList());
+            }
 		}
 
         public async Task<IActionResult> SetFilter()
@@ -91,7 +89,6 @@ namespace Entity.Controllers
                 });
             }
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

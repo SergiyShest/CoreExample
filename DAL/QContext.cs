@@ -88,7 +88,6 @@ public partial class QContext : DbContext
 		modelBuilder.Entity<HitCounter>(entity =>
 		{	
 			entity.Property(e => e.Id).HasColumnName("Id");
-//			entity.ToTable("AnsverHeader");
                entity.Property(e => e.Cdate)
               .HasColumnType("timestamp with time zone")
               .HasColumnName("Cdate");
@@ -132,6 +131,12 @@ public partial class QContext : DbContext
 			entity.Property(e => e.Ldate).HasColumnName("LDate");
 			entity.Property(e => e.Luser).HasColumnName("LUser");
 		});
+
+		modelBuilder.Entity<AnswerNote>(entity =>
+		{
+
+		});
+
 
 		modelBuilder.Entity<QuestionImage>(entity =>
 		{
