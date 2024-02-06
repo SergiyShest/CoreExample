@@ -14,14 +14,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="EmailAddress">EmailAddress</label>
-                <input type="text" class="form-control" asp-for="EmailAddress" placeholder="Email Address" />
+                <input id="Email_id" type="text" class="form-control" asp-for="EmailAddress" placeholder="Email Address" />
             </div>
             <div class="form-group">
                 <label asp-for="Password">Password</label>
-                <input class="form-control" asp-for="Password" placeholder="Password" type="password" />
+                <input id="Password_id" class="form-control" asp-for="Password" placeholder="Password" type="password" />
             </div>
             <div  style="display:flex;flex-direction:row; align-items:center;justify-content:end;">
-                <button class="btn btn-primary" style="margin:5px" type="submit">Login</button>
+                <button id="LogonBtn_id" class="btn btn-primary" style="margin:5px" type="submit">Login</button>
                 <a asp-area="" asp-controller="Account" asp-action="Register">Register</a>
             </div>
         </div>

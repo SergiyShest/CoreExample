@@ -51,7 +51,7 @@ namespace DAL.Core
     {
         Database EFDatabase { get; }
 
-        QContext DbContext { get; }
+        IQContext DbContext { get; }
 
         IRepos<T> GetRepository<T>() where T : class, IEntity;
     }

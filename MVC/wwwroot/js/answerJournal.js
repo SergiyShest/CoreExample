@@ -9,49 +9,49 @@
 
 //добавление пункта меню копировать
 function contextMenuPreparing(e) {
-
+     console.log(e)
     if (e.target == 'header') {
         var dataGrid = $('#grid').dxDataGrid('instance');
         var selectedRows = dataGrid.getSelectedRowsData();
+       var dataField = e.column.dataField;
         if (selectedRows.length > 0) {
-            var ind = e.column.dataField;
+           
             e.items.push({
                 text: "Copy",
                 onItemClick: function () {
                     var res = '';
-                    for (i = 0; i < selectedRows.length; i++) { res += selectedRows[i][ind] + ',' }
+                    for (i = 0; i < selectedRows.length; i++) { res += selectedRows[i][dataField] + ',' }
                     copyToClipboard(res.trim(','));
                 }
             });
         }
+        
+
     }
+    if (e.target == 'content') {
+            e.items=[]
+            e.items.push({
+                text: "Edit Notes",
+                onItemClick: function () {
+                    var header = (e.row.data.userName??'') + ' email:' + (e.row.data.userEmail??'')
+                    xPopup(`Notes for : ${header}`, '/AnswerNotes?id=' + e.row.key);
+                }
+            });
+        e.items.push({
+            text: "Copy cell",
+            onItemClick: function () {
+                var dataField = e.column.dataField;
+                copyToClipboard(e.row.data[dataField])
+            }
+        });
+
+        }
+    
+
 }
 
 $(function () {
 
-//получение строки фильтров
-function processFilter(dataGridInstance, filter) {
-    if ($.isArray(filter)) {
-        if ($.isFunction(filter[0])) {
-            filter[0] = getColumnFieldName(dataGridInstance, filter[0]);
-        }
-        else {
-            for (var i = 0; i < filter.length; i++) {
-                processFilter(dataGridInstance, filter[i]);
-            }
-        }
-    }
-}
-
-//$("#buttonContainer").dxButton({
-//    text: "проверка фильтра",
-//    onClick: function (e) {
-//        var grid = $("#grid").dxDataGrid("instance"),
-//        filter = grid.getCombinedFilter();
-//        processFilter(grid, filter);
-//        alert(filter);
-//    }
-    //}).dxButton("instance");
 
 //поиск имени конолки по фильтру
 function getColumnFieldName(dataGridInstance, getter) {
@@ -72,12 +72,6 @@ function getColumnFieldName(dataGridInstance, getter) {
 }
 
 
-    //установка источника данных
-    
-
-
-
-
 
     $("#grid").dxDataGrid({
         remoteOperations: { paging: true, filtering: true, sorting: true, grouping: true, summary: true, groupPaging: true },
@@ -85,9 +79,9 @@ function getColumnFieldName(dataGridInstance, getter) {
         //    key: "id",
         //    loadUrl: "../AnswerJournal/Get",
         //}),
-
+        onContextMenuPreparing:contextMenuPreparing,
         stateStoring: {
-            storageKey: 'answer2_Grid',
+            storageKey: 'answer2_grid',
         },
 
         columns: [
@@ -103,6 +97,7 @@ function getColumnFieldName(dataGridInstance, getter) {
         { caption: 'User Name', dataField: 'userName' },
         { caption: 'Email', dataField: 'userEmail' },
         { caption: 'Phone', dataField: 'userPhone' },
+            { caption: 'Note', dataField: 'note' },
         { caption: 'Date', dataField: 'cdate', dataType: 'date' },
         { caption: 'Time', dataField: 'time' },
         { caption: 'Session Id', dataField: 'sessionId' },

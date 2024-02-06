@@ -46,4 +46,8 @@
     <None Include="wwwroot\BaseMixin.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

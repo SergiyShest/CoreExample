@@ -11,7 +11,7 @@ namespace DAL.Core
         private bool _disposed;
         private readonly Dictionary<string, object> _repos = new Dictionary<string, object>();
 
-        public QContext DbContext { get; }
+        public IQContext DbContext { get; }
         public object EFDatabase => DbContext.Database;
 
         Database IUnitOfWorkReadOnly.EFDatabase => throw new NotImplementedException();
@@ -21,7 +21,10 @@ namespace DAL.Core
             DbContext = new QContext();
         }
 
-
+        public UnitOfWork(IQContext context)
+        {
+            DbContext = context;
+        }
         public void Save()
         {
 
@@ -81,7 +84,7 @@ namespace DAL.Core
             {
                 if (disposing)
                 {
-                    DbContext.Dispose();
+                    (DbContext as DbContext).Dispose();
                 }
                 _disposed = true;
             }
@@ -95,8 +98,7 @@ namespace DAL.Core
         {
             if (RemembeNewEntity)
             {
-                addedForTest.Add((entity, repository))
-                        ;
+                addedForTest.Add((entity, repository));
             }
         }
         static List<(IEntity entity, IRepos repository)> addedForTest = new List<(IEntity entity, IRepos repository)>();
@@ -138,9 +140,9 @@ namespace DAL.Core
 
         bool RemembeNewEntity;
 
-        QContext _db;
+        IQContext _db;
 
-        public Repository(QContext db, bool remembeNewEntity)
+        public Repository(IQContext db, bool remembeNewEntity)
         {
             _db = db;
             RemembeNewEntity = remembeNewEntity;

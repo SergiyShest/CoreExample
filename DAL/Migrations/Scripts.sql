@@ -96,7 +96,7 @@ CREATE TABLE "AnswerNote" (
     CONSTRAINT "PK_AnswerNote" PRIMARY KEY ("Id")
 );
 
-CREATE UNIQUE INDEX ix_answer_note_answer_id ON "AnswerNote" ("AnswerId");
+CREATE  INDEX ix_answer_note_answer_id ON "AnswerNote" ("AnswerId");
 
 GRANT ALL ON TABLE public."AnswerNote" TO postgres;
 

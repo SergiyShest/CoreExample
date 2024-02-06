@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DAL.Migrations
 {
-    [DbContext(typeof(QContext))]
+    [DbContext(typeof(IQContext))]
     [Migration("20231007061852_QuestionImage")]
     partial class QuestionImage
     {

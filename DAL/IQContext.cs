@@ -12,63 +12,83 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Reflection;
 using Entity;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DAL;
 
-public partial class QContext : DbContext
+public interface IQContext
 {
-    protected IConfiguration Configuration;
+    // Другие свойства и методы, если нужно
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+
+    int SaveChanges();
+
+    DatabaseFacade Database {  get; }
+
+	EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
+
+
+	DbSet<TEntity> Set< TEntity>()where TEntity : class;
+}
+
+
+
+public partial class QContext : DbContext,IQContext
+{
+	protected IConfiguration Configuration;
 
 	static QContext()
 	{
 		AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
-       AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+		AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 
 	}
 
 
 	public QContext()
-    {
+	{
 
 		var config = new ConfigurationBuilder()
-     .SetBasePath(Directory.GetCurrentDirectory())
-     .AddJsonFile("appsettings.json")
-     .Build();
-        Configuration = config;
+	 .SetBasePath(Directory.GetCurrentDirectory())
+	 .AddJsonFile("appsettings.json")
+	 .Build();
+		Configuration = config;
 
 
-    }
+	}
 
-    public QContext(DbContextOptions<QContext> options)
-        : base(options)
-    {
+	public QContext(DbContextOptions<QContext> options)
+		: base(options)
+	{
 
 
 	}
 
 
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-    {
-        //  => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=UserPortal;Username=postgres;Password=Qazwsx123");
+	protected override void OnConfiguring(DbContextOptionsBuilder options)
+	{
+		//  => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=UserPortal;Username=postgres;Password=Qazwsx123");
 
 
-        var loggerFactory = LoggerFactory.Create(builder =>
-        {
-            // builder.AddFilter("Microsoft", LogLevel.Warning)
-            // AddFilter("System", LogLevel.Warning)
-            builder.AddFilter("", LogLevel.Debug);
-        }
+		var loggerFactory = LoggerFactory.Create(builder =>
+		{
+			// builder.AddFilter("Microsoft", LogLevel.Warning)
+			// AddFilter("System", LogLevel.Warning)
+			builder.AddFilter("", LogLevel.Debug);
+		}
 
-        );
-        loggerFactory.AddNLog().ConfigureNLog("NLog.config"); ;
+		);
+		loggerFactory.AddNLog().ConfigureNLog("NLog.config"); ;
 
-        options.UseLoggerFactory(loggerFactory) //tie-up DbContext with LoggerFactory object
-            .EnableSensitiveDataLogging();
+		options.UseLoggerFactory(loggerFactory) //tie-up DbContext with LoggerFactory object
+			.EnableSensitiveDataLogging();
 
-        var connectString = Configuration.GetConnectionString("WebApiDatabase");
-        options.UseNpgsql(connectString);
+		var connectString = Configuration.GetConnectionString("WebApiDatabase");
+		options.UseNpgsql(connectString);
 
 
 
@@ -76,29 +96,29 @@ public partial class QContext : DbContext
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+	{
 
 
 
 
 		modelBuilder
-            .HasPostgresExtension("pgcrypto");
+			.HasPostgresExtension("pgcrypto");
 
 
 		modelBuilder.Entity<HitCounter>(entity =>
-		{	
+		{
 			entity.Property(e => e.Id).HasColumnName("Id");
-               entity.Property(e => e.Cdate)
-              .HasColumnType("timestamp with time zone")
-              .HasColumnName("Cdate");
-        });
+			entity.Property(e => e.Cdate)
+		   .HasColumnType("timestamp with time zone")
+		   .HasColumnName("Cdate");
+		});
 
 		modelBuilder.Entity<Answer>(entity =>
 		{
 			entity.ToTable("Answer");
 			entity.Property(e => e.DateTime)
-              .HasColumnType("timestamp with time zone")
-              .HasColumnName("dateTime");
+			  .HasColumnType("timestamp with time zone")
+			  .HasColumnName("dateTime");
 
 		});
 
@@ -106,8 +126,8 @@ public partial class QContext : DbContext
 		{
 			entity.ToTable("SimpleAnsver");
 			entity.Property(e => e.DateTime)
-              .HasColumnType("timestamp with time zone")
-              .HasColumnName("dateTime");
+			  .HasColumnType("timestamp with time zone")
+			  .HasColumnName("dateTime");
 
 		});
 
@@ -155,17 +175,18 @@ public partial class QContext : DbContext
 		});
 
 		modelBuilder.Entity<User>(entity =>
-{            entity.ToTable("Users");       
-			entity.HasIndex(e => e.Email, "IX_user_email").IsUnique();
+{
+	entity.ToTable("Users");
+	entity.HasIndex(e => e.Email, "IX_user_email").IsUnique();
 
-			entity.Property(e => e.Id).HasColumnName("id");
-			entity.Property(e => e.Cdate).HasColumnName("CDate");
-			entity.Property(e => e.Cuser).HasColumnName("CUser");
-			entity.Property(e => e.Ldate).HasColumnName("LDate");
-			entity.Property(e => e.Luser).HasColumnName("LUser");
-			entity.Property(e => e.PasswordHash).HasDefaultValueSql("''::text");
-			entity.Property(e => e.Salt).HasDefaultValueSql("''::text");
-		});
+	entity.Property(e => e.Id).HasColumnName("id");
+	entity.Property(e => e.Cdate).HasColumnName("CDate");
+	entity.Property(e => e.Cuser).HasColumnName("CUser");
+	entity.Property(e => e.Ldate).HasColumnName("LDate");
+	entity.Property(e => e.Luser).HasColumnName("LUser");
+	entity.Property(e => e.PasswordHash).HasDefaultValueSql("''::text");
+	entity.Property(e => e.Salt).HasDefaultValueSql("''::text");
+});
 
 		modelBuilder.Entity<Vjsf>(entity =>
 		{
@@ -190,7 +211,7 @@ public partial class QContext : DbContext
 
 	}
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+	partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
 
 public static class UtcDateAnnotation

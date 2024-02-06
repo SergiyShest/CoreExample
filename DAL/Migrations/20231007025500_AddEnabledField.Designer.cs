@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DAL.Migrations
 {
-    [DbContext(typeof(QContext))]
+    [DbContext(typeof(IQContext))]
     [Migration("20231007025500_AddEnabledField")]
     partial class AddEnabledField
     {
