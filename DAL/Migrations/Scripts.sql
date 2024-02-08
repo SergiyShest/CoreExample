@@ -123,3 +123,35 @@ INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
 VALUES ('20240201024059_AnsverNote', '7.0.11');
 
 COMMIT;
+
+CREATE OR REPLACE VIEW public.v_answer2
+ AS
+ SELECT ans."Id",
+    ans."QuestionnarieId",
+    ans."UserName",
+    ans."UserEmail",
+    ans."UserPhone",
+    SUBSTRING (anote."Note",1,100) as "Note" ,
+    ans."Cdate",
+    ans."SessionId",
+    ans."dateTime",
+    (((date_part('hour'::text, ans."dateTime") || ':'::text) || date_part('minute'::text, ans."dateTime")) || ':'::text) || date_part('second'::text, ans."dateTime") AS "Time",
+    hc."Os",
+    hc."Area",
+    hc."Browser",
+    hc."ScreenSize"
+   FROM "SimpleAnsver" ans
+     LEFT JOIN "HitCounter" hc ON ans."SessionId" ~~ (hc."SessionId" || '%'::text)
+     LEFT JOIN LATERAL ( SELECT DISTINCT ON ("AnswerNote"."AnswerId") "AnswerNote"."Id",
+            "AnswerNote"."AnswerId",
+            "AnswerNote"."Note",
+            "AnswerNote"."LUser",
+            "AnswerNote"."CUser",
+            "AnswerNote"."Ldate",
+            "AnswerNote"."Cdate"
+           FROM "AnswerNote"
+          WHERE "AnswerNote"."AnswerId" = ans."Id"
+          ORDER BY "AnswerNote"."AnswerId", "AnswerNote"."Id" DESC) anote ON true;
+
+ALTER TABLE public.v_answer2
+    OWNER TO postgres;
