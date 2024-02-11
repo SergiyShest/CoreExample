@@ -7,16 +7,13 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/vue2.js"></script>
 
-<script src="~/BaseMixinSDN.js" asp-append-version="true"></script>
+@* <script src="~/BaseMixinSDN.js" asp-append-version="true"></script> *@
 <script src="~/vueComponents.js" asp-append-version="true"></script>
 
 <div style="display:flex;flex-direction:column;align-items:flex-start;align-content:flex-start;align-self:stretch">
-    <h1></h1>
-
     <div id="app" style="display: flex;flex-direction: column;width: 550px;">
         <div id="items" class="grid-container">
-           @*  <kf-input text='Id' v-model='Item.Id'></kf-input> *@
-            <div style="margin:2px;padding:2px;border: 1px solid #ccc; border-radius:3px; background-color:#ddd" v-for="note in Item.Notes">
+            <div   style="margin:2px;padding:2px;border: 1px solid #ccc; border-radius:3px; background-color:#ddd" v-for="note in Item.Notes">
                 <div>Created:{{formatDate(note.Ldate)}}</div>
                 <div style="display:flex;width:100%">  
                     <textarea :id="'note_'+note.Id" v-model='note.Note' style="width:100%"></textarea>
@@ -27,20 +24,18 @@
                 </div>
             </div>
             <div style="display:flex;margin:2px;padding:2px;border: 1px solid #ccc; border-radius:3px; background-color:#ddd">
-                <textarea v-model='NewNote' style="width:100%"></textarea>
+                <textarea id="newNote" v-model='NewNote' style="width:100%"></textarea>
                 <div>
-                    <kf-button v-on:click.native="SaveClick(null)" style="width:60px" text="Add" :disabled="!NewNote"></kf-button>
+                    <kf-button id="addBtn" v-on:click.native="SaveClick(null)" style="width:60px" text="Add" :disabled="!NewNote"></kf-button>
                 </div>
             </div>
         </div>
-
         <div style="display:flex;flex-direction:row;">
-          @*   <kf-button id="closeButton" v-on:click.native="CloseClick" text="Close" style="margin-left:auto;width:60px"></kf-button> *@
         </div>
     </div>
 </div>
 
-<script>
+<script type="module">
 
 
 
@@ -50,7 +45,7 @@
                 });
     let Mode = '@ViewBag.Mode';
     let Id = '@ViewBag.Id';
-
+    import { baseMixin } from '/js/BaseMixin.js';
 
     let vue_ = new Vue({
         el: "#app",
@@ -111,9 +106,17 @@
 
             CloseClick() {
 
-            }, formatDate(date) {
+            }, 
+            formatDate(date) {
 
                 return date.substring(0, date.length - 7).replace("T", " ")
+            }, 
+            handleKeyDown(event) {
+                if (event.ctrlKey && event.key === 'Enter') {
+                    this.SaveClick(null);
+                }
+                console.log(event)
+                return true;
             }
         },
         mounted: function () {

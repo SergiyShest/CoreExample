@@ -3,7 +3,7 @@
     Layout = "_Layout";
 }
  <script src="/lib/vue.js"></script>
-<script src="~/BaseMixinSDN.js" asp-append-version="true"></script>
+<script src="~/js/codePopup.js" asp-append-version="true"></script>
 <script src="/js/answerJournal.js" asp-append-version="true" ></script>
 @section Scripts {
     <title>Hit Counter</title>
@@ -34,7 +34,6 @@
         var grid = $("#grid").dxDataGrid("instance");
         grid.option("dataSource", dataSource);
     }
-
 
     import { baseMixin } from '/js/BaseMixin.js';
     const App = {

@@ -2,7 +2,6 @@
 (function (window) {
     {
         var unknown = '-';
-
         // screen
         var screenSize = '';
         if (screen.width) {

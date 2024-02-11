@@ -9,6 +9,7 @@
   <ItemGroup>
     <Content Remove="appsettings.json" />
     <Content Remove="nlog.config" />
+    <Content Remove="wwwroot\js\BaseMixin.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +45,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="wwwroot\BaseMixin.js" />
+    <None Include="wwwroot\js\BaseMixin.js" />
   </ItemGroup>
 
   <ItemGroup>

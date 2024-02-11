@@ -18,3 +18,11 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+beforeEach(() => {
+    cy.visit('https://localhost:7297/AnswerNotes?id=1')
+    cy.get('#Email_id').type("Shest_akow@rambler.ru").blur();
+    cy.get('#Password_id').type("Adm").blur();
+    cy.get('#LogonBtn_id').click();
+
+  });

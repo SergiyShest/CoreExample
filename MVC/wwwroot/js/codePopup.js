@@ -1,85 +1,24 @@
-﻿
-$(() => {
-    $('#show-popup-button').dxButton({
-        text: 'Show Popup',
-        width: 300,
-        type: 'default',
-        onClick() {
-            popup.show();
-        },
-    });
+﻿function xPopup(header, path) {
 
-    $('#show-popup-with-scrollview-button').dxButton({
-        text: 'Show Popup',
-        width: 300,
-        onClick() {
-            popupWithScrollView.show();
-        },
-    });
+	var content = `<H1> no content </H1>`
+	var popupContentTemplate = function () {
+		return content;
+	};
 
-    const popup = $('#popup')
-        .dxPopup({
-            width: 360,
-            height: 320,
-            visible: false,
-            title: 'Downtown Inn',
-            hideOnOutsideClick: true,
-            showCloseButton: true,
-            toolbarItems: [
-                {
-                    widget: 'dxButton',
-                    toolbar: 'bottom',
-                    location: 'center',
-                    options: {
-                        width: 300,
-                        text: 'Book',
-                        type: 'default',
-                        stylingMode: 'contained',
-                        onClick() {
-                            popup.hide();
-                        },
-                    },
-                },
-            ],
-        }).dxPopup('instance');
+	var popup = $('#dxPopup')
+		.dxPopup({
+			width: '50vw',
+			height: '95vh',
+			visible: false,
+			title: header,
+			hideOnOutsideClick: true,
+			showCloseButton: true,
+			contentTemplate: popupContentTemplate
+		}).dxPopup('instance');
 
+	path = document.location.origin + path
+	content = '<iframe src="' + path + '" style= "width:100%; height:100%">'
 
-    const popupWithScrollView = $('#popup-with-scrollview')
-        .dxPopup({
-            width: 360,
-            height: 320,
-            visible: false,
-            title: 'Downtown Inn',
-            hideOnOutsideClick: true,
-            showCloseButton: true,
-            toolbarItems: [
-                {
-                    widget: 'dxButton',
-                    toolbar: 'bottom',
-                    location: 'center',
-                    options: {
-                        width: 300,
-                        text: 'Book',
-                        type: 'default',
-                        stylingMode: 'contained',
-                        onClick() {
-                            popupWithScrollView.hide();
-                        },
-                    },
-                },
-            ],
-            contentTemplate() {
-                const $scrollView = $('<div/>');
+	popup.show()
 
-                $scrollView.append($('<div/>').html(htmlContent));
-
-                $scrollView.dxScrollView({
-                    width: '100%',
-                    height: '100%',
-                });
-
-                return $scrollView;
-            },
-        })
-        .dxPopup('instance');
-});
+}

@@ -2,6 +2,7 @@ export const baseMixin = {
 
 	data: () => ({
 		loadingData: false,
+		mode: 'edit'
      })
 ,
 	methods: {
@@ -72,9 +73,13 @@ export const baseMixin = {
 			alert(message)
 		}
 		,
-
+		FetchJson(pathEnd, execFunction, data) {
+			this.fetch(execFunction, pathEnd, data)
+		}
+		,
 		//универсальная функция получения/отправки данных
 		fetch: function (execFunction, pathEnd, data = null) {
+			if (pathEnd.startsWith("/")) { pathEnd = pathEnd.substring(1); }
 			this.loadingData = true;
 			const fetchRef = execFunction;
 			const path = document.location.origin  +'/'+ pathEnd

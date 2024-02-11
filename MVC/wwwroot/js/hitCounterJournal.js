@@ -72,6 +72,7 @@ function getColumnFieldName(dataGridInstance, getter) {
 
 
     $("#grid").dxDataGrid({
+        remoteOperations: true,
         dataSource: DevExpress.data.AspNet.createStore({
             key: "id",
             loadUrl: "../HitCounter/Get",

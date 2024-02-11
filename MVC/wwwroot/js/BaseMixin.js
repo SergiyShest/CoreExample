@@ -68,17 +68,23 @@ export const baseMixin = {
 		}
 		,
 		ShowAlert(message) {
-			console.log(alert);
+			console.log(message);
 			alert(message)
+		}
+		,
+		FetchJson(pathEnd, execFunction, data) {
+			this.fetch(execFunction, pathEnd, data)
 		}
 		,
 
 		//универсальная функция получения/отправки данных
 		fetch: function (execFunction, pathEnd, data = null) {
+			if (pathEnd.startsWith("/")) { pathEnd = pathEnd.substring(1); }
 			this.loadingData = true;
-			var fetchRef = execFunction;
-			var path = document.location.origin + pathEnd
-			var json = JSON.stringify(data);
+			const fetchRef = execFunction;
+			const path = document.location.origin  +'/'+ pathEnd
+			//const path ='http://localhost:5056/'+ pathEnd
+			const json = JSON.stringify(data);
 			fetch(path,
 				{
 					method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -91,20 +97,22 @@ export const baseMixin = {
 				})
 				.then((response) => {
 					this.loadingData = false;
-					if (response)
-						try {
-							return response.json();
-						}
-						catch {	}
+					if (response )
+					{
+						return response.json();
+					}  
 				})
 				.then((retData) => {
-					fetchRef(retData);
+					if(retData){
+					{console.log(retData)	
+					fetchRef(retData)
+				}
+			}
 					this.loadingData = false;
 	
 				}).catch(error => {
 					this.loadingData = false;
 					console.error("Error while getting server data: " + path + ' :' + error)
-					this.ShowAlert("Error while getting server data: " + path + ' :' + error);
 				});
 
 		}

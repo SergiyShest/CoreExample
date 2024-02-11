@@ -35,7 +35,7 @@ namespace Tests2e2
 
 		}
 
-		[TestCaseSource(nameof(GetTests))]
+		[TestCaseSource(nameof(GetTestsCommon))]
 		public void ViewTests(string command )
 		{
 			string workingDirectory = @"C:\Users\Saergey\source\repos\Core\Tests2e2\test_e2e";
@@ -56,7 +56,7 @@ namespace Tests2e2
 
         } 
 
-        public static IEnumerable<TestCaseData> GetTests()
+        public static IEnumerable<TestCaseData> GetTestsCommon()
         {
             string jsonConfigPath = @"E:\source\repos\Core\Tests2e2\test_e2e\package.json";
             string jsonConfig = File.ReadAllText(jsonConfigPath);
@@ -65,7 +65,7 @@ namespace Tests2e2
 
             if (scripts != null)
             {
-                foreach (JProperty script in scripts.Children<JProperty>())
+                foreach (JProperty script in scripts.Children<JProperty>())//find scripts in packageJson section scripts
                 {
 					if (!script.Name.Contains("run:e2e.")) continue;
 					yield return new TestCaseData(script.Name.ToString()) { TestName = script.Name};

@@ -22,8 +22,8 @@ namespace BLL
             answer.UserName = answersJson.Name;
             answer.UserPhone = answersJson.Phone;
             answer.UserEmail = answersJson.Email;
-            answer.Cdate = DateOnly.FromDateTime(DateTime.Today);
-            answer.DateTime = DateTime.Today;
+            answer.Cdate = DateOnly.FromDateTime(DateTime.Now);
+            answer.DateTime = DateTime.Now;
             log.Info($"\"{answersJson.Name}\";\"{answersJson.Phone}\";\"{answersJson.Email}\"");
             var rep = base.UOW.GetRepository<SimpleAnswer>();
             rep.Create(answer);

@@ -9,24 +9,20 @@
 
 //добавление пункта меню копировать
 function contextMenuPreparing(e) {
-     console.log(e)
     if (e.target == 'header') {
         var dataGrid = $('#grid').dxDataGrid('instance');
         var selectedRows = dataGrid.getSelectedRowsData();
-       var dataField = e.column.dataField;
         if (selectedRows.length > 0) {
-           
+            var ind = e.column.dataField;
             e.items.push({
                 text: "Copy",
                 onItemClick: function () {
                     var res = '';
-                    for (i = 0; i < selectedRows.length; i++) { res += selectedRows[i][dataField] + ',' }
+                    for (i = 0; i < selectedRows.length; i++) { res += selectedRows[i][ind] + ',' }
                     copyToClipboard(res.trim(','));
                 }
             });
         }
-        
-
     }
     if (e.target == 'content') {
             e.items=[]
@@ -35,6 +31,7 @@ function contextMenuPreparing(e) {
                 onItemClick: function () {
                     var header = (e.row.data.userName??'') + ' email:' + (e.row.data.userEmail??'')
                     xPopup(`Notes for : ${header}`, '/AnswerNotes?id=' + e.row.key);
+
                 }
             });
         e.items.push({
@@ -74,14 +71,11 @@ function getColumnFieldName(dataGridInstance, getter) {
 
 
     $("#grid").dxDataGrid({
-        remoteOperations: { paging: true, filtering: true, sorting: true, grouping: true, summary: true, groupPaging: true },
-        //dataSource: DevExpress.data.AspNet.createStore({
-        //    key: "id",
-        //    loadUrl: "../AnswerJournal/Get",
-        //}),
+        remoteOperations: true, //{ paging: true, filtering: true, sorting: true, grouping: true, summary: true, groupPaging: true },
+
         onContextMenuPreparing:contextMenuPreparing,
         stateStoring: {
-            storageKey: 'answer2_grid',
+            storageKey: 'Answer8_grid',
         },
 
         columns: [
@@ -97,9 +91,9 @@ function getColumnFieldName(dataGridInstance, getter) {
         { caption: 'User Name', dataField: 'userName' },
         { caption: 'Email', dataField: 'userEmail' },
         { caption: 'Phone', dataField: 'userPhone' },
-            { caption: 'Note', dataField: 'note' },
+        { caption: 'Note', dataField: 'note' },
         { caption: 'Date', dataField: 'cdate', dataType: 'date' },
-        { caption: 'Time', dataField: 'time' },
+        { caption: 'Time', dataField: 'formatedTime' },
         { caption: 'Session Id', dataField: 'sessionId' },
         { caption: 'OS', dataField: 'os' },
         { caption: 'Area', dataField: 'area' },
