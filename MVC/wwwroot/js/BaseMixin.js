@@ -34,7 +34,7 @@ export const baseMixin = {
 		ShowErrors(item) {
 			this.PlayError()
 			var stringError;
-			console.log(item.Errors);
+//			console.log(item.Errors);
 			if(Array.isArray(item.Errors)){
 			item.Errors.forEach(x => {
 				if (x.Name) {
@@ -68,7 +68,7 @@ export const baseMixin = {
 		}
 		,
 		ShowAlert(message) {
-			console.log(message);
+//			console.log(message);
 			alert(message)
 		}
 		,
@@ -104,9 +104,7 @@ export const baseMixin = {
 				})
 				.then((retData) => {
 					if(retData){
-					{console.log(retData)	
 					fetchRef(retData)
-				}
 			}
 					this.loadingData = false;
 	

@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Entity.Models;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using NLog;
 
 namespace Entity.Controllers
 {   [Authorize]
     public class AnswerJournalController : BaseController
     {
+        Logger logger=LogManager.GetCurrentClassLogger();
 
      public  AnswerJournalController(IHttpContextAccessor httpContextAccessor):base(httpContextAccessor) { }
 
@@ -28,13 +30,27 @@ namespace Entity.Controllers
             
             if (!string.IsNullOrWhiteSpace(dateFrom))
             {
-                var dateFr = DateOnly.FromDateTime(DateTime.Parse(dateFrom));
-                answers = answers.Where(x => x.Cdate > dateFr);
+                try
+                {
+                    var dateFr = DateOnly.FromDateTime(DateTime.Parse(dateFrom));
+                    answers = answers.Where(x => x.Cdate > dateFr);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error("error while parsing from param" + dateFrom);
+                }
             }
             if (!string.IsNullOrWhiteSpace(dateTo))
             {
-                var dateT = DateOnly.FromDateTime(DateTime.Parse(dateTo));
-                answers = answers.Where(x => x.Cdate < dateT);
+                try
+                {
+                    var dateT = DateOnly.FromDateTime(DateTime.Parse(dateTo));
+                    answers = answers.Where(x => x.Cdate < dateT);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error("error while parsing to param" + dateTo);
+                }
             }
             
             loadOptions.PrimaryKey = new[] { "Id" };

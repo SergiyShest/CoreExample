@@ -5,7 +5,10 @@
   "scripts": {
     "test:e2e": "cypress open",
     "run:e2e": "cypress run",
-    "run:e2e.NotesTests": "cypress run --spec 'tests/e2e/specs/NotesTests.js'"
+    "run:e2e.NotesTests": "cypress run --spec 'tests/e2e/specs/NotesTests.js'",
+    "run:e2e.AnswerJournalTests": "cypress run --spec 'tests/e2e/specs/AnswerJournalTests.js'",
+    "run:e2e.HitCounterJournal": "cypress run --spec 'tests/e2e/specs/HitCounterJournal.js'",
+    "run:e2e.SaveAnswer": "cypress run --spec 'tests/e2e/specs/SaveAnswer.js'"
   },
   "devDependencies": {
     "cypress": "^9.7.0"

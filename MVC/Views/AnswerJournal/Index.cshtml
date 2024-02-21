@@ -12,13 +12,16 @@
 
 <h1>View responses</h1>
 <div id="app" style="display: flex;flex-direction: column;width: 300px;">
-    <div style="display: flex;">
+
+@*     <fieldset class="scheduler-border" style="background-color: #eeeeee;">
+        <legend class="float-none w-auto p-2">Filter:</legend> *@
+        <div style="display: flex;">
         <div style="width: 100px;">Date</div>
         <input id="d1From" type="date" v-model="from" style="margin:3px">
-        <input id="d1To" type="date" v-model="to" style="margin:3px">
-        <button @@click="Filter()" style="margin:3px">Find</button>
-    </div>
-
+        <input id="d1To"   type="date" v-model="to" style="margin:3px">
+        <button id="findButton" @@click="Filter()" style="margin:3px">Find</button>
+        </div>
+@*     </fieldset> *@
 </div>
 <div id="grid"></div>
 <div id="dxPopup"></div>
@@ -35,12 +38,11 @@
         grid.option("dataSource", dataSource);
     }
 
-    import { baseMixin } from '/js/BaseMixin.js';
+    import { baseMixin } from '/js/BaseMixin.js?v=1';
     const App = {
-        mixins: [baseMixin],
-        data() {
+            mixins: [baseMixin],
+             data() {
             return {
-
                 from: null,
                 to: null
             }
@@ -62,9 +64,7 @@
         mounted() {
            
             this.from = localStorage.getItem('dateFrom')
-            this.to = localStorage.getItem('to')
-             console.log('dateFrom = '+this.from)
-            console.log('dateTo = '+this.to)
+            this.to = localStorage.getItem('dateTo')
             this.Filter()
 
         }

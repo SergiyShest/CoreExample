@@ -13,7 +13,7 @@
         <div style="width: 100px;">Date</div>
         <input id="d1From" type="date" v-model="from" style="margin:3px">
         <input id="d1To" type="date" v-model="to" style="margin:3px"> 
-        <button @@click="FindDate()" style="margin:3px">Find</button>
+        <button id="findButton" @@click="FindDate()" style="margin:3px">Find</button>
     </div>
 
 </div>
@@ -38,11 +38,11 @@
                 localStorage.setItem('dateTo',this.to);                
                 const  pathEnd = "/HitCounter/SetFilter";
                 const data= {from:this.from,to:this.to} ;
-                console.log(data);
+
                 this.fetch(this.Ok, pathEnd, data )
             },
             Ok() { 
-                console.log("ok")
+
                 var dataGrid = $('#grid').dxDataGrid('instance');
                 dataGrid.refresh()
             }
@@ -50,17 +50,14 @@
 
         },
         mounted() {
-          console.log(localStorage.getItem('dateFrom'))
-         console.log(localStorage.getItem('dateTo'))
+
           this.from=localStorage.getItem('dateFrom')
-          this.to=localStorage.getItem('to')          
+          this.to = localStorage.getItem('dateTo')
         }
 
     }
 
     Vue.createApp(App).mount('#app')
-
-
 
 </script>
 

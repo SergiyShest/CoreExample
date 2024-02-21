@@ -30,11 +30,13 @@ function contextMenuPreparing(e) {
                 text: "Edit Notes",
                 onItemClick: function () {
                     var header = (e.row.data.userName??'') + ' email:' + (e.row.data.userEmail??'')
-                    xPopup(`Notes for : ${header}`, '/AnswerNotes?id=' + e.row.key);
-
+                    xPopup(`Notes for : ${header}`, '/AnswerNotes?id=' + e.row.key, function () {
+                        var dataGrid = $('#grid').dxDataGrid('instance'); 
+                         dataGrid.refresh()
+                    });
                 }
             });
-        e.items.push({
+           e.items.push({
             text: "Copy cell",
             onItemClick: function () {
                 var dataField = e.column.dataField;

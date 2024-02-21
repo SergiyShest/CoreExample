@@ -26,6 +26,7 @@ public partial class vAnswer2 : IEntity
     public string? Time { get; set; }
 
     static Regex _timeReg = new Regex("(.*)\\.", RegexOptions.Compiled);
+   
     [NotMapped]
     public string? FormatedTime
     {
@@ -40,7 +41,10 @@ public partial class vAnswer2 : IEntity
     }
 
     public string? Os { get; set; }
+
     public string? Area { get; set; }
+
     public string? Browser { get; set; }
+
     public string? ScreenSize { get; set; }
 }
