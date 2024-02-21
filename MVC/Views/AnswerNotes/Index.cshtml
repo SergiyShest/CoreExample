@@ -2,31 +2,30 @@
 @{
     Layout = "_LayoutEmpty";
 }
-<link rel="stylesheet" href="example2.css">
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/vue2.js"></script>
+<script src="~/lib/vue.js"></script>
 
 @* <script src="~/BaseMixinSDN.js" asp-append-version="true"></script> *@
-<script src="~/vueComponents.js" asp-append-version="true"></script>
+
 
 <div style="display:flex;flex-direction:column;align-items:flex-start;align-content:flex-start;align-self:stretch">
     <div id="app" style="display: flex;flex-direction: column;width: 550px;">
         <div id="items" class="grid-container">
             <div   style="margin:2px;padding:2px;border: 1px solid #ccc; border-radius:3px; background-color:#ddd" v-for="note in Item.Notes">
-                <div>Created:{{formatDate(note.Ldate)}}</div>
+                <div>Created at :{{formatDate(note.Ldate)}}</div>
                 <div style="display:flex;width:100%">  
                     <textarea :id="'note_'+note.Id" v-model='note.Note' style="width:100%"></textarea>
                 <div style="width:65px">
-                    <kf-button :id="'saveBtn_'+note.Id" v-on:click.native="SaveClick(note.Id)" style="width:60px" text="Edit"></kf-button>
-                    <kf-button :id="'delBtn_'+note.Id" v-on:click.native="DelClick(note.Id)" style="width:60px" text="Delete"></kf-button>
+                    <button :id="'saveBtn_'+note.Id" v-on:click.native="SaveClick(note.Id)" style="width:60px" text="Edit"></button>
+                    <button :id="'delBtn_'+note.Id" v-on:click.native="DelClick(note.Id)" style="width:60px" text="Delete"></button>
                 </div>
                 </div>
             </div>
             <div style="display:flex;margin:2px;padding:2px;border: 1px solid #ccc; border-radius:3px; background-color:#ddd">
                 <textarea id="newNote" v-model='NewNote' style="width:100%"></textarea>
                 <div>
-                    <kf-button id="addBtn" v-on:click.native="SaveClick(null)" style="width:60px" text="Add" :disabled="!NewNote"></kf-button>
+                    <button id="addBtn" v-on:click.native="SaveClick(null)" style="width:60px" text="Add" :disabled="!NewNote"></button>
                 </div>
             </div>
         </div>
@@ -46,81 +45,70 @@
     let Mode = '@ViewBag.Mode';
     let Id = '@ViewBag.Id';
     import { baseMixin } from '/js/BaseMixin.js';
+    const { ref } = Vue;
 
-    let vue_ = new Vue({
-        el: "#app",
-        mixins: [baseMixin],
+    const app = Vue.createApp({
+       mixins: [baseMixin],
         data() {
             return {
-                Item:
-                {
+                Item: {
                     Id: Id,
                     Notes: []
                 },
                 NewNote: ''
-            }
-        }
-        ,
+            };
+        },
         methods: {
             Get() {
                 const pathEnd = "/AnswerNotes/Get?id=" + Id;
-                this.FetchJson(pathEnd, this.GetEnd)
+                this.FetchJson(pathEnd, this.GetEnd);
             },
             GetEnd(data) {
                 this.Item.Notes = this.ExtractItem(data);
             },
-
             SaveClick(noteId) {
-               console.log(noteId)
-             
                 let data;
-                if (noteId) { 
-                    for (var i = 0; i < this.Item.Notes.length; i++) {
-                        var item = this.Item.Notes[i];
-                        if (item.Id == noteId)
-                        { 
+                if (noteId) {
+                    for (let i = 0; i < this.Item.Notes.length; i++) {
+                        let item = this.Item.Notes[i];
+                        if (item.Id === noteId) {
                             data = item;
                             break;
                         }
                     }
-                }
-                else {  data = { AnswerId:Id, Note:this.NewNote }
-                    this.NewNote = null;
+                } else {
+                    data = { AnswerId: Id, Note: this.NewNote };
+                    this.NewNote = '';
                 }
                 const pathEnd = "/AnswerNotes/Set?id=" + Id;
                 this.FetchJson(pathEnd, this.Get, data);
-
             },
-
             Ok(data) {
-                var res = this.ExtractItem(data);
-                if (res)
-                    alert(res)
+                let res = this.ExtractItem(data);
+                if (res) alert(res);
             },
             DelClick(noteId) {
                 if (confirm("delete this item?")) {
                     const pathEnd = "/AnswerNotes/Delete?id=" + Id + "&noteId=" + noteId;
-                    this.FetchJson(pathEnd, this.Get)
+                    this.FetchJson(pathEnd, this.Get);
                 }
             },
-
-            CloseClick() {
-
-            }, 
+            CloseClick() { },
             formatDate(date) {
-
-                return date.substring(0, date.length - 7).replace("T", " ")
-            }, 
+                return date.substring(0, date.length - 7).replace("T", " ");
+            },
             handleKeyDown(event) {
                 if (event.ctrlKey && event.key === 'Enter') {
                     this.SaveClick(null);
                 }
-                console.log(event)
                 return true;
             }
         },
-        mounted: function () {
-            this.Get()
+        mounted() {
+            this.Get();
         }
     });
+
+    app.mount('#app');
 </script>
+<script src="~/vue3Components.js" asp-append-version="true"></script>
