@@ -5,10 +5,6 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/vue.js"></script>
-
-@* <script src="~/BaseMixinSDN.js" asp-append-version="true"></script> *@
-
-
 <div style="display:flex;flex-direction:column;align-items:flex-start;align-content:flex-start;align-self:stretch">
     <div id="app" style="display: flex;flex-direction: column;width: 550px;">
         <div id="items" class="grid-container">
@@ -17,19 +13,20 @@
                 <div style="display:flex;width:100%">  
                     <textarea :id="'note_'+note.Id" v-model='note.Note' style="width:100%"></textarea>
                 <div style="width:65px">
-                    <button :id="'saveBtn_'+note.Id" v-on:click.native="SaveClick(note.Id)" style="width:60px" text="Edit"></button>
-                    <button :id="'delBtn_'+note.Id" v-on:click.native="DelClick(note.Id)" style="width:60px" text="Delete"></button>
+                    <kf-button :id="'saveBtn_'+note.Id" v-on:click.native="SaveClick(note.Id)" style="width:60px" text="Edit"></kf-button>
+                    <kf-button :id="'delBtn_'+note.Id" v-on:click.native="DelClick(note.Id)" style="width:60px" text="Delete"></kf-button>
                 </div>
                 </div>
             </div>
             <div style="display:flex;margin:2px;padding:2px;border: 1px solid #ccc; border-radius:3px; background-color:#ddd">
                 <textarea id="newNote" v-model='NewNote' style="width:100%"></textarea>
                 <div>
-                    <button id="addBtn" v-on:click.native="SaveClick(null)" style="width:60px" text="Add" :disabled="!NewNote"></button>
+                    <kf-button id="addBtn" v-on:click.native="SaveClick(null)" style="width:60px" text="Add" :disabled="!NewNote"></kf-button>
                 </div>
             </div>
         </div>
         <div style="display:flex;flex-direction:row;">
+            <kf-field requre></kf-field>
         </div>
     </div>
 </div>
@@ -44,6 +41,7 @@
                 });
     let Mode = '@ViewBag.Mode';
     let Id = '@ViewBag.Id';
+    import { KfButton, KfField } from './vue3Components.js';
     import { baseMixin } from '/js/BaseMixin.js';
     const { ref } = Vue;
 
@@ -108,7 +106,7 @@
             this.Get();
         }
     });
-
+    app.component('kf-field', KfField);
+    app.component('kf-button', KfButton);
     app.mount('#app');
 </script>
-<script src="~/vue3Components.js" asp-append-version="true"></script>

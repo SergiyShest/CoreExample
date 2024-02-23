@@ -31,8 +31,6 @@ function reFormatNum(val) {
 // inputClass - тип String, класс для поля ввода по умолчанию.
 
 
-//import { ref, watch } from 'vue'; // Импорт ref и watch из Vue 3
-
 
 const componentBase = {
     props: {
@@ -128,23 +126,19 @@ const componentBase = {
         };
     }
 };
+export const KfField ={
+    mixins: [componentBase],
+    props: {
+        'value': { type: String },
 
-// Оставшаяся часть кода без изменений
+    },
+    methods: {
+        valChanged(event) {
+            this.$emit('input', event.target.value);
+        }
+    },
 
-
-Vue.component('kf-field', {
-  mixins: [componentBase],
-  props: {
-      'value': { type: String },
-
-  },
-  methods: {
-      valChanged(event) {
-          this.$emit('input', event.target.value);
-      }
-  },
-
-  template: `
+    template: `
       <input 
           :class="inputClasses" 
           :style="inputStyle"
@@ -153,212 +147,14 @@ Vue.component('kf-field', {
           v-on:input="valChanged($event)"
       />
   `
-})
-
-Vue.component('kf-input', {
-mixins: [componentBase],
-props: {
-  'value': { type: [String,Number] },
-},
-
-methods: {
-},
-template: `
- <div class="flex-row" >
- <div class="title-col" >{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
- 
- <input
-  :class="inputClasses" 
-  :style="inputStyle"
-  :title="notValidText" 
-   v-bind:value="value"
-   v-on:input="valChanged($event)"
-   v-bind:readonly="readonly || externalReadonly"
- ></input>
- <img v-if="!valid" src="/images/invalid.png" class="invalidImage"></img><slot></slot>
- </div>
-`
-})//kf-input
-
-Vue.component('kf-date', {
-mixins: [componentBase],
-props: {
-  'value': { type: [String,Date] },
-},
-  watch: {
-      immediate: true,
-      value(val) {
-          this.valueInt = ConvertDate(val)
-          this.Validate(val)
-      }
-  },
-methods: {
-  },
-  mounted: function () {
-      this.valueInt = ConvertDate(this.value)
-      this.Validate(this.value)
-  },
+}
 
 
-template: `
- <div class="flex-row" >
- <div class="title-col" >{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
 
- <input type='date'
- :class="inputClasses" 
- :style="inputStyle"
-  :title="notValidText" 
-   v-bind:value="valueInt"
-   v-bind:readonly="readonly || externalReadonly"
-   v-on:input="valChanged($event)"
- ></input>
- <img v-if="!valid" src="/images/invalid.png" class="invalidImage"></img><slot></slot>
- </div>
-`
-})//kf-date
 
-Vue.component('kf-select', {
-mixins: [componentBase],
-props: {
-  'value': { type: [String, Number] },
-  "items": Array
-},
-  methods: {
-},
 
-template: `
- <div class="flex-row" >
-  <div class="title-col" >{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
- <select
- :class="inputClasses" 
- :style="inputStyle"
-  :title="notValidText"
-  v-model="valueInt"
-  v-bind:disabled="readonly || externalReadonly"
-  v-on:input="valChanged($event)"
-  >
-<option v-for="item in items" :key="item.Id"   v-bind:value="item.Id" >{{item.Name}}  </option>
-</select>
- <img v-if="!valid" src="/images/invalid.png" class="invalidImage"></img><slot></slot>
- </div>
-`
-})//kf-select
 
-Vue.component('kf-number', {
-mixins: [componentBase],
-props: {
-  'value': { type: [Number,String] },
-  },
-  watch: {
-      immediate: true,
-      value(val) {
-          this.valueInt = formatNum(val)
-          this.Validate(val)
-      }
-  },
-methods: {
-    virtChange(val) {
-    val = reFormatNum(val)
-    this.$emit('input', val)//event to parent
-  }
-},
-  mounted: function () {
-        this.valueInt = formatNum(this.value)
-},
-template: `
- <div class="flex-row" >
- <div class="title-col" >{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
-<input  style="text-align:right"
-  :class="inputClasses" 
-  :style="inputStyle" 
-  :title="notValidText" 
-   v-bind:value="valueInt"
-   v-on:input="valChanged($event)"
-   onblur="numOnBlur(this)"
-   onfocus="numOnFocus(this)"
-   v-bind:readonly="readonly || externalReadonly"
- />
- <img v-if="!valid" src="/images/invalid.png" class="invalidImage"></img><slot></slot>
- </div>
-`
-})//kf-number
-
-Vue.component('kf-check', {
-  mixins: [componentBase],
-  props: {
-      'value': { type: [Boolean, String] },
-  },
-  watch: {
-      immediate: true,
-      valueInt(val) {
-          this.$emit('input', val)//event to parent
-      }
-  },
-  methods: {
-
-  },
-  template: `
- <div class="flex-row" >
- <div class="title-col" >{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
-<div style="width:30px;" >
- <input style="width:20px;margin:0px"
-   type="checkbox"
-  :class="inputClasses"
-  :style="inputStyle"
-  :title="notValidText" 
-   v-model="valueInt"
-   v-bind:disabled="readonly || externalReadonly"
- ></input>
- <img v-if="!valid" src="/images/invalid.png" class="invalidImage" ></img><slot></slot>
-</div>
- </div>
-`
-})//kf-check
-
-Vue.component('kf-textarea', {
-  mixins: [componentBase],
-  props: {
-      'value': { type: String },
-  },
-
-  methods: {
-  },
-  template: `
- <div class="flex-row" >
- <div class="title-col" >{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
- <div
- :class="inputClasses"
- :style="inputStyle"
- >
- <textarea style= "width:100%"
-  :class="{ invalid: !valid}"
-   class="kf-inp"
-  :title="notValidText" 
-   v-bind:value="value"
-   v-on:input="valChanged($event)"
-   v-bind:readonly="readonly || externalReadonly"
-  rows="5"
- ></textarea>
-</div>
- <img v-if="!valid" src="/images/invalid.png" class="invalidImage"></img><slot></slot> 
- </div>
-`
-})//kf-textarea
-
-Vue.component('kf-text', {
-  mixins: [componentBase],
-  props: {
-      'value': { type: String },
-  },
-  template: `
- <div class="flex-row" >
- <div class="coll" >{{ text }}:</div>
- <div class="short bold">{{value}}</div><slot></slot>
- </div>
-`
-})//kf-text не редактируемый текст (class=" bold")
-
-Vue.component('kf-button', {
+export const KfButton = {
   props: {
       'text': null,
       'image':null
@@ -374,5 +170,5 @@ class="kf-button"
 >
 <img v-if="image" :src="imgSrc" class="kf-button-image" />{{text}}<slot></slot>
 </button>`
-})//kf-button  
+}//kf-button  
 
