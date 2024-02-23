@@ -29,103 +29,83 @@ function reFormatNum(val) {
 // rules - список правил валидации.
 // inputStyle - тип Object или String, стили для поля ввода.
 // inputClass - тип String, класс для поля ввода по умолчанию.
+    const componentBase = {
+        props: {
+            'text': String,
+            'requre': Boolean,
+            'valudateonload': { type: [Boolean, String], default: false },
+            'readonly': Boolean,
+            'requretext': { type: String, default: 'Значение должно быть заполнено!!!' },
+            'rules': { type: Array, default: () => [] },
+            'inputStyle': { type: [Object, String] },
+            'inputClass': { type: String, default: 'def-inp' },
+        },
+        data() {
+            return {
+                valueInt: null,
+                valid: true,
+                externalReadonly: false,
+                notValidText: null,
+                inputClasses: {},
+            };
+        },
+        methods: {
+            valChanged(event) {
+                this.virtChange(event.target.value);
+            },
+            virtChange(val) {
+                this.valueInt = val;
+                this.$emit('input', val);
+            },
+            SetReadonly(val) {
+                this.externalReadonly = val;
+            },
+            Validate(val) {
+                if (typeof val !== "undefined") {
+                    val = this.value.value;
+                }
+                this.valid = true;
+                const errList = [];
+                this.notValidText = '';
 
-
-
-const componentBase = {
-    props: {
-        'text': String,
-        'requre': Boolean,
-        'valudateonload': { type: [Boolean, String], default: false },
-        'readonly': Boolean,
-        'requretext': { type: String, default: 'Значение должно быть заполнено!!!' },
-        'rules': { type: Array, default: () => [] },
-        'inputStyle': { type: [Object, String] },
-        'inputClass': { type: String, default: 'def-inp' },
-    },
-    setup(props) {
-        const valueInt = ref(null);
-        const valid = ref(true);
-        const externalReadonly = ref(false);
-        const notValidText = ref(null);
-
-        const inputClasses = computed(() => ({
-            'invalid': !valid.value,
-            [props.inputClass]: props.inputClass
-        }));
-
-        const valChanged = (event) => {
-            virtChange(event.target.value);
-        };
-
-        const virtChange = (val) => {
-            valueInt.value = val;
-            emit('input', val);
-        };
-
-        const SetReadonly = (val) => {
-            externalReadonly.value = val;
-        };
-
-        const Validate = (val) => {
-            if (typeof val === "undefined") {
-                val = value.value;
-            }
-            valid.value = true;
-            const errList = [];
-            notValidText.value = '';
-
-            if (props.requre && !val) {
-                valid.value = false;
-                notValidText.value = props.requretext;
-            } else {
-                try {
-                    if (props.rules) {
-                        props.rules.forEach(element => {
-                            const valResult = element(val);
-                            if (valResult !== true) {
-                                errList.push(valResult);
-                                valid.value = false;
+                if (this.requre && !val) {
+                    this.valid = false;
+                    this.notValidText = this.requretext;
+                } else {
+                    try {
+                        if (this.rules) {
+                            this.rules.forEach(element => {
+                                const valResult = element(val);
+                                if (valResult !== true) {
+                                    errList.push(valResult);
+                                    this.valid = false;
+                                }
+                            });
+                            if (!this.valid) {
+                                this.notValidText = errList.join('\n');
                             }
-                        });
-                        if (!valid.value) {
-                            notValidText.value = errList.join('\n');
                         }
+                    } catch (error) {
+                        console.error("Error while validation rules executing: " + error);
                     }
-                } catch (error) {
-                    console.error("Error while validation rules executing: " + error);
+                }
+
+                console.log(this.text + ' valid = ' + this.valid);
+            },
+            mounted() {
+                this.valueInt = this.value;
+                if (this.valudateonload == true) {
+                    this.Validate(this.value);
                 }
             }
-
-            console.log(props.text + ' valid = ' + valid.value);
-        };
-
-        watch(() => props.value, (newValue) => {
-            valueInt.value = newValue;
-            Validate(newValue);
-        }, { immediate: true });
-
-        const mounted = () => {
-            valueInt.value = props.value;
-            if (props.valudateonload == true) {
-                Validate(props.value);
+        },
+        watch: {
+            value(newValue) {
+                this.valueInt = newValue;
+                this.Validate(newValue);
             }
-        };
-
-        return {
-            valueInt,
-            valid,
-            externalReadonly,
-            notValidText,
-            inputClasses,
-            valChanged,
-            virtChange,
-            SetReadonly,
-            Validate,
-            mounted
-        };
-    }
-};
+        }
+    };
 export const KfField ={
     mixins: [componentBase],
     props: {
@@ -147,10 +127,197 @@ export const KfField ={
           v-on:input="valChanged($event)"
       />
   `
-}
+}//kf-field
 
+export const KfInput = {
+    mixins: [componentBase],
+    props: {
+        'value': { type: [String, Number] },
+    },
 
+    methods: {
+    },
+    template: `
+ <div class="flex-row" >
+ <div class="title-col" >{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
+ 
+ <input
+  :class="inputClasses" 
+  :style="inputStyle"
+  :title="notValidText" 
+   v-bind:value="value"
+   v-on:input="valChanged($event)"
+   v-bind:readonly="readonly || externalReadonly"
+ />
+ <img v-if="!valid" src="/images/invalid.png" class="invalidImage" /><slot></slot>
+ </div>
+`
+}//kf-input
 
+// Компонент kf-date
+export const KfDate = {
+    mixins: [componentBase],
+    props: {
+        'value': { type: [String, Date] },
+    },
+    methods: {},
+    template: `
+        <div class="flex-row">
+            <div class="title-col">{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
+            <input 
+                type='date'
+                :class="inputClasses" 
+                :style="inputStyle"
+                :title="notValidText" 
+                v-bind:value="valueInt"
+                v-bind:readonly="readonly || externalReadonly"
+                v-on:input="valChanged($event)"
+            />
+            <img v-if="!valid" src="/images/invalid.png" class="invalidImage">
+            <slot></slot>
+        </div>
+    `
+}//kf-date
+
+// Компонент kf-select
+export const KfSelect = {
+    mixins: [componentBase],
+    props: {
+        'value': { type: [String, Number] },
+        'items': Array
+    },
+    methods: {},
+    template: `
+        <div class="flex-row">
+            <div class="title-col">{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
+            <select 
+                :class="inputClasses" 
+                :style="inputStyle"
+                :title="notValidText"
+                v-model="valueInt"
+                v-bind:disabled="readonly || externalReadonly"
+                v-on:input="valChanged($event)"
+            >
+                <option v-for="item in items" :key="item.Id" v-bind:value="item.Id">{{item.Name}}</option>
+            </select>
+            <img v-if="!valid" src="/images/invalid.png" class="invalidImage">
+            <slot></slot>
+        </div>
+    `
+};//kf-select
+export const KfNumber =  {
+    mixins: [componentBase],
+    props: {
+        'value': { type: [Number, String] },
+    },
+    watch: {
+        value(val) {
+            this.valueInt = formatNum(val)
+            this.Validate(val)
+        }
+    },
+    methods: {
+        virtChange(val) {
+            val = reFormatNum(val)
+            this.$emit('input', val)//event to parent
+        }
+    },
+    mounted: function () {
+        this.valueInt = formatNum(this.value)
+        this.Validate(this.value)
+    },
+    template: `
+ <div class="flex-row" >
+ <div class="title-col" >{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
+<input  style="text-align:right"
+  :class="inputClasses" 
+  :style="inputStyle" 
+  :title="notValidText" 
+   v-bind:value="valueInt"
+   v-on:input="valChanged($event)"
+   onblur="numOnBlur(this)"
+   onfocus="numOnFocus(this)"
+   v-bind:readonly="readonly || externalReadonly"
+ />
+ <img v-if="!valid" src="/images/invalid.png" class="invalidImage"/><slot></slot>
+ </div>
+`
+}//kf-number
+
+export const KfCheck = {
+    mixins: [componentBase],
+    props: {
+        'value': { type: [Boolean, String] },
+    },
+    watch: {
+        immediate: true,
+        valueInt(val) {
+            this.$emit('input', val)//event to parent
+        }
+    },
+    methods: {
+
+    },
+    template: `
+ <div class="flex-row" >
+ <div class="title-col" >{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
+<div style="width:30px;" >
+ <input style="width:20px;margin:0px"
+   type="checkbox"
+  :class="inputClasses"
+  :style="inputStyle"
+  :title="notValidText" 
+   v-model="valueInt"
+   v-bind:disabled="readonly || externalReadonly"
+ ></input>
+ <img v-if="!valid" src="/images/invalid.png" class="invalidImage" /><slot></slot>
+</div>
+ </div>
+`
+}//kf-check
+
+export const KfTextarea = {
+    mixins: [componentBase],
+    props: {
+        'value': { type: String },
+    },
+
+    methods: {
+    },
+    template: `
+ <div class="flex-row" >
+ <div class="title-col" >{{ text }}<span v-if="requre" style="color:red">*</span>:</div>
+ <div
+ :class="inputClasses"
+ :style="inputStyle"
+ >
+ <textarea style= "width:100%"
+  :class="{ invalid: !valid}"
+   class="kf-inp"
+  :title="notValidText" 
+   v-bind:value="value"
+   v-on:input="valChanged($event)"
+   v-bind:readonly="readonly || externalReadonly"
+  rows="5"
+ ></textarea>
+</div>
+ <img v-if="!valid" src="/images/invalid.png" class="invalidImage" /><slot></slot> 
+ </div>
+`
+}//kf-textarea
+
+export const KfText = {
+    mixins: [componentBase],
+    props: {
+        'value': { type: String },
+    },
+    template: `
+ <div class="flex-row" >
+ <div class="coll" >{{ text }}:</div>
+ <div class="short bold">{{value}}</div><slot></slot>
+ </div>
+`
+}//kf-text не редактируемый текст (class=" bold")
 
 
 
